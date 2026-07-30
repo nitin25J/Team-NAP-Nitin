@@ -8,11 +8,13 @@
 
 ## Overview
 
-NexusDR is an AI-powered Disaster Intelligence Platform designed to transform disaster management from reactive response to proactive decision-making. The platform integrates weather forecasts, satellite imagery, GIS maps, IoT sensors, traffic networks, hospitals, and emergency resources into a unified intelligence layer.
+Varuna AI is an AI-powered Disaster Intelligence Platform designed to transform disaster management from reactive response to proactive decision-making. The platform integrates weather forecasts, satellite imagery, GIS maps, IoT sensors, traffic networks, hospitals, and emergency resources into a unified intelligence layer.
 
-Using Multi-Agent AI, Digital Twins, Knowledge Graphs, Computer Vision, and Predictive Analytics, NexusDR continuously monitors disaster risks, simulates future scenarios, and generates explainable recommendations for evacuation planning, rescue deployment, resource allocation, and emergency response.
+Using Multi-Agent AI, Digital Twins, Knowledge Graphs, Computer Vision, and Predictive Analytics, Varuna AI continuously monitors disaster risks, simulates future scenarios, and generates explainable recommendations for evacuation planning, rescue deployment, resource allocation, and emergency response.
 
-Unlike traditional disaster monitoring systems, NexusDR provides real-time decision intelligence that helps governments, emergency agencies, and smart cities respond faster while minimizing casualties and infrastructure damage.
+Unlike traditional disaster monitoring systems, Varuna AI provides real-time decision intelligence that helps governments, emergency agencies, and smart cities respond faster while minimizing casualties and infrastructure damage.
+
+The platform is currently being developed and prototyped as a state-level command center for Assam, India, with district-level coverage across Sivasagar, Golaghat, Jorhat, and Charaideo, and is designed to scale to a national deployment.
 
 ---
 
@@ -37,7 +39,7 @@ To build an intelligent disaster management platform capable of predicting, simu
 
 # Problem Statement
 
-Disaster management agencies often operate in isolated systems.
+## Disaster management agencies often operate in isolated systems.
 
 - Weather departments monitor forecasts.
 - Hospitals monitor patient capacity.
@@ -47,7 +49,7 @@ Disaster management agencies often operate in isolated systems.
 
 These systems rarely communicate in real time, resulting in delayed decision-making and inefficient disaster response.
 
-NexusDR bridges this gap by creating a unified AI-powered intelligence platform.
+Varuna AI bridges this gap by creating a unified AI-powered intelligence platform.
 
 ---
 
@@ -65,6 +67,9 @@ NexusDR bridges this gap by creating a unified AI-powered intelligence platform.
 - Intelligent Evacuation Planning
 - Explainable AI Recommendations
 - Interactive Disaster Dashboard
+- Drone-Fed Terrain Scanning
+- AI-Verified Citizen Incident Reporting
+- Emergency Alert Broadcasting with Live Countdown Tracking
 
 ---
 
@@ -84,7 +89,7 @@ Hospital Information
 Emergency Resources
         │
 ──────────────────────────────
-NexusDR Intelligence Layer
+Varuna AI Intelligence Layer
 ──────────────────────────────
 Data Fusion Engine
 Knowledge Graph
@@ -105,23 +110,23 @@ Live Dashboard
 
 # Multi-Agent AI Architecture
 
-NexusDR consists of specialized AI agents working together.
+Varuna AI consists of specialized AI agents working together.
 
-| Agent | Responsibility |
-|--------|----------------|
-| Weather Agent | Predict rainfall, storms, cyclones, and heatwaves |
-| Satellite Agent | Detect floods, landslides, fires, and damaged infrastructure |
-| Traffic Agent | Monitor roads and recommend evacuation routes |
-| Hospital Agent | Track beds, ICU availability, ambulances, and medical resources |
-| Rescue Agent | Allocate rescue teams, boats, helicopters, and emergency vehicles |
-| Government Agent | Generate reports and emergency notifications |
-| Master Agent | Coordinates all AI agents and generates final recommendations |
+| Agent || Responsibility |
+|--------||----------------|
+| Weather Agent || Predict rainfall, storms, cyclones, and heatwaves |
+| Satellite Agent || Detect floods, landslides, fires, and damaged infrastructure |
+| Traffic Agent || Monitor roads and recommend evacuation routes |
+| Hospital Agent || Track beds, ICU availability, ambulances, and medical resources |
+| Rescue Agent || Allocate rescue teams, boats, helicopters, and emergency vehicles |
+| Government Agent || Generate reports and emergency notifications |
+| Master Agent || Coordinates all AI agents and generates final recommendations |
 
 ---
 
 # Digital Twin
 
-NexusDR creates a virtual representation of a city or district containing:
+Varuna AI creates a virtual representation of a city or district containing:
 
 - Roads
 - Rivers
@@ -129,7 +134,6 @@ NexusDR creates a virtual representation of a city or district containing:
 - Hospitals
 - Shelters
 - Schools
-- Power Stations
 - Emergency Vehicles
 - Population Distribution
 - Disaster-Prone Areas
@@ -177,7 +181,7 @@ The Digital Twin enables authorities to simulate disasters before they occur and
 - FastAPI
 - Python
 
-## Artificial Intelligence
+## Artificial Intelligence (planned — not yet integrated)
 
 - LangChain
 - OpenAI / Gemini
@@ -252,11 +256,10 @@ Issue Public Alerts
 
 # Future Scope
 
-- Drone Integration
 - Live Satellite Data Processing
 - Autonomous Rescue Systems
 - National Digital Twin
-- Citizen Mobile Application
+- Citizen Mobile Application (native app; web-based citizen reporting already prototyped)
 - Reinforcement Learning for Resource Optimization
 - Cross-State Disaster Coordination
 
@@ -265,7 +268,7 @@ Issue Public Alerts
 # Repository Structure
 
 ```
-NexusDR/
+VarunaAI/
 │
 ├── backend/
 ├── frontend/
@@ -285,7 +288,15 @@ NexusDR/
 
 # Project Status
 
-This project is currently under active development. Features and architecture will continue to evolve as new modules are implemented.
+This project is currently under active development. 
+
+- Frontend: functional prototype dashboard (Live Map, AI Risk Prediction, Resource Management, Hospitals, Rescue Teams, Emergency Alerts, Satellite Analysis, Citizen Reports, Analytics, Settings) — currently running on mock/sample data.
+- Backend: Flask API in early integration, currently serving live weather data; endpoints for other modules (resources, alerts, reports) not yet built.
+- AI/ML models: not yet integrated — prediction confidence values shown in the UI are placeholders.
+- Database & Knowledge Graph: not yet implemented.
+- Digital Twin & Multi-Agent backend: planned, not yet built.
+
+Features and architecture will continue to evolve as new modules are implemented.
 
 ---
 
@@ -313,6 +324,6 @@ This project draws inspiration from modern research in Artificial Intelligence, 
 
 ---
 
-## NexusDR
+## Varuna AI
 
 **Predict. Prepare. Protect.**
