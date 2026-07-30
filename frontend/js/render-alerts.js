@@ -1,43 +1,78 @@
-// Renders Emergency Alert cards from ALERTS (see mock-data.js) and keeps
-// each countdown timer ticking down every second.
-const alertsGrid = document.getElementById('alertsGrid');
+const alertsGrid = document.getElementById("alertsGrid");
 
-function formatCountdown(totalSeconds){
-  const h = Math.floor(totalSeconds / 3600);
-  const m = Math.floor((totalSeconds % 3600) / 60);
-  const s = totalSeconds % 60;
-  return [h, m, s].map(n => String(n).padStart(2, '0')).join(':');
+async function loadAlerts() {
+    if (!alertsGrid) return;
+
+    try {
+        const response = await fetch(`${API_BASE}/alerts`);
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch alerts");
+        }
+
+        const alerts = await response.json();
+
+        alertsGrid.innerHTML = alerts.map((a) => {
+
+            let tagClass = "ok";
+
+            if (a.severity === "High" || a.severity === "Severe") {
+                tagClass = "critical";
+            } else if (a.severity === "Moderate") {
+                tagClass = "moderate";
+            }
+
+            return `
+                <div class="card hoverable alert-card">
+
+                    <div class="alert-top">
+
+                        <div>
+
+                            <span class="tag ${tagClass}">
+                                ${a.severity}
+                            </span>
+
+                            <div class="alert-title" style="margin-top:8px">
+                                ${a.type}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="alert-meta">
+
+                        <span>District: <b>${a.district}</b></span>
+
+                        <span>Status: <b>${a.status}</b></span>
+
+                        <span>River: <b>${a.river ?? "N/A"}</b></span>
+
+                    </div>
+
+                    <p style="margin-top:12px">
+                        ${a.message}
+                    </p>
+
+                    <button class="btn primary" style="margin-top:14px">
+
+                        View Details
+
+                    </button>
+
+                </div>
+            `;
+
+        }).join("");
+
+    } catch (err) {
+
+        console.error(err);
+
+        alertsGrid.innerHTML = "<p>Unable to load alerts.</p>";
+
+    }
 }
 
-if (alertsGrid) {
-  alertsGrid.innerHTML = ALERTS.map((a, i)=>{
-    const isCritical = a.level === 'critical';
-    return `
-      <div class="card hoverable alert-card ${isCritical ? '' : 'warning'}">
-        <div class="alert-top">
-          <div>
-            <span class="tag ${isCritical ? 'critical' : 'moderate'}">${isCritical ? 'Critical' : 'Warning'}</span>
-            <div class="alert-title" style="margin-top:8px">${a.title}</div>
-          </div>
-          <div class="countdown" data-remaining="${a.endsIn}" id="countdown-${i}">${formatCountdown(a.endsIn)}</div>
-        </div>
-        <div class="alert-meta">
-          <span>Districts: <b>${a.districts}</b></span>
-          <span>Population: <b>${a.population}</b></span>
-          <span>AI confidence: <b>${a.confidence}%</b></span>
-        </div>
-        <button class="btn ${isCritical ? 'danger' : 'primary'}" style="margin-top:14px">
-          <i class="ti ti-broadcast"></i>${isCritical ? 'Escalate now' : 'Review advisory'}
-        </button>
-      </div>`;
-  }).join('');
-
-  setInterval(()=>{
-    document.querySelectorAll('.countdown').forEach(el=>{
-      let remaining = Number(el.dataset.remaining) - 1;
-      if (remaining < 0) remaining = 0;
-      el.dataset.remaining = remaining;
-      el.textContent = formatCountdown(remaining);
-    });
-  }, 1000);
-}
+loadAlerts();
