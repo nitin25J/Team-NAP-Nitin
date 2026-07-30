@@ -1,0 +1,61 @@
+{
+  "state": "Assam",
+  "forecast_issued_at": "2026-07-29T05:30:00+05:30",
+  "source": "India Meteorological Department",
+  "district_forecast": [
+    {
+      "district": "Guwahati",
+      "condition": "Moderate Rain",
+      "temperature_c": { "min": 26, "max": 31 },
+      "humidity_percent": 88,
+      "rainfall_mm_24h": 42.5,
+      "wind_speed_kmph": 18,
+      "forecast_next_48h": "Continued moderate to heavy showers expected, isolated thunderstorms likely."
+    },
+    {
+      "district": "Dibrugarh",
+      "condition": "Heavy Rain",
+      "temperature_c": { "min": 25, "max": 29 },
+      "humidity_percent": 92,
+      "rainfall_mm_24h": 88.2,
+      "wind_speed_kmph": 22,
+      "forecast_next_48h": "Heavy rainfall to persist, river levels expected to rise further."
+    },
+    {
+      "district": "Jorhat",
+      "condition": "Very Heavy Rain",
+      "temperature_c": { "min": 24, "max": 28 },
+      "humidity_percent": 94,
+      "rainfall_mm_24h": 104.7,
+      "wind_speed_kmph": 24,
+      "forecast_next_48h": "Very heavy rainfall warning in effect, flood risk remains severe."
+    },
+    {
+      "district": "Cachar",
+      "condition": "Heavy Rain",
+      "temperature_c": { "min": 26, "max": 30 },
+      "humidity_percent": 90,
+      "rainfall_mm_24h": 76.4,
+      "wind_speed_kmph": 20,
+      "forecast_next_48h": "Heavy showers likely to continue, waterlogging risk in urban Silchar."
+    },
+    {
+      "district": "Golaghat",
+      "condition": "Light to Moderate Rain",
+      "temperature_c": { "min": 25, "max": 30 },
+      "humidity_percent": 84,
+      "rainfall_mm_24h": 28.1,
+      "wind_speed_kmph": 15,
+      "forecast_next_48h": "Rain intensity expected to reduce gradually over next two days."
+    },
+    {
+      "district": "Sivasagar",
+      "condition": "Moderate Rain",
+      "temperature_c": { "min": 25, "max": 29 },
+      "humidity_percent": 87,
+      "rainfall_mm_24h": 51.3,
+      "wind_speed_kmph": 17,
+      "forecast_next_48h": "Moderate rain to continue, river levels being closely monitored."
+    }
+  ]
+}

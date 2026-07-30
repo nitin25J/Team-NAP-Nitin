@@ -1,0 +1,52 @@
+{
+  "model_name": "Varuna Flood Risk AI",
+  "model_version": "2.3.1",
+  "last_run": "2026-07-29T12:00:00+05:30",
+  "predictions": [
+    {
+      "district": "Dibrugarh",
+      "risk_score": 0.87,
+      "risk_level": "High",
+      "predicted_event": "Flood",
+      "confidence": 0.91,
+      "forecast_window_hours": 48,
+      "contributing_factors": ["Rising Brahmaputra water level", "Continuous rainfall", "Upstream dam release"]
+    },
+    {
+      "district": "Jorhat",
+      "risk_score": 0.93,
+      "risk_level": "Severe",
+      "predicted_event": "Flood",
+      "confidence": 0.94,
+      "forecast_window_hours": 24,
+      "contributing_factors": ["Embankment weakness", "Brahmaputra above danger mark", "Saturated soil"]
+    },
+    {
+      "district": "Cachar",
+      "risk_score": 0.62,
+      "risk_level": "Moderate",
+      "predicted_event": "Heavy Rainfall",
+      "confidence": 0.78,
+      "forecast_window_hours": 48,
+      "contributing_factors": ["IMD heavy rainfall forecast", "Low drainage capacity in Silchar"]
+    },
+    {
+      "district": "Golaghat",
+      "risk_score": 0.35,
+      "risk_level": "Low",
+      "predicted_event": "Landslide",
+      "confidence": 0.68,
+      "forecast_window_hours": 72,
+      "contributing_factors": ["Hilly terrain moisture saturation"]
+    },
+    {
+      "district": "Sivasagar",
+      "risk_score": 0.48,
+      "risk_level": "Moderate",
+      "predicted_event": "River Overflow",
+      "confidence": 0.71,
+      "forecast_window_hours": 48,
+      "contributing_factors": ["Dikhow river rising trend"]
+    }
+  ]
+}

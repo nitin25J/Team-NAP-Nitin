@@ -1,0 +1,40 @@
+{
+  "satellite_analysis": [
+    {
+      "district": "Dibrugarh",
+      "image_source": "ISRO Bhuvan / Sentinel-1",
+      "captured_at": "2026-07-29T05:00:00+05:30",
+      "flood_extent_sq_km": 84.6,
+      "change_from_previous_capture_percent": 12.4,
+      "affected_villages_detected": 58,
+      "analysis_summary": "Significant increase in inundation area along Brahmaputra floodplain near Chabua and Barbari."
+    },
+    {
+      "district": "Jorhat",
+      "image_source": "ISRO Bhuvan / Sentinel-1",
+      "captured_at": "2026-07-29T05:00:00+05:30",
+      "flood_extent_sq_km": 112.3,
+      "change_from_previous_capture_percent": 21.7,
+      "affected_villages_detected": 49,
+      "analysis_summary": "Majuli island shows sharp increase in water coverage following embankment breach."
+    },
+    {
+      "district": "Cachar",
+      "image_source": "Sentinel-2",
+      "captured_at": "2026-07-29T04:45:00+05:30",
+      "flood_extent_sq_km": 46.1,
+      "change_from_previous_capture_percent": 6.2,
+      "affected_villages_detected": 22,
+      "analysis_summary": "Moderate waterlogging detected in Silchar urban zone, drainage congestion visible near Ghungoor."
+    },
+    {
+      "district": "Sivasagar",
+      "image_source": "Sentinel-1",
+      "captured_at": "2026-07-29T04:50:00+05:30",
+      "flood_extent_sq_km": 19.8,
+      "change_from_previous_capture_percent": 3.5,
+      "affected_villages_detected": 11,
+      "analysis_summary": "Dikhow river channel widening slightly near Nazira, no major overflow detected yet."
+    }
+  ]
+}

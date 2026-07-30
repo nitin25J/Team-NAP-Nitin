@@ -1,0 +1,29 @@
+{
+  "state": "Assam",
+  "last_updated": "2026-07-29T12:00:00+05:30",
+  "overview_stats": {
+    "active_alerts": 4,
+    "districts_affected": 6,
+    "total_population_affected": 184500,
+    "relief_camps_active": 96,
+    "rescue_teams_deployed": 34,
+    "hospitals_on_standby": 18,
+    "current_risk_level": "High"
+  },
+  "top_affected_districts": [
+    { "district": "Dibrugarh", "risk_level": "High", "affected_population": 41200 },
+    { "district": "Jorhat", "risk_level": "Severe", "affected_population": 38900 },
+    { "district": "Cachar", "risk_level": "Moderate", "affected_population": 34700 }
+  ],
+  "quick_links": [
+    { "label": "Live Flood Map", "endpoint": "/api/disaster-map" },
+    { "label": "Weather Forecast", "endpoint": "/api/weather" },
+    { "label": "AI Risk Prediction", "endpoint": "/api/prediction" },
+    { "label": "Rescue Operations", "endpoint": "/api/rescue" }
+  ],
+  "recent_activity": [
+    { "time": "2026-07-29T11:40:00+05:30", "event": "Embankment breach reported near Majuli, Jorhat district" },
+    { "time": "2026-07-29T09:15:00+05:30", "event": "Relief camp opened at Nazira, Sivasagar district" },
+    { "time": "2026-07-29T07:50:00+05:30", "event": "NDRF team deployed to Dibrugarh town" }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "incidents": [
+    {
+      "id": "INC-3001",
+      "type": "Flood",
+      "district": "Dibrugarh",
+      "location": "Chabua Circle",
+      "reported_at": "2026-07-29T05:20:00+05:30",
+      "severity": "High",
+      "people_affected": 5400,
+      "status": "Ongoing",
+      "reported_by": "District Administration"
+    },
+    {
+      "id": "INC-3002",
+      "type": "Embankment Breach",
+      "district": "Jorhat",
+      "location": "Majuli Sector 3",
+      "reported_at": "2026-07-28T21:50:00+05:30",
+      "severity": "Severe",
+      "people_affected": 8700,
+      "status": "Ongoing",
+      "reported_by": "Water Resources Department"
+    },
+    {
+      "id": "INC-3003",
+      "type": "Waterlogging",
+      "district": "Cachar",
+      "location": "Silchar Town, Ward 12",
+      "reported_at": "2026-07-29T08:10:00+05:30",
+      "severity": "Moderate",
+      "people_affected": 2100,
+      "status": "Under Control",
+      "reported_by": "Municipal Corporation"
+    },
+    {
+      "id": "INC-3004",
+      "type": "Landslide",
+      "district": "Golaghat",
+      "location": "Kohora hill road",
+      "reported_at": "2026-07-27T13:30:00+05:30",
+      "severity": "Moderate",
+      "people_affected": 320,
+      "status": "Resolved",
+      "reported_by": "Local Police Station"
+    },
+    {
+      "id": "INC-3005",
+      "type": "Riverbank Erosion",
+      "district": "Sivasagar",
+      "location": "Nazira Ghat",
+      "reported_at": "2026-07-26T10:00:00+05:30",
+      "severity": "Low",
+      "people_affected": 150,
+      "status": "Monitoring",
+      "reported_by": "Village Panchayat"
+    }
+  ]
+}

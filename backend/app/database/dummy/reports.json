@@ -1,0 +1,48 @@
+{
+  "citizen_reports": [
+    {
+      "id": "RPT-501",
+      "reporter_name": "Anonymous",
+      "district": "Dibrugarh",
+      "location": "Chabua Circle",
+      "type": "Flood",
+      "description": "Water entering homes near Chabua market area, need immediate boats for evacuation.",
+      "submitted_at": "2026-07-29T06:45:00+05:30",
+      "status": "Verified",
+      "media_attached": true
+    },
+    {
+      "id": "RPT-502",
+      "reporter_name": "Rina Bora",
+      "district": "Jorhat",
+      "location": "Majuli Sector 3",
+      "type": "Embankment Breach",
+      "description": "Embankment near our village has broken, water rushing in fast, several families stranded on rooftops.",
+      "submitted_at": "2026-07-28T22:05:00+05:30",
+      "status": "Verified",
+      "media_attached": true
+    },
+    {
+      "id": "RPT-503",
+      "reporter_name": "Anonymous",
+      "district": "Cachar",
+      "location": "Silchar Ward 12",
+      "type": "Waterlogging",
+      "description": "Roads submerged, unable to reach main hospital road, requesting alternate route info.",
+      "submitted_at": "2026-07-29T08:30:00+05:30",
+      "status": "Pending Review",
+      "media_attached": false
+    },
+    {
+      "id": "RPT-504",
+      "reporter_name": "Bikash Das",
+      "district": "Golaghat",
+      "location": "Kohora hill road",
+      "type": "Landslide",
+      "description": "Small landslide blocked road partially, no injuries reported but road is risky.",
+      "submitted_at": "2026-07-27T13:45:00+05:30",
+      "status": "Resolved",
+      "media_attached": true
+    }
+  ]
+}
