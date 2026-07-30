@@ -1,4 +1,4 @@
-# NexusDR
+# VARUNA AI
 
 ## AI Disaster Intelligence Platform
 
