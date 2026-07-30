@@ -1,0 +1,59 @@
+{
+  "rescue_teams": [
+    {
+      "id": "TEAM-01",
+      "name": "NDRF 1st Battalion Alpha",
+      "type": "NDRF",
+      "district": "Dibrugarh",
+      "personnel_count": 32,
+      "boats_assigned": 8,
+      "status": "Deployed",
+      "current_operation": "Evacuation at Chabua Circle",
+      "contact": "1070"
+    },
+    {
+      "id": "TEAM-02",
+      "name": "SDRF Assam Unit 3",
+      "type": "SDRF",
+      "district": "Jorhat",
+      "personnel_count": 28,
+      "boats_assigned": 10,
+      "status": "Deployed",
+      "current_operation": "Embankment breach rescue, Majuli Sector 3",
+      "contact": "1070"
+    },
+    {
+      "id": "TEAM-03",
+      "name": "Assam Fire and Emergency Services Cachar",
+      "type": "State Fire Service",
+      "district": "Cachar",
+      "personnel_count": 20,
+      "boats_assigned": 5,
+      "status": "Standby",
+      "current_operation": null,
+      "contact": "101"
+    },
+    {
+      "id": "TEAM-04",
+      "name": "Civil Defence Golaghat Unit",
+      "type": "Civil Defence",
+      "district": "Golaghat",
+      "personnel_count": 15,
+      "boats_assigned": 2,
+      "status": "Standby",
+      "current_operation": null,
+      "contact": "1077"
+    },
+    {
+      "id": "TEAM-05",
+      "name": "NDRF 1st Battalion Bravo",
+      "type": "NDRF",
+      "district": "Sivasagar",
+      "personnel_count": 24,
+      "boats_assigned": 6,
+      "status": "En Route",
+      "current_operation": "Monitoring Dikhow river rise",
+      "contact": "1070"
+    }
+  ]
+}

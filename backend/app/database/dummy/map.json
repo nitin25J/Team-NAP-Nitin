@@ -1,0 +1,50 @@
+{
+  "state": "Assam",
+  "map_center": { "lat": 26.2006, "lng": 92.9376 },
+  "zoom_level": 7,
+  "layers": ["flood_zones", "river_levels", "relief_camps", "hospitals", "rescue_teams"],
+  "flood_zones": [
+    {
+      "district": "Dibrugarh",
+      "risk_level": "High",
+      "coordinates": { "lat": 27.4728, "lng": 94.9120 },
+      "affected_radius_km": 12
+    },
+    {
+      "district": "Jorhat",
+      "risk_level": "Severe",
+      "coordinates": { "lat": 26.7509, "lng": 94.2037 },
+      "affected_radius_km": 15
+    },
+    {
+      "district": "Cachar",
+      "risk_level": "Moderate",
+      "coordinates": { "lat": 24.8333, "lng": 92.7789 },
+      "affected_radius_km": 9
+    },
+    {
+      "district": "Golaghat",
+      "risk_level": "Low",
+      "coordinates": { "lat": 26.5100, "lng": 93.9600 },
+      "affected_radius_km": 5
+    },
+    {
+      "district": "Sivasagar",
+      "risk_level": "Moderate",
+      "coordinates": { "lat": 26.9850, "lng": 94.6389 },
+      "affected_radius_km": 7
+    },
+    {
+      "district": "Guwahati",
+      "risk_level": "Low",
+      "coordinates": { "lat": 26.1445, "lng": 91.7362 },
+      "affected_radius_km": 4
+    }
+  ],
+  "river_markers": [
+    { "river": "Brahmaputra", "district": "Dibrugarh", "level_m": 105.8, "danger_level_m": 104.5, "status": "Above Danger" },
+    { "river": "Brahmaputra", "district": "Jorhat", "level_m": 87.3, "danger_level_m": 86.0, "status": "Above Danger" },
+    { "river": "Barak", "district": "Cachar", "level_m": 22.4, "danger_level_m": 23.5, "status": "Below Danger" },
+    { "river": "Dikhow", "district": "Sivasagar", "level_m": 91.1, "danger_level_m": 92.0, "status": "Below Danger" }
+  ]
+}

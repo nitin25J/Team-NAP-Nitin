@@ -1,0 +1,76 @@
+{
+  "hospitals": [
+    {
+      "id": "HOSP-001",
+      "name": "Gauhati Medical College and Hospital",
+      "district": "Guwahati",
+      "address": "Bhangagarh, Guwahati, Assam",
+      "type": "Government",
+      "beds_total": 1200,
+      "beds_available": 214,
+      "emergency_contact": "0361-2529457",
+      "flood_response_ready": true,
+      "coordinates": { "lat": 26.1584, "lng": 91.7458 }
+    },
+    {
+      "id": "HOSP-002",
+      "name": "Assam Medical College and Hospital",
+      "district": "Dibrugarh",
+      "address": "Barbari, Dibrugarh, Assam",
+      "type": "Government",
+      "beds_total": 950,
+      "beds_available": 87,
+      "emergency_contact": "0373-2300106",
+      "flood_response_ready": true,
+      "coordinates": { "lat": 27.4728, "lng": 94.9120 }
+    },
+    {
+      "id": "HOSP-003",
+      "name": "Jorhat Medical College and Hospital",
+      "district": "Jorhat",
+      "address": "Barbheta, Jorhat, Assam",
+      "type": "Government",
+      "beds_total": 750,
+      "beds_available": 42,
+      "emergency_contact": "0376-2340900",
+      "flood_response_ready": true,
+      "coordinates": { "lat": 26.7509, "lng": 94.2037 }
+    },
+    {
+      "id": "HOSP-004",
+      "name": "Silchar Medical College and Hospital",
+      "district": "Cachar",
+      "address": "Ghungoor Road, Silchar, Assam",
+      "type": "Government",
+      "beds_total": 900,
+      "beds_available": 63,
+      "emergency_contact": "03842-260204",
+      "flood_response_ready": true,
+      "coordinates": { "lat": 24.8333, "lng": 92.7789 }
+    },
+    {
+      "id": "HOSP-005",
+      "name": "Golaghat Civil Hospital",
+      "district": "Golaghat",
+      "address": "Golaghat Town, Assam",
+      "type": "Government",
+      "beds_total": 300,
+      "beds_available": 55,
+      "emergency_contact": "03774-280234",
+      "flood_response_ready": false,
+      "coordinates": { "lat": 26.5100, "lng": 93.9600 }
+    },
+    {
+      "id": "HOSP-006",
+      "name": "Sivasagar District Civil Hospital",
+      "district": "Sivasagar",
+      "address": "S.T. Road, Sivasagar, Assam",
+      "type": "Government",
+      "beds_total": 350,
+      "beds_available": 71,
+      "emergency_contact": "03772-222222",
+      "flood_response_ready": true,
+      "coordinates": { "lat": 26.9850, "lng": 94.6389 }
+    }
+  ]
+}

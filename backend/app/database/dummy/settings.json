@@ -1,0 +1,36 @@
+{
+  "system": {
+    "platform_name": "Varuna AI",
+    "default_state": "Assam",
+    "language": "en",
+    "timezone": "Asia/Kolkata",
+    "units": {
+      "rainfall": "mm",
+      "river_level": "meters",
+      "temperature": "celsius"
+    }
+  },
+  "notification_preferences": {
+    "sms_alerts": true,
+    "email_alerts": true,
+    "push_notifications": true,
+    "alert_severity_threshold": "Moderate"
+  },
+  "data_sources": {
+    "weather": "India Meteorological Department (IMD)",
+    "river_levels": "Central Water Commission (CWC)",
+    "satellite": "ISRO Bhuvan / Sentinel Hub",
+    "disaster_coordination": "Assam State Disaster Management Authority (ASDMA)"
+  },
+  "user_roles": [
+    { "role": "Admin", "permissions": ["read", "write", "delete", "manage_users"] },
+    { "role": "District Officer", "permissions": ["read", "write"] },
+    { "role": "Citizen", "permissions": ["read", "report_incident"] }
+  ],
+  "refresh_intervals": {
+    "dashboard_seconds": 60,
+    "weather_seconds": 900,
+    "river_levels_seconds": 600,
+    "satellite_seconds": 3600
+  }
+}

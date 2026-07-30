@@ -1,0 +1,55 @@
+{
+  "bot_name": "Varuna Assistant",
+  "language_support": ["English", "Assamese", "Hindi"],
+  "intents": [
+    {
+      "intent": "flood_status_query",
+      "sample_queries": [
+        "What is the flood situation in Dibrugarh?",
+        "Is Jorhat flooded right now?",
+        "Current flood level in Cachar"
+      ],
+      "response_template": "As of the latest update, {district} is experiencing {severity} flood conditions with the {river} river at {status} level."
+    },
+    {
+      "intent": "nearest_shelter",
+      "sample_queries": [
+        "Where is the nearest relief camp?",
+        "Find shelter near me in Golaghat",
+        "Nearest evacuation center"
+      ],
+      "response_template": "The nearest relief shelter to your location in {district} is {shelter_name}, located at {address}."
+    },
+    {
+      "intent": "emergency_contact",
+      "sample_queries": [
+        "Emergency helpline number",
+        "How do I contact rescue teams?",
+        "Call for help"
+      ],
+      "response_template": "You can reach the State Emergency Operations Centre at 1070 or Assam Flood Helpline at 1077."
+    },
+    {
+      "intent": "weather_forecast_query",
+      "sample_queries": [
+        "Will it rain tomorrow in Sivasagar?",
+        "Weather forecast for Guwahati"
+      ],
+      "response_template": "The forecast for {district} shows {condition} with expected rainfall of {rainfall_mm}mm over the next 24 hours."
+    }
+  ],
+  "conversation_log_sample": [
+    {
+      "session_id": "SESS-8841",
+      "user_message": "Is there flooding in Dibrugarh today?",
+      "bot_response": "Yes, Dibrugarh is currently under a High severity flood alert with the Brahmaputra river above danger level. Please avoid low-lying areas.",
+      "timestamp": "2026-07-29T10:12:00+05:30"
+    },
+    {
+      "session_id": "SESS-8842",
+      "user_message": "Nearest hospital in Cachar",
+      "bot_response": "Silchar Medical College and Hospital is the nearest major facility, located on Ghungoor Road, Silchar.",
+      "timestamp": "2026-07-29T10:20:00+05:30"
+    }
+  ]
+}

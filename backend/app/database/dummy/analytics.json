@@ -1,0 +1,34 @@
+{
+  "state": "Assam",
+  "period": "2026-07-01 to 2026-07-29",
+  "summary": {
+    "total_incidents_reported": 342,
+    "total_people_affected": 184500,
+    "total_relief_camps": 96,
+    "total_rescue_operations": 128,
+    "total_casualties": 14,
+    "total_missing": 6,
+    "total_livestock_affected": 22300
+  },
+  "district_wise_impact": [
+    { "district": "Dibrugarh", "affected_population": 41200, "villages_affected": 58, "relief_camps": 21 },
+    { "district": "Jorhat", "affected_population": 38900, "villages_affected": 49, "relief_camps": 18 },
+    { "district": "Cachar", "affected_population": 34700, "villages_affected": 44, "relief_camps": 20 },
+    { "district": "Golaghat", "affected_population": 22100, "villages_affected": 31, "relief_camps": 12 },
+    { "district": "Sivasagar", "affected_population": 26400, "villages_affected": 36, "relief_camps": 15 },
+    { "district": "Guwahati", "affected_population": 21200, "villages_affected": 19, "relief_camps": 10 }
+  ],
+  "monthly_trend": [
+    { "month": "April", "incidents": 12, "affected": 8200 },
+    { "month": "May", "incidents": 34, "affected": 26100 },
+    { "month": "June", "incidents": 121, "affected": 78400 },
+    { "month": "July", "incidents": 175, "affected": 184500 }
+  ],
+  "disaster_type_distribution": {
+    "flood": 61.2,
+    "heavy_rainfall": 21.5,
+    "landslide": 9.8,
+    "riverbank_erosion": 5.1,
+    "cyclone_effect": 2.4
+  }
+}
