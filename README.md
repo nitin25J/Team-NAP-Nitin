@@ -18,11 +18,11 @@ The current prototype focuses on flood disaster management in Assam and is desig
 
 ## Live Demo
 
-**Frontend:** https://your-frontend.vercel.app
+**Frontend:** https://varuna-ai.vercel.app/
 
-**Backend API:** https://your-backend.onrender.com
+**Backend API:** https://varuna-ai.onrender.com/
 
-**API Documentation (Swagger):** https://your-backend.onrender.com/docs
+**API Documentation (Swagger):** https://varuna-ai.onrender.com/docs
 
 ---
 
