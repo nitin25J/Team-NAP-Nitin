@@ -1,0 +1,970 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varuna AI — National Disaster Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+/* ============ DESIGN TOKENS ============ */
+:root{
+  --ink:#070F17; --panel:#0E1B26; --surface:#122130; --surface-hi:#1A2E3E;
+  --border:#20364A; --border-hi:#2C4863;
+  --text:#EAF3F4; --text-dim:#93AAB6; --text-faint:#5C7484;
+
+  --hydro:#17C9C0; --hydro-2:#0B8C86; --hydro-dim:#0E2B2C;
+  --alert:#FF6A4D; --alert-dim:#3A1B14;
+  --warn:#F5B94D; --warn-dim:#3A2C10;
+  --safe:#3ED598; --safe-dim:#0F3327;
+  --blue:#5B9CFF; --blue-dim:#122A44;
+  --violet:#9B7BFF; --violet-dim:#221A3A;
+
+  --r-lg:18px; --r-md:14px; --r-sm:10px;
+  --glass: rgba(19,36,49,0.62);
+  --shadow: 0 8px 30px rgba(0,0,0,0.35);
+}
+html[data-theme="light"]{
+  --ink:#EEF3F5; --panel:#FFFFFF; --surface:#FFFFFF; --surface-hi:#F3F7F8;
+  --border:#DCE6E9; --border-hi:#C7D5D9;
+  --text:#122430; --text-dim:#54707C; --text-faint:#8AA0AA;
+  --glass: rgba(255,255,255,0.72);
+  --shadow: 0 8px 30px rgba(20,50,60,0.08);
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--ink);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;transition:background .3s,color .3s;}
+h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:4px;}
+button{font-family:inherit;}
+a{color:inherit;}
+
+/* ============ APP SHELL ============ */
+.app{display:grid;grid-template-columns:240px 1fr;grid-template-rows:64px 1fr;height:100vh;transition:grid-template-columns .25s ease;}
+.app.collapsed{grid-template-columns:76px 1fr;}
+
+/* Topbar */
+.topbar{grid-column:1/3;background:var(--glass);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 22px;gap:18px;z-index:20;}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Space Grotesk';font-weight:700;font-size:18px;letter-spacing:.9px;white-space:nowrap;}
+.brand .mark{width:34px;height:34px;border-radius:10px;background:#0A1A1C;border:1px solid #1E4640;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px rgba(20,230,211,.08) inset, 0 4px 14px rgba(23,201,192,.18);}
+.collapse-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.collapse-btn:hover{color:var(--hydro);border-color:var(--hydro);}
+
+.searchbar{flex:1;max-width:380px;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 12px;color:var(--text-faint);margin-left:8px;}
+.searchbar input{background:transparent;border:none;outline:none;color:var(--text);font-size:12.5px;width:100%;}
+.searchbar i{font-size:15px;}
+
+.topbar-right{display:flex;align-items:center;gap:14px;margin-left:auto;}
+.live-pill{display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--text-dim);background:var(--surface);border:1px solid var(--border);padding:6px 12px;border-radius:20px;}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--alert);position:relative;flex-shrink:0;}
+.pulse-dot::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:1.5px solid var(--alert);animation:pulse 1.8s ease-out infinite;}
+@keyframes pulse{0%{transform:scale(0.4);opacity:1;}100%{transform:scale(1.9);opacity:0;}}
+
+.icon-btn{position:relative;width:38px;height:38px;border-radius:10px;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:.15s;}
+.icon-btn:hover{color:var(--hydro);border-color:var(--hydro);background:var(--hydro-dim);}
+.icon-btn .dot{position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--alert);border:2px solid var(--panel);}
+
+.theme-toggle{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3px;gap:2px;}
+.theme-toggle button{width:30px;height:26px;border-radius:16px;border:none;background:transparent;color:var(--text-faint);cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
+.theme-toggle button.active{background:var(--hydro-dim);color:var(--hydro);}
+
+.profile{display:flex;align-items:center;gap:10px;padding:5px 12px 5px 5px;border-radius:24px;background:var(--surface);border:1px solid var(--border);cursor:pointer;}
+.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(155deg,var(--violet),#5B3FC9);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px;}
+.profile .pname{font-size:12px;font-weight:600;line-height:1.1;}
+.profile .prole{font-size:10.5px;color:var(--text-faint);}
+
+/* Sidebar */
+.rail{background:var(--panel);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:16px 12px;gap:2px;overflow-y:auto;}
+.rail-section-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:var(--text-faint);padding:14px 10px 6px;}
+.app.collapsed .rail-section-lbl{opacity:0;height:6px;overflow:hidden;padding:6px 0 0;}
+.rail button.nav-item{display:flex;align-items:center;gap:12px;width:100%;padding:10px 12px;border-radius:11px;border:none;background:transparent;color:var(--text-dim);cursor:pointer;font-size:13px;font-weight:500;text-align:left;white-space:nowrap;overflow:hidden;transition:.15s;}
+.rail button.nav-item i{font-size:18px;flex-shrink:0;width:18px;text-align:center;}
+.rail button.nav-item:hover{background:var(--surface);color:var(--text);}
+.rail button.nav-item.active{background:linear-gradient(90deg,var(--hydro-dim),transparent);color:var(--hydro);box-shadow:inset 3px 0 0 var(--hydro);}
+.app.collapsed .rail button.nav-item span{display:none;}
+.app.collapsed .rail button.nav-item{justify-content:center;}
+
+/* Main canvas */
+.main{overflow:auto;padding:24px 28px 60px;}
+.view{display:none;animation:fadeUp .35s ease;}
+.view.active{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+.view-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.view-head h1{font-size:22px;font-weight:600;margin:0;letter-spacing:-.2px;}
+.view-head p{color:var(--text-dim);font-size:12.5px;margin:5px 0 0;}
+.eyebrow{font-size:10.5px;text-transform:uppercase;letter-spacing:1px;color:var(--hydro);font-weight:600;margin-bottom:4px;}
+
+.btn{background:var(--surface);border:1px solid var(--border-hi);color:var(--text);padding:9px 15px;border-radius:10px;font-size:12.5px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:.15s;font-weight:500;}
+.btn:hover{background:var(--surface-hi);transform:translateY(-1px);}
+.btn.primary{background:linear-gradient(135deg,var(--hydro),var(--hydro-2));border-color:transparent;color:#04211f;font-weight:600;box-shadow:0 4px 16px rgba(23,201,192,.28);}
+.btn.primary:hover{filter:brightness(1.08);}
+.btn.danger{background:linear-gradient(135deg,var(--alert),#C8402A);border-color:transparent;color:#2b0d0a;font-weight:600;}
+.btn.ghost{background:transparent;border-color:var(--border);}
+
+/* Glass card base */
+.card{background:var(--glass);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;box-shadow:var(--shadow);transition:transform .2s,box-shadow .2s,border-color .2s;}
+.card.hoverable:hover{transform:translateY(-3px);border-color:var(--border-hi);}
+.grid{display:grid;gap:16px;}
+.grid-4{grid-template-columns:repeat(4,1fr);}
+.grid-3{grid-template-columns:repeat(3,1fr);}
+.grid-2{grid-template-columns:repeat(2,1fr);}
+@media(max-width:1300px){.grid-4{grid-template-columns:repeat(2,1fr);}.grid-3{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:760px){.grid-4,.grid-3,.grid-2{grid-template-columns:1fr;}}
+
+/* ============ COMMAND RING (signature element) ============ */
+.hero{display:grid;grid-template-columns:230px 1fr;gap:24px;margin-bottom:22px;align-items:stretch;}
+@media(max-width:900px){.hero{grid-template-columns:1fr;}}
+.ring-card{display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.ring-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 20%,rgba(23,201,192,.16),transparent 65%);}
+.ring-wrap{position:relative;width:168px;height:168px;}
+.ring-wrap svg{width:100%;height:100%;transform:rotate(-90deg);}
+.ring-track{fill:none;stroke:var(--border);stroke-width:10;}
+.ring-fill{fill:none;stroke:url(#ringGrad);stroke-width:10;stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1);filter:drop-shadow(0 0 8px rgba(255,106,77,.45));}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ring-center .num{font-family:'Space Grotesk';font-size:38px;font-weight:700;color:var(--alert);line-height:1;}
+.ring-center .lbl{font-size:10px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.8px;margin-top:5px;}
+.ring-foot{margin-top:14px;text-align:center;}
+.ring-foot .t{font-size:12.5px;font-weight:600;}
+.ring-foot .s{font-size:10.5px;color:var(--text-faint);margin-top:2px;}
+
+.hero-kpis{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,1fr);gap:14px;}
+.kpi{position:relative;overflow:hidden;}
+.kpi .ki-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.kpi .ki-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.kpi .ki-delta{font-size:10.5px;font-weight:600;padding:2px 7px;border-radius:6px;}
+.kpi .ki-delta.up{color:var(--alert);background:var(--alert-dim);}
+.kpi .ki-delta.down{color:var(--safe);background:var(--safe-dim);}
+.kpi .ki-val{font-family:'Space Grotesk';font-size:24px;font-weight:700;}
+.kpi .ki-lbl{font-size:11px;color:var(--text-dim);margin-top:3px;}
+
+/* Section label */
+.section-lbl{display:flex;align-items:center;gap:10px;margin:28px 0 14px;}
+.section-lbl .n{width:24px;height:24px;border-radius:7px;background:var(--hydro-dim);color:var(--hydro);font-family:'IBM Plex Mono';font-size:12px;display:flex;align-items:center;justify-content:center;font-weight:600;}
+.section-lbl h3{margin:0;font-size:15px;}
+.section-lbl p{margin:1px 0 0;font-size:11.5px;color:var(--text-faint);}
+
+/* ============ LIVE MAP VIEW ============ */
+.map-shell{display:grid;grid-template-columns:1fr 300px;gap:16px;}
+.map-col{display:flex;flex-direction:column;gap:14px;}
+#liveMap{height:520px;border-radius:var(--r-lg);border:1px solid var(--border);}
+.layer-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:11.5px;color:var(--text-dim);cursor:pointer;user-select:none;transition:.15s;}
+.chip .dotc{width:8px;height:8px;border-radius:50%;}
+.chip.on{border-color:var(--hydro);color:var(--text);background:var(--hydro-dim);}
+.chip:hover{border-color:var(--border-hi);}
+
+/* Timeline */
+.timeline{display:flex;align-items:center;position:relative;padding:22px 6px 6px;}
+.tl-step{flex:1;text-align:center;position:relative;}
+.tl-step::before{content:'';position:absolute;top:-16px;left:0;right:0;height:2px;background:var(--border);}
+.tl-step:first-child::before{left:50%;}
+.tl-step:last-child::before{right:50%;}
+.tl-step.done::before{background:var(--hydro);}
+.tl-dot{width:13px;height:13px;border-radius:50%;background:var(--border);border:2px solid var(--panel);position:absolute;top:-22px;left:50%;transform:translateX(-50%);}
+.tl-step.done .tl-dot{background:var(--hydro);box-shadow:0 0 0 3px var(--hydro-dim);}
+.tl-step.active .tl-dot{background:var(--alert);box-shadow:0 0 0 4px var(--alert-dim);}
+.tl-label{font-size:11px;color:var(--text-dim);margin-top:4px;}
+.tl-step.done .tl-label,.tl-step.active .tl-label{color:var(--text);font-weight:600;}
+.tl-time{font-size:9.5px;color:var(--text-faint);font-family:'IBM Plex Mono';margin-top:2px;}
+
+/* AI drawer */
+.ai-panel{display:flex;flex-direction:column;gap:12px;}
+.ai-head{display:flex;align-items:center;gap:10px;}
+.ai-avatar{width:36px;height:36px;border-radius:10px;background:linear-gradient(155deg,var(--violet),#5B3FC9);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.confidence-bar{height:6px;background:var(--surface-hi);border-radius:3px;overflow:hidden;margin-top:6px;}
+.confidence-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--hydro),var(--safe));}
+.ai-rec{display:flex;gap:9px;font-size:12px;color:var(--text-dim);padding:8px 0;border-bottom:1px solid var(--border);}
+.ai-rec:last-child{border-bottom:none;}
+.ai-rec i{color:var(--hydro);font-size:15px;margin-top:1px;flex-shrink:0;}
+
+/* ============ RESOURCE / HOSPITAL / RESCUE cards ============ */
+.res-card{}
+.res-card .rc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.res-card .rc-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.progress{height:7px;background:var(--surface-hi);border-radius:4px;overflow:hidden;margin:10px 0 6px;}
+.progress-fill{height:100%;border-radius:4px;}
+.res-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--text-faint);}
+.status-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;font-size:12.8px;}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-faint);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--border);}
+td{padding:12px;border-bottom:1px solid var(--border);vertical-align:middle;}
+tr:hover td{background:var(--surface);}
+.tag{font-size:10px;padding:3px 9px;border-radius:6px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;}
+.tag.critical{background:var(--alert-dim);color:#ff9683;}
+.tag.moderate{background:var(--warn-dim);color:#f2c363;}
+.tag.ok{background:var(--safe-dim);color:#7fe0af;}
+.mini-bar{width:90px;height:6px;background:var(--surface-hi);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:8px;}
+.mini-fill{height:100%;border-radius:3px;}
+
+/* Alerts */
+.alert-card{position:relative;border-left:4px solid var(--alert);}
+.alert-card.warning{border-left-color:var(--warn);}
+.alert-top{display:flex;justify-content:space-between;align-items:flex-start;}
+.alert-title{font-size:14.5px;font-weight:600;}
+.alert-meta{display:flex;gap:16px;margin-top:10px;font-size:11.5px;color:var(--text-dim);flex-wrap:wrap;}
+.alert-meta b{color:var(--text);font-family:'IBM Plex Mono';}
+.countdown{font-family:'IBM Plex Mono';font-size:15px;color:var(--alert);font-weight:600;background:var(--alert-dim);padding:5px 11px;border-radius:8px;}
+
+/* Citizen reports */
+.report-card{}
+.report-media{height:140px;border-radius:12px;background:linear-gradient(135deg,var(--surface-hi),var(--surface));display:flex;align-items:center;justify-content:center;color:var(--text-faint);font-size:26px;margin-bottom:12px;position:relative;overflow:hidden;}
+.verified-badge{position:absolute;top:8px;right:8px;background:var(--safe-dim);color:var(--safe);font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:6px;display:flex;align-items:center;gap:4px;}
+.report-user{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.report-user .ru-avatar{width:26px;height:26px;border-radius:50%;background:var(--surface-hi);display:flex;align-items:center;justify-content:center;font-size:12px;}
+
+/* Analytics */
+.chart-card canvas{max-height:220px;}
+
+/* AI feature grid */
+.feat-card{display:flex;flex-direction:column;gap:8px;}
+.feat-icon{width:42px;height:42px;border-radius:11px;background:var(--hydro-dim);color:var(--hydro);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:4px;}
+.feat-title{font-size:13.5px;font-weight:600;}
+.feat-desc{font-size:11.5px;color:var(--text-dim);line-height:1.5;}
+
+/* toast */
+.toast-wrap{position:fixed;bottom:22px;right:22px;display:flex;flex-direction:column;gap:10px;z-index:100;}
+.toast{background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:12.5px;box-shadow:var(--shadow);animation:toastIn .3s ease;min-width:260px;}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+.toast i{color:var(--hydro);font-size:17px;}
+
+/* skeleton */
+.skeleton{background:linear-gradient(90deg,var(--surface) 25%,var(--surface-hi) 50%,var(--surface) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:8px;}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+/* responsive */
+@media(max-width:1100px){.map-shell{grid-template-columns:1fr;}.hero-kpis{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:900px){.app{grid-template-columns:1fr;grid-template-rows:64px 1fr;}.rail{position:fixed;left:-260px;top:64px;bottom:0;width:240px;z-index:30;transition:left .25s;}.app.mobile-open .rail{left:0;}}
+</style>
+</head>
+<body>
+<div class="app" id="appShell">
+
+  <div class="topbar">
+    <button class="collapse-btn" id="collapseBtn"><i class="ti ti-layout-sidebar-left-collapse"></i></button>
+    <div class="brand"><div class="mark"><svg viewBox="0 0 34 34" width="21" height="21" fill="none"><path d="M17 3 27.5 7.2v7.6c0 7.6-4.6 11.9-10.5 15.7C11 26.7 6.5 22.4 6.5 14.8V7.2z" fill="none" stroke="#14E6D3" stroke-width="1.5"/><circle cx="17" cy="14.5" r="4.3" fill="none" stroke="#14E6D3" stroke-width="1.3"/><circle cx="17" cy="14.5" r="1.5" fill="#14E6D3"/><path d="M17 6.7v3M17 19.6v2.9M9.9 14.5h2.8M21.3 14.5h2.8" stroke="#14E6D3" stroke-width="1.1" stroke-linecap="round"/><path d="M12.6 22.8c1.4 1.5 2.8 2.4 4.4 3 1.6-.6 3-1.5 4.4-3" stroke="#8CF5EA" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></div>Varuna AI</div>
+    <div class="searchbar"><i class="ti ti-search"></i><input placeholder="Search districts, incidents, units…"></div>
+    <div class="topbar-right">
+      <div class="live-pill"><span class="pulse-dot"></span>LIVE · ASSAM COMMAND</div>
+      <div class="theme-toggle">
+        <button class="active" data-theme="dark"><i class="ti ti-moon"></i></button>
+        <button data-theme="light"><i class="ti ti-sun"></i></button>
+      </div>
+      <button class="icon-btn"><i class="ti ti-bell"></i><span class="dot"></span></button>
+      <button class="icon-btn" id="aiAssistantBtn"><i class="ti ti-sparkles"></i></button>
+      <div class="profile">
+        <div class="avatar">NS</div>
+        <div><div class="pname">Nitin Sharma</div><div class="prole" title="Director General, National Disaster Response Force">Director General, NDRF</div></div>
+        <i class="ti ti-chevron-down" style="font-size:14px;color:var(--text-faint)"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail" id="rail">
+    <div class="rail-section-lbl">Command</div>
+    <button class="nav-item active" data-view="dashboard"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></button>
+    <button class="nav-item" data-view="map"><i class="ti ti-map-2"></i><span>Live Disaster Map</span></button>
+    <button class="nav-item" data-view="ai"><i class="ti ti-brain"></i><span>AI Risk Prediction</span></button>
+
+    <div class="rail-section-lbl">Response</div>
+    <button class="nav-item" data-view="resources"><i class="ti ti-package"></i><span>Resource Management</span></button>
+    <button class="nav-item" data-view="hospitals"><i class="ti ti-building-hospital"></i><span>Hospitals</span></button>
+    <button class="nav-item" data-view="rescue"><i class="ti ti-shield"></i><span>Rescue Teams</span></button>
+    <button class="nav-item" data-view="alerts"><i class="ti ti-bell-ringing"></i><span>Emergency Alerts</span></button>
+
+    <div class="rail-section-lbl">Intelligence</div>
+    <button class="nav-item" data-view="satellite"><i class="ti ti-satellite"></i><span>Satellite Analysis</span></button>
+    <button class="nav-item" data-view="reports"><i class="ti ti-file-text"></i><span>Citizen Reports</span></button>
+    <button class="nav-item" data-view="analytics"><i class="ti ti-chart-bar"></i><span>Analytics</span></button>
+
+    <div class="rail-section-lbl">System</div>
+    <button class="nav-item" data-view="settings"><i class="ti ti-settings"></i><span>Settings</span></button>
+  </div>
+
+  <div class="main">
+
+    <!-- ============ DASHBOARD ============ -->
+    <div class="view active" id="view-dashboard">
+      <div class="view-head">
+        <div><div class="eyebrow">Executive overview</div><h1>National situation summary</h1><p>Real-time posture across all monitored sectors · updated every 60s</p></div>
+        <button class="btn primary"><i class="ti ti-refresh"></i>Refresh</button>
+      </div>
+
+      <div class="hero">
+        <div class="card ring-card">
+          <div class="ring-wrap">
+            <svg viewBox="0 0 160 160">
+              <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6A4D"/><stop offset="100%" stop-color="#F5B94D"/></linearGradient></defs>
+              <circle class="ring-track" cx="80" cy="80" r="70"/>
+              <circle class="ring-fill" id="ringFill" cx="80" cy="80" r="70"/>
+            </svg>
+            <div class="ring-center"><div class="num" id="ringNum">0</div><div class="lbl">Severity /100</div></div>
+          </div>
+          <div class="ring-foot"><div class="t">Elevated risk posture</div><div class="s">3 active disasters · Assam sector</div></div>
+        </div>
+
+        <div class="hero-kpis">
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--alert-dim);color:var(--alert)"><i class="ti ti-alert-triangle"></i></div><span class="ki-delta up">+1</span></div>
+            <div class="ki-val" data-count="3">0</div><div class="ki-lbl">Active disasters</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--warn-dim);color:var(--warn)"><i class="ti ti-users-group"></i></div><span class="ki-delta up">+8%</span></div>
+            <div class="ki-val" data-count="445000">0</div><div class="ki-lbl">Population at risk</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-truck"></i></div><span class="ki-delta down">+12</span></div>
+            <div class="ki-val" data-count="86">0</div><div class="ki-lbl">Rescue teams deployed</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--safe-dim);color:var(--safe)"><i class="ti ti-home"></i></div><span class="ki-delta down">+5</span></div>
+            <div class="ki-val" data-count="109">0</div><div class="ki-lbl">Shelters available</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--blue-dim);color:var(--blue)"><i class="ti ti-heartbeat"></i></div><span class="ki-delta up">71%</span></div>
+            <div class="ki-val" data-count="71" data-suffix="%">0</div><div class="ki-lbl">Hospital occupancy</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--violet-dim);color:var(--violet)"><i class="ti ti-cloud-storm"></i></div><span class="ki-delta up">4 new</span></div>
+            <div class="ki-val" data-count="12">0</div><div class="ki-lbl">Weather alerts</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-gauge"></i></div><span class="ki-delta down">-3%</span></div>
+            <div class="ki-val" data-count="64" data-suffix="%">0</div><div class="ki-lbl">Resource utilization</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--safe-dim);color:var(--safe)"><i class="ti ti-brain"></i></div><span class="ki-delta down">stable</span></div>
+            <div class="ki-val" data-count="92" data-suffix="%">0</div><div class="ki-lbl">AI model confidence</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-lbl"><div class="n"><i class="ti ti-list-check" style="font-size:13px"></i></div><div><h3>Live incident feed</h3><p>Highest-priority events across monitored districts</p></div></div>
+      <div class="card" style="padding:0">
+        <table>
+          <tr><th>Incident</th><th>District</th><th>Severity</th><th>Score</th><th>Status</th></tr>
+          <tr><td>Riverside colony flooding</td><td>Sivasagar</td><td><span class="tag critical">Critical</span></td><td class="mono">92</td><td><span class="status-dot" style="background:var(--alert)"></span>Assigning</td></tr>
+          <tr><td>Sector 12 bridge collapse</td><td>Golaghat</td><td><span class="tag critical">Critical</span></td><td class="mono">87</td><td><span class="status-dot" style="background:var(--warn)"></span>En route</td></tr>
+          <tr><td>Market road waterlogging</td><td>Charaideo</td><td><span class="tag moderate">Moderate</span></td><td class="mono">54</td><td><span class="status-dot" style="background:var(--safe)"></span>Monitoring</td></tr>
+          <tr><td>School shelter overcapacity</td><td>Jorhat</td><td><span class="tag moderate">Moderate</span></td><td class="mono">48</td><td><span class="status-dot" style="background:var(--safe)"></span>Monitoring</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ LIVE DISASTER MAP ============ -->
+    <div class="view" id="view-map">
+      <div class="view-head">
+        <div><div class="eyebrow">GIS command view</div><h1>Live disaster map</h1><p>Guwahati sector · all overlays sourced from monitored sensors and rescue telemetry</p></div>
+        <button class="btn ghost"><i class="ti ti-maximize"></i>Fullscreen</button>
+      </div>
+
+      <div class="layer-chips" style="margin-bottom:14px">
+        <div class="chip on" data-layer="flood"><span class="dotc" style="background:var(--blue)"></span>Flood zones</div>
+        <div class="chip" data-layer="wildfire"><span class="dotc" style="background:var(--alert)"></span>Wildfire spread</div>
+        <div class="chip" data-layer="cyclone"><span class="dotc" style="background:var(--violet)"></span>Cyclone path</div>
+        <div class="chip" data-layer="landslide"><span class="dotc" style="background:#B08968"></span>Landslide probability</div>
+        <div class="chip" data-layer="earthquake"><span class="dotc" style="background:var(--warn)"></span>Earthquake intensity</div>
+        <div class="chip" data-layer="traffic"><span class="dotc" style="background:#F5B94D"></span>Traffic congestion</div>
+        <div class="chip on" data-layer="hospitals"><span class="dotc" style="background:var(--safe)"></span>Hospitals</div>
+        <div class="chip on" data-layer="shelters"><span class="dotc" style="background:var(--hydro)"></span>Shelters</div>
+        <div class="chip on" data-layer="units"><span class="dotc" style="background:#5B9CFF"></span>Rescue vehicles</div>
+        <div class="chip" data-layer="drones"><span class="dotc" style="background:#9B7BFF"></span>Drones</div>
+        <div class="chip" data-layer="sensors"><span class="dotc" style="background:#3ED598"></span>IoT sensors</div>
+        <div class="chip" data-layer="radar"><span class="dotc" style="background:#8CA3AE"></span>Weather radar</div>
+      </div>
+
+      <div class="map-shell">
+        <div class="map-col">
+          <div id="liveMap"></div>
+          <div class="card">
+            <div class="section-lbl" style="margin:0 0 4px"><div class="n"><i class="ti ti-timeline" style="font-size:13px"></i></div><div><h3>Response timeline — Sivasagar flood event</h3><p>Detection through recovery, tracked automatically</p></div></div>
+            <div class="timeline">
+              <div class="tl-step done"><div class="tl-dot"></div><div class="tl-label">Detection</div><div class="tl-time">06:12</div></div>
+              <div class="tl-step done"><div class="tl-dot"></div><div class="tl-label">Prediction</div><div class="tl-time">06:24</div></div>
+              <div class="tl-step done"><div class="tl-dot"></div><div class="tl-label">Alert issued</div><div class="tl-time">06:40</div></div>
+              <div class="tl-step active"><div class="tl-dot"></div><div class="tl-label">Rescue started</div><div class="tl-time">07:05</div></div>
+              <div class="tl-step"><div class="tl-dot"></div><div class="tl-label">Resources deployed</div><div class="tl-time">—</div></div>
+              <div class="tl-step"><div class="tl-dot"></div><div class="tl-label">Recovery</div><div class="tl-time">—</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card ai-panel">
+          <div class="ai-head"><div class="ai-avatar"><i class="ti ti-sparkles"></i></div><div><div style="font-weight:600;font-size:13.5px">AI Insight Assistant</div><div style="font-size:10.5px;color:var(--text-faint)">Analyzing Sivasagar sector</div></div></div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin:0">Water levels near riverside colony are projected to rise 0.4m over the next 6 hours based on upstream gauge trends and rainfall forecast. Evacuation of low-lying wards is recommended before 14:00.</p>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-faint);margin-bottom:3px"><span>Prediction confidence</span><b class="mono" style="color:var(--text)">87%</b></div>
+            <div class="confidence-bar"><div class="confidence-fill" style="width:87%"></div></div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 2px">Recommended actions</div>
+            <div class="ai-rec"><i class="ti ti-alert-triangle"></i>Issue evacuation notice for Wards 4–7</div>
+            <div class="ai-rec"><i class="ti ti-truck-delivery"></i>Reposition 2 boats from Golaghat depot</div>
+            <div class="ai-rec"><i class="ti ti-building-hospital"></i>Pre-alert Sivasagar Civil Hospital, +15 beds</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 2px">Evacuation priority</div>
+            <span class="tag critical">Ward 4-7 · Immediate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ AI RISK PREDICTION ============ -->
+    <div class="view" id="view-ai">
+      <div class="view-head">
+        <div><div class="eyebrow">Predictive intelligence</div><h1>AI risk prediction</h1><p>Model outputs across all monitored hazard types</p></div>
+      </div>
+      <div class="grid grid-3">
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-droplet"></i></div><div class="feat-title">Flood prediction</div><div class="feat-desc">Upstream gauge + rainfall fusion model</div><div class="confidence-bar"><div class="confidence-fill" style="width:91%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">91% confidence · Sivasagar sector</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon" style="background:var(--alert-dim);color:var(--alert)"><i class="ti ti-flame"></i></div><div class="feat-title">Wildfire prediction</div><div class="feat-desc">Vegetation dryness + wind vector model</div><div class="confidence-bar"><div class="confidence-fill" style="width:34%;background:linear-gradient(90deg,var(--warn),var(--alert))"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">34% confidence · low current risk</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon" style="background:var(--warn-dim);color:var(--warn)"><i class="ti ti-activity"></i></div><div class="feat-title">Earthquake risk estimation</div><div class="feat-desc">Seismic history + fault-line proximity</div><div class="confidence-bar"><div class="confidence-fill" style="width:18%;background:linear-gradient(90deg,var(--warn),var(--alert))"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">18% confidence · minimal activity</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon" style="background:var(--violet-dim);color:var(--violet)"><i class="ti ti-tornado"></i></div><div class="feat-title">Cyclone tracking</div><div class="feat-desc">Satellite trajectory + pressure modeling</div><div class="confidence-bar"><div class="confidence-fill" style="width:0%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">No active system in basin</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon" style="background:#3a2a10;color:#c98a3e"><i class="ti ti-mountain"></i></div><div class="feat-title">Landslide probability</div><div class="feat-desc">Slope saturation + terrain slope model</div><div class="confidence-bar"><div class="confidence-fill" style="width:62%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">62% confidence · hill districts</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-photo-search"></i></div><div class="feat-title">AI image damage detection</div><div class="feat-desc">Computer vision on citizen-submitted photos</div><div class="confidence-bar"><div class="confidence-fill" style="width:88%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">88% average detection accuracy</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-satellite"></i></div><div class="feat-title">Satellite analysis</div><div class="feat-desc">Multi-spectral flood-extent mapping</div><div class="confidence-bar"><div class="confidence-fill" style="width:79%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">Updated 2 hrs ago</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-message-chatbot"></i></div><div class="feat-title">AI chatbot assistant</div><div class="feat-desc">Natural-language query over live incident data</div><button class="btn ghost" style="margin-top:4px;font-size:11.5px">Open assistant</button></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-microphone"></i></div><div class="feat-title">Voice command support</div><div class="feat-desc">Hands-free dispatch for field responders</div><button class="btn ghost" style="margin-top:4px;font-size:11.5px"><i class="ti ti-microphone"></i>Try voice input</button></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-language"></i></div><div class="feat-title">Multi-language translation</div><div class="feat-desc">Assamese · Bengali · Hindi · English</div><div class="lang-pills" style="display:flex;gap:6px;margin-top:2px"><span class="tag ok">EN</span><span class="tag ok">অস</span><span class="tag ok">বাং</span><span class="tag ok">हिं</span></div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-chart-dots"></i></div><div class="feat-title">Predictive analytics</div><div class="feat-desc">Resource-demand forecasting, 72-hr horizon</div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">Next update in 38 min</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-drone"></i></div><div class="feat-title">Drone-fed terrain scan</div><div class="feat-desc">Live aerial feed correlation with flood layer</div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">2 drones airborne, Sivasagar</div></div>
+      </div>
+    </div>
+
+    <!-- ============ RESOURCE MANAGEMENT ============ -->
+    <div class="view" id="view-resources">
+      <div class="view-head"><div><div class="eyebrow">Logistics</div><h1>Resource management</h1><p>Live availability across all depots</p></div><button class="btn primary"><i class="ti ti-plus"></i>Request resource</button></div>
+      <div class="grid grid-4" id="resourceGrid"></div>
+    </div>
+
+    <!-- ============ HOSPITALS ============ -->
+    <div class="view" id="view-hospitals">
+      <div class="view-head"><div><div class="eyebrow">Medical readiness</div><h1>Hospitals</h1><p>Bed availability and ICU load, updated every 15 min</p></div></div>
+      <div class="card" style="padding:0">
+        <table>
+          <tr><th>Hospital</th><th>District</th><th>Beds available</th><th>ICU occupancy</th><th>Ambulances</th><th>Status</th></tr>
+          <tr><td>Sivasagar Civil Hospital</td><td>Sivasagar</td><td class="mono">18 / 120</td><td><span class="mini-bar"><span class="mini-fill" style="width:88%;background:var(--alert)"></span></span>88%</td><td class="mono">4</td><td><span class="tag critical">Near capacity</span></td></tr>
+          <tr><td>Golaghat District Hospital</td><td>Golaghat</td><td class="mono">42 / 150</td><td><span class="mini-bar"><span class="mini-fill" style="width:61%;background:var(--warn)"></span></span>61%</td><td class="mono">6</td><td><span class="tag moderate">Elevated</span></td></tr>
+          <tr><td>Jorhat Medical College</td><td>Jorhat</td><td class="mono">96 / 220</td><td><span class="mini-bar"><span class="mini-fill" style="width:44%;background:var(--safe)"></span></span>44%</td><td class="mono">9</td><td><span class="tag ok">Stable</span></td></tr>
+          <tr><td>Charaideo Community Hospital</td><td>Charaideo</td><td class="mono">31 / 60</td><td><span class="mini-bar"><span class="mini-fill" style="width:52%;background:var(--warn)"></span></span>52%</td><td class="mono">3</td><td><span class="tag moderate">Elevated</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ RESCUE TEAMS ============ -->
+    <div class="view" id="view-rescue">
+      <div class="view-head"><div><div class="eyebrow">Field units</div><h1>Rescue teams</h1><p>Deployment status of all registered response units</p></div></div>
+      <div class="grid grid-4" id="rescueGrid"></div>
+    </div>
+
+    <!-- ============ EMERGENCY ALERTS ============ -->
+    <div class="view" id="view-alerts">
+      <div class="view-head"><div><div class="eyebrow">Public safety</div><h1>Emergency alerts</h1><p>Active advisories across monitored districts</p></div><button class="btn danger"><i class="ti ti-broadcast"></i>Issue new alert</button></div>
+      <div class="grid grid-2" id="alertsGrid"></div>
+    </div>
+
+    <!-- ============ SATELLITE ANALYSIS ============ -->
+    <div class="view" id="view-satellite">
+      <div class="view-head"><div><div class="eyebrow">Remote sensing</div><h1>Satellite analysis</h1><p>Multi-spectral imagery compared against baseline terrain</p></div></div>
+      <div class="grid grid-3">
+        <div class="card hoverable">
+          <div class="report-media" style="background:linear-gradient(180deg,rgba(7,15,23,.1) 45%,rgba(7,15,23,.92) 100%),url('https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/13000/13474/aqua_bangladesh_13jul04.jpg?w=800&amp;h=600&amp;fit=clip&amp;crop=faces%2Cfocalpoint') center/cover no-repeat;align-items:flex-end;justify-content:flex-start;padding:8px"><i class="ti ti-satellite" style="font-size:15px;background:rgba(7,15,23,.65);border-radius:7px;padding:6px"></i></div>
+          <div style="font-weight:600;font-size:13px">Sivasagar — flood extent</div>
+          <div style="font-size:11px;color:var(--text-faint);margin:4px 0 8px">Sentinel-derived, captured 4 hrs ago</div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim)"><span>Flooded area</span><b class="mono" style="color:var(--text)">38.4 km²</b></div>
+        </div>
+        <div class="card hoverable">
+          <div class="report-media" style="background:linear-gradient(180deg,rgba(7,15,23,.1) 45%,rgba(7,15,23,.92) 100%),url('https://commons.wikimedia.org/wiki/Special:FilePath/Landslide%20o%20the%20way%20from%20guwahati%20to%20shilong.jpg?width=800') center/cover no-repeat;align-items:flex-end;justify-content:flex-start;padding:8px"><i class="ti ti-mountain" style="font-size:15px;background:rgba(7,15,23,.65);border-radius:7px;padding:6px"></i></div>
+          <div style="font-weight:600;font-size:13px">Charaideo hills — slope saturation</div>
+          <div style="font-size:11px;color:var(--text-faint);margin:4px 0 8px">Radar-derived, captured 9 hrs ago</div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim)"><span>High-risk slope</span><b class="mono" style="color:var(--text)">12 sites</b></div>
+        </div>
+        <div class="card hoverable">
+          <div class="report-media" style="background:linear-gradient(180deg,rgba(7,15,23,.1) 45%,rgba(7,15,23,.92) 100%),url('https://commons.wikimedia.org/wiki/Special:FilePath/Chinawal-Vadgaon%20broken%20bridge%20on%20Suki%20river%201.jpg?width=800') center/cover no-repeat;align-items:flex-end;justify-content:flex-start;padding:8px"><i class="ti ti-photo-search" style="font-size:15px;background:rgba(7,15,23,.65);border-radius:7px;padding:6px"></i></div>
+          <div style="font-weight:600;font-size:13px">AI damage detection — Golaghat bridge</div>
+          <div style="font-size:11px;color:var(--text-faint);margin:4px 0 8px">Structural damage flagged automatically</div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim)"><span>Detection confidence</span><b class="mono" style="color:var(--text)">88%</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CITIZEN REPORTS ============ -->
+    <div class="view" id="view-reports">
+      <div class="view-head"><div><div class="eyebrow">Crowd intelligence</div><h1>Citizen reports</h1><p>Field reports submitted via the public app, AI-verified before dispatch</p></div></div>
+      <div class="grid grid-3" id="reportsGrid"></div>
+    </div>
+
+    <!-- ============ ANALYTICS ============ -->
+    <div class="view" id="view-analytics">
+      <div class="view-head"><div><div class="eyebrow">Performance</div><h1>Analytics</h1><p>Historical trends across response operations</p></div></div>
+      <div class="grid grid-2">
+        <div class="card chart-card"><h3 style="margin:0 0 10px;font-size:13.5px">Disaster frequency by month</h3><canvas id="chartFreq"></canvas></div>
+        <div class="card chart-card"><h3 style="margin:0 0 10px;font-size:13.5px">Average response time (min)</h3><canvas id="chartResponse"></canvas></div>
+        <div class="card chart-card"><h3 style="margin:0 0 10px;font-size:13.5px">Resource utilization by category</h3><canvas id="chartUtil"></canvas></div>
+        <div class="card chart-card"><h3 style="margin:0 0 10px;font-size:13.5px">AI model confidence over time</h3><canvas id="chartConf"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ============ SETTINGS ============ -->
+    <div class="view" id="view-settings">
+      <div class="view-head"><div><div class="eyebrow">Preferences</div><h1>Settings</h1><p>Account, notifications, and platform preferences</p></div></div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 style="margin-top:0;font-size:13.5px">Appearance</h3>
+          <label style="font-size:12px;color:var(--text-dim)">Theme</label>
+          <div style="display:flex;gap:8px;margin-top:6px"><button class="btn ghost" onclick="setTheme('dark')"><i class="ti ti-moon"></i>Dark</button><button class="btn ghost" onclick="setTheme('light')"><i class="ti ti-sun"></i>Light</button></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;font-size:13.5px">Language</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><span class="tag ok">English</span><span class="tag ok">অসমীয়া</span><span class="tag ok">বাংলা</span><span class="tag ok">हिन्दी</span></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;font-size:13.5px">Notifications</h3>
+          <div style="font-size:12.5px;color:var(--text-dim);line-height:2">Critical alerts · always on<br>Shelter capacity warnings · on<br>Weekly analytics digest · off</div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;font-size:13.5px">Account</h3>
+          <div style="font-size:12.5px;color:var(--text-dim);line-height:2">Nitin Sharma — Dispatch Officer<br>Assam State Command<br>Role: Dispatcher</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+// Central place for backend connection settings.
+// Point this at your live backend URL once it's deployed.
+// Every future fetch() call in the other JS files should use API_BASE, e.g.:
+//   fetch(`${API_BASE}/api/incidents`)
+const API_BASE = "http://localhost:5000"; // swap for the deployed backend URL later
+// Dark / light theme toggle
+function setTheme(mode){
+  document.documentElement.setAttribute('data-theme', mode);
+  document.querySelectorAll('.theme-toggle button').forEach(b=>{
+    b.classList.toggle('active', b.dataset.theme === mode);
+  });
+  localStorage.setItem('varuna-theme', mode);
+}
+
+document.querySelectorAll('.theme-toggle button').forEach(btn=>{
+  btn.addEventListener('click', ()=> setTheme(btn.dataset.theme));
+});
+
+// Restore saved preference, default dark
+setTheme(localStorage.getItem('varuna-theme') || 'dark');
+// Sidebar navigation — switches the visible view
+document.querySelectorAll('.nav-item').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-' + btn.dataset.view).classList.add('active');
+
+    // Leaflet needs a resize nudge whenever its container becomes visible again
+    if (btn.dataset.view === 'map' && window.liveMapInstance) {
+      setTimeout(()=> window.liveMapInstance.invalidateSize(), 80);
+    }
+  });
+});
+
+// Collapse sidebar to icon-only
+document.getElementById('collapseBtn').addEventListener('click', ()=>{
+  document.getElementById('appShell').classList.toggle('collapsed');
+  if (window.liveMapInstance) {
+    setTimeout(()=> window.liveMapInstance.invalidateSize(), 300);
+  }
+});
+// Animate KPI number counters on load
+function animateCount(el, target, suffix){
+  const duration = 1200;
+  const start = performance.now();
+  function tick(now){
+    const p = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - p, 3);
+    const val = Math.round(target * eased);
+    el.textContent = val.toLocaleString('en-IN') + (suffix || '');
+    if (p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
+document.querySelectorAll('.ki-val[data-count]').forEach(el=>{
+  const target = Number(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  animateCount(el, target, suffix);
+});
+
+// Command ring — animates the severity arc to its value
+const SEVERITY_SCORE = 74; // 0-100, drives both the ring and its number
+const ringFill = document.getElementById('ringFill');
+const ringNum = document.getElementById('ringNum');
+const CIRCUMFERENCE = 440; // 2 * PI * r(70), matches the SVG circle
+
+if (ringFill) {
+  const offset = CIRCUMFERENCE - (SEVERITY_SCORE / 100) * CIRCUMFERENCE;
+  requestAnimationFrame(()=>{ ringFill.style.strokeDashoffset = offset; });
+  animateCount(ringNum, SEVERITY_SCORE, '');
+}
+// All mock records live here so each render-*.js file only handles rendering.
+// When the backend is ready, replace these arrays with fetch(`${API_BASE}/api/...`) calls.
+
+const RESOURCES = [
+  { name:'Ambulances',        icon:'ti-ambulance',      have:34, total:48, color:'var(--alert)' },
+  { name:'Fire trucks',       icon:'ti-flame',          have:11, total:16, color:'var(--warn)' },
+  { name:'Boats',             icon:'ti-anchor',         have:22, total:30, color:'var(--hydro)' },
+  { name:'Rescue helicopters',icon:'ti-helicopter',     have:4,  total:6,  color:'var(--violet)' },
+  { name:'Medical kits',      icon:'ti-first-aid-kit',  have:860,total:1200,color:'var(--safe)' },
+  { name:'Food supplies',     icon:'ti-bread',          have:640,total:1000,color:'var(--warn)' },
+  { name:'Water supplies',    icon:'ti-droplet',        have:410,total:900, color:'var(--blue)' },
+  { name:'Volunteers',        icon:'ti-users',          have:312,total:400, color:'var(--safe)' },
+];
+
+const RESCUE_TEAMS = [
+  { name:'NDRF Team Alpha',   type:'NDRF',      members:12, location:'Sivasagar', status:'deployed' },
+  { name:'SDRF Unit 3',       type:'SDRF',      members:9,  location:'Golaghat',  status:'deployed' },
+  { name:'District Police RRT', type:'Police',  members:15, location:'Jorhat',    status:'standby' },
+  { name:'Red Cross Volunteers', type:'Volunteer', members:22, location:'Charaideo', status:'deployed' },
+  { name:'NDRF Team Bravo',   type:'NDRF',      members:12, location:'Numaligarh', status:'standby' },
+  { name:'Fire & Emergency Svc', type:'Fire',   members:8,  location:'Sivasagar', status:'deployed' },
+  { name:'Coast Guard Boat Unit', type:'Boat',  members:6,  location:'Dhansiri River', status:'deployed' },
+  { name:'Civil Defence Corps', type:'Volunteer', members:30, location:'Jorhat', status:'standby' },
+];
+
+const ALERTS = [
+  { title:'Severe flood warning — Sivasagar', level:'critical', districts:'Sivasagar, Charaideo', population:'1.2 L', confidence:91, endsIn: 3*3600 },
+  { title:'River level advisory — Dhansiri (Golaghat)', level:'warning', districts:'Golaghat', population:'340,000', confidence:84, endsIn: 6*3600 },
+  { title:'Heavy rainfall alert — Upper Assam', level:'warning', districts:'Jorhat, Sivasagar, Golaghat', population:'2.1 L', confidence:78, endsIn: 12*3600 },
+  { title:'Road closure advisory — GS Road link', level:'critical', districts:'Guwahati sector', population:'—', confidence:95, endsIn: 1*3600 + 40*60 },
+];
+
+const REPORTS = [
+  {
+    user: "Anonymous citizen",
+    location: "Riverside Colony, Sivasagar",
+    severity: "critical",
+    verified: true,
+    time: "4 min ago",
+    status: "Dispatched",
+    image: "https://images.unsplash.com/photo-1657069343871-fd1476990d04?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    user: "Anonymous citizen",
+    location: "Golaghat Bridge",
+    severity: "critical",
+    verified: true,
+    time: "11 min ago",
+    status: "En route",
+    image: "https://images.unsplash.com/photo-1657069342814-ef2dcfb25f6f?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    user: "Anonymous citizen",
+    location: "Market Road",
+    severity: "moderate",
+    verified: false,
+    time: "22 min ago",
+    status: "Reviewing",
+    image: "https://images.unsplash.com/photo-1657069342866-2d11c2509b02?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    user: "Anonymous citizen",
+    location: "Relief Shelter",
+    severity: "moderate",
+    verified: true,
+    time: "40 min ago",
+    status: "Monitoring",
+    image: "https://images.unsplash.com/photo-1762624822556-921847c110d9?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    user: "Anonymous citizen",
+    location: "Overflowing River",
+    severity: "critical",
+    verified: true,
+    time: "1 hr ago",
+    status: "Dispatched",
+    image: "https://images.unsplash.com/photo-1545276070-ec815f01c6ec?auto=format&fit=crop&w=1200&q=80"
+  },
+  {
+    user: "Anonymous citizen",
+    location: "NDRF Rescue Operation",
+    severity: "critical",
+    verified: true,
+    time: "2 hr ago",
+    status: "Rescue Ongoing",
+    image: "https://images.unsplash.com/photo-1741081288260-877057e3fa27?auto=format&fit=crop&w=1200&q=80"
+  }
+];
+// Renders the Resource Management grid from RESOURCES (see mock-data.js)
+const resourceGrid = document.getElementById('resourceGrid');
+
+if (resourceGrid) {
+  resourceGrid.innerHTML = RESOURCES.map(r=>{
+    const pct = Math.round((r.have / r.total) * 100);
+    return `
+      <div class="card hoverable res-card">
+        <div class="rc-top">
+          <div class="rc-icon" style="background:color-mix(in srgb, ${r.color} 18%, transparent);color:${r.color}">
+            <i class="ti ${r.icon}"></i>
+          </div>
+          <span class="tag ${pct < 40 ? 'critical' : pct < 70 ? 'moderate' : 'ok'}">${pct}% avail.</span>
+        </div>
+        <div style="font-weight:600;font-size:13.5px">${r.name}</div>
+        <div class="progress"><div class="progress-fill" style="width:${pct}%;background:${r.color}"></div></div>
+        <div class="res-foot"><span>${r.have} available</span><span>${r.total} total</span></div>
+      </div>`;
+  }).join('');
+}
+// Renders the Rescue Teams grid from RESCUE_TEAMS (see mock-data.js)
+const rescueGrid = document.getElementById('rescueGrid');
+
+if (rescueGrid) {
+  rescueGrid.innerHTML = RESCUE_TEAMS.map(t=>{
+    const deployed = t.status === 'deployed';
+    return `
+      <div class="card hoverable res-card">
+        <div class="rc-top">
+          <div class="rc-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-shield-check"></i></div>
+          <span class="tag ${deployed ? 'critical' : 'ok'}">${deployed ? 'Deployed' : 'Standby'}</span>
+        </div>
+        <div style="font-weight:600;font-size:13.5px">${t.name}</div>
+        <div style="font-size:11.5px;color:var(--text-faint);margin-top:2px">${t.type} · ${t.members} members</div>
+        <div class="res-foot" style="margin-top:12px">
+          <span><i class="ti ti-map-pin" style="font-size:12px;vertical-align:-1px"></i> ${t.location}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+// Renders Emergency Alert cards from ALERTS (see mock-data.js) and keeps
+// each countdown timer ticking down every second.
+const alertsGrid = document.getElementById('alertsGrid');
+
+function formatCountdown(totalSeconds){
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  return [h, m, s].map(n => String(n).padStart(2, '0')).join(':');
+}
+
+if (alertsGrid) {
+  alertsGrid.innerHTML = ALERTS.map((a, i)=>{
+    const isCritical = a.level === 'critical';
+    return `
+      <div class="card hoverable alert-card ${isCritical ? '' : 'warning'}">
+        <div class="alert-top">
+          <div>
+            <span class="tag ${isCritical ? 'critical' : 'moderate'}">${isCritical ? 'Critical' : 'Warning'}</span>
+            <div class="alert-title" style="margin-top:8px">${a.title}</div>
+          </div>
+          <div class="countdown" data-remaining="${a.endsIn}" id="countdown-${i}">${formatCountdown(a.endsIn)}</div>
+        </div>
+        <div class="alert-meta">
+          <span>Districts: <b>${a.districts}</b></span>
+          <span>Population: <b>${a.population}</b></span>
+          <span>AI confidence: <b>${a.confidence}%</b></span>
+        </div>
+        <button class="btn ${isCritical ? 'danger' : 'primary'}" style="margin-top:14px">
+          <i class="ti ti-broadcast"></i>${isCritical ? 'Escalate now' : 'Review advisory'}
+        </button>
+      </div>`;
+  }).join('');
+
+  setInterval(()=>{
+    document.querySelectorAll('.countdown').forEach(el=>{
+      let remaining = Number(el.dataset.remaining) - 1;
+      if (remaining < 0) remaining = 0;
+      el.dataset.remaining = remaining;
+      el.textContent = formatCountdown(remaining);
+    });
+  }, 1000);
+}
+// Renders the Citizen Reports grid from REPORTS (see mock-data.js)
+const reportsGrid = document.getElementById('reportsGrid');
+
+if (reportsGrid) {
+  reportsGrid.innerHTML = REPORTS.map(r=>`
+    <div class="card hoverable report-card">
+      <div class="report-media" style="background:linear-gradient(180deg,rgba(7,15,23,.05) 55%,rgba(7,15,23,.88) 100%),url('${r.image}') center/cover no-repeat;">
+        ${r.verified ? '<span class="verified-badge"><i class="ti ti-rosette-discount-check"></i>AI verified</span>' : ''}
+      </div>
+      <div class="report-user">
+        <div class="ru-avatar"><i class="ti ti-user"></i></div>
+        <div>
+          <div style="font-size:12.5px;font-weight:600">${r.user}</div>
+          <div style="font-size:10.5px;color:var(--text-faint)">${r.time}</div>
+        </div>
+      </div>
+      <div style="font-size:12.5px;color:var(--text-dim);display:flex;align-items:center;gap:5px;margin-bottom:8px">
+        <i class="ti ti-map-pin" style="font-size:13px"></i>${r.location}
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span class="tag ${r.severity === 'critical' ? 'critical' : 'moderate'}">${r.severity}</span>
+        <span style="font-size:11px;color:var(--text-faint)">${r.status}</span>
+      </div>
+    </div>`).join('');
+}
+// Live Disaster Map — Leaflet init + toggleable overlay layers.
+// Replace the marker/circle coordinates below with real feed data once the
+// backend is wired up (see config.js for API_BASE).
+
+const GUWAHATI = [26.1445, 91.7362];
+
+const liveMap = L.map('liveMap', { zoomControl: true }).setView(GUWAHATI, 10);
+window.liveMapInstance = liveMap; // exposed so nav.js can invalidateSize() on tab switch
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; OpenStreetMap &copy; CARTO',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(liveMap);
+
+// ---- Layer groups, one per chip ----
+const layers = {
+  flood:      L.layerGroup([ L.circle([26.10, 91.90], { radius: 6000, color:'#5B9CFF', fillColor:'#5B9CFF', fillOpacity:0.25, weight:1 }) ]),
+  wildfire:   L.layerGroup([ L.circle([26.30, 91.60], { radius: 4000, color:'#FF6A4D', fillColor:'#FF6A4D', fillOpacity:0.25, weight:1 }) ]),
+  cyclone:    L.layerGroup([ L.polyline([[25.9,92.3],[26.05,92.0],[26.2,91.7],[26.35,91.4]], { color:'#9B7BFF', weight:3, dashArray:'6,6' }) ]),
+  landslide:  L.layerGroup([ L.circle([26.35, 92.05], { radius: 5000, color:'#B08968', fillColor:'#B08968', fillOpacity:0.22, weight:1 }) ]),
+  earthquake: L.layerGroup([ L.circle([26.0, 91.5], { radius: 7000, color:'#F5B94D', fillColor:'#F5B94D', fillOpacity:0.18, weight:1 }) ]),
+  traffic:    L.layerGroup([ L.polyline([[26.14,91.70],[26.16,91.75],[26.18,91.80]], { color:'#F5B94D', weight:5, opacity:0.6 }) ]),
+  radar:      L.layerGroup([ L.circle(GUWAHATI, { radius: 20000, color:'#8CA3AE', fillColor:'#8CA3AE', fillOpacity:0.06, weight:1, dashArray:'4,6' }) ]),
+  drones:     L.layerGroup([
+                mkDot([26.12, 91.86], '#9B7BFF', 'ti-drone', 'Drone-01 · airborne'),
+                mkDot([26.25, 91.65], '#9B7BFF', 'ti-drone', 'Drone-02 · airborne'),
+              ]),
+  sensors:    L.layerGroup([
+                mkDot([26.15, 91.95], '#3ED598', 'ti-antenna', 'River gauge · Sivasagar'),
+                mkDot([26.32, 91.55], '#3ED598', 'ti-antenna', 'Rainfall sensor · Golaghat'),
+              ]),
+  hospitals:  L.layerGroup([
+                mkDot([26.13, 91.80], '#3ED598', 'ti-building-hospital', 'Sivasagar Civil Hospital · 88% ICU'),
+                mkDot([26.30, 91.62], '#3ED598', 'ti-building-hospital', 'Golaghat District Hospital · 61% ICU'),
+              ]),
+  shelters:   L.layerGroup([
+                mkDot([26.11, 91.92], '#17C9C0', 'ti-home', 'Govt school shelter · 71% full'),
+                mkDot([26.20, 91.75], '#17C9C0', 'ti-home', 'Community hall shelter · 39% full'),
+              ]),
+  units:      L.layerGroup([
+                mkDot([26.145, 91.83], '#5B9CFF', 'ti-truck', 'NDRF Team Alpha · en route'),
+                mkDot([26.28, 91.60], '#5B9CFF', 'ti-anchor', 'Boat unit · deployed'),
+              ]),
+};
+
+function mkDot(latlng, color, icon, label){
+  const html = `<div style="width:26px;height:26px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;border:2px solid #0E1B26;box-shadow:0 0 0 2px ${color}55;">
+                  <i class="ti ${icon}" style="font-size:13px;color:#04211f"></i>
+                </div>`;
+  const divIcon = L.divIcon({ html, className:'', iconSize:[26,26], iconAnchor:[13,13] });
+  return L.marker(latlng, { icon: divIcon }).bindTooltip(label, { direction:'top', offset:[0,-10] });
+}
+
+// Turn on the layers that start "on" per the chip markup in index.html
+document.querySelectorAll('.chip').forEach(chip=>{
+  const key = chip.dataset.layer;
+  if (chip.classList.contains('on') && layers[key]) layers[key].addTo(liveMap);
+
+  chip.addEventListener('click', ()=>{
+    chip.classList.toggle('on');
+    if (!layers[key]) return;
+    if (chip.classList.contains('on')) layers[key].addTo(liveMap);
+    else liveMap.removeLayer(layers[key]);
+  });
+});
+// Analytics view — four Chart.js charts. Swap the data arrays for real
+// aggregates from the backend once /api/analytics endpoints exist.
+Chart.defaults.color = '#93AAB6';
+Chart.defaults.font.family = "'Inter', sans-serif";
+Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
+new Chart(document.getElementById('chartFreq'), {
+  type: 'bar',
+  data: {
+    labels: ['Feb','Mar','Apr','May','Jun','Jul'],
+    datasets: [{
+      label: 'Disasters recorded',
+      data: [2, 3, 5, 7, 9, 14],
+      backgroundColor: '#17C9C0',
+      borderRadius: 6,
+      maxBarThickness: 34
+    }]
+  },
+  options: { plugins:{ legend:{ display:false } }, scales:{ y:{ grid:{ color:'rgba(255,255,255,0.06)'} }, x:{ grid:{ display:false } } } }
+});
+
+new Chart(document.getElementById('chartResponse'), {
+  type: 'line',
+  data: {
+    labels: ['Feb','Mar','Apr','May','Jun','Jul'],
+    datasets: [{
+      label: 'Avg. response time',
+      data: [58, 52, 47, 41, 38, 33],
+      borderColor: '#5B9CFF',
+      backgroundColor: 'rgba(91,156,255,0.15)',
+      fill: true,
+      tension: 0.35,
+      pointRadius: 3
+    }]
+  },
+  options: { plugins:{ legend:{ display:false } }, scales:{ y:{ grid:{ color:'rgba(255,255,255,0.06)'} }, x:{ grid:{ display:false } } } }
+});
+
+new Chart(document.getElementById('chartUtil'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Ambulances','Boats','Helicopters','Fire trucks','Volunteers'],
+    datasets: [{
+      data: [71, 73, 67, 69, 78],
+      backgroundColor: ['#FF6A4D','#17C9C0','#9B7BFF','#F5B94D','#3ED598'],
+      borderWidth: 0
+    }]
+  },
+  options: { plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, font:{size:10.5} } } }, cutout:'62%' }
+});
+
+new Chart(document.getElementById('chartConf'), {
+  type: 'line',
+  data: {
+    labels: ['Week 1','Week 2','Week 3','Week 4','Week 5','Week 6'],
+    datasets: [{
+      label: 'AI model confidence',
+      data: [81, 84, 83, 88, 90, 92],
+      borderColor: '#3ED598',
+      backgroundColor: 'rgba(62,213,152,0.15)',
+      fill: true,
+      tension: 0.35,
+      pointRadius: 3
+    }]
+  },
+  options: { plugins:{ legend:{ display:false } }, scales:{ y:{ min:70, max:100, grid:{ color:'rgba(255,255,255,0.06)'} }, x:{ grid:{ display:false } } } }
+});
+// Small toast notifications — floating live-update style messages.
+function showToast(message, icon){
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = `<i class="ti ${icon || 'ti-bell-ringing'}"></i><span>${message}</span>`;
+  wrap.appendChild(el);
+  setTimeout(()=>{
+    el.style.transition = 'opacity .3s';
+    el.style.opacity = '0';
+    setTimeout(()=> el.remove(), 300);
+  }, 4200);
+}
+
+// Demo: one toast shortly after load, to show the pattern working live
+setTimeout(()=> showToast('New citizen report verified in Sivasagar', 'ti-rosette-discount-check'), 1600);
+
+document.getElementById('aiAssistantBtn').addEventListener('click', ()=>{
+  showToast('AI assistant: 3 recommended actions ready in Live Map view', 'ti-sparkles');
+});
+
+</script>
+</body>
+</html>
