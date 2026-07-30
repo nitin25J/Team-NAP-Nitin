@@ -1,92 +1,53 @@
-# backend/app/api/alerts.py
-
 import logging
 from typing import Any, Dict, List
 
-from fastapi import APIRouter, HTTPException, status
-
-from app.services import alert_service
+from app.database.loader import load_json
 
 logger = logging.getLogger(__name__)
 
-router = APIRouter(
-    prefix="/alerts",
-    tags=["Alerts"],
-)
+FILENAME = "dashboard.json"
 
 
-@router.get("/", response_model=List[Dict[str, Any]])
-def get_all_alerts_route() -> List[Dict[str, Any]]:
-    """Return all alerts."""
-    try:
-        return alert_service.get_all_alerts()
-    except Exception as exc:
-        logger.exception("Failed to retrieve all alerts")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error",
-        ) from exc
+def get_dashboard_data() -> Dict[str, Any]:
+    """
+    Return complete dashboard data.
+    """
+    data = load_json(FILENAME)
+
+    if not isinstance(data, dict):
+        logger.warning("Invalid dashboard data format.")
+        return {}
+
+    return data
 
 
-@router.get("/active", response_model=List[Dict[str, Any]])
-def get_active_alerts_route() -> List[Dict[str, Any]]:
-    """Return all active alerts."""
-    try:
-        return alert_service.get_active_alerts()
-    except Exception as exc:
-        logger.exception("Failed to retrieve active alerts")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error",
-        ) from exc
+def get_overview_stats() -> Dict[str, Any]:
+    """
+    Return overview statistics.
+    """
+    data = get_dashboard_data()
+    return data.get("overview", {})
 
 
-@router.get("/district/{district}", response_model=List[Dict[str, Any]])
-def get_alerts_by_district_route(district: str) -> List[Dict[str, Any]]:
-    """Return alerts filtered by district."""
-    try:
-        return alert_service.get_alerts_by_district(district)
-    except Exception as exc:
-        logger.exception("Failed to retrieve district alerts")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error",
-        ) from exc
+def get_top_affected_districts() -> List[Dict[str, Any]]:
+    """
+    Return top affected districts.
+    """
+    data = get_dashboard_data()
+    return data.get("top_districts", [])
 
 
-@router.get("/severity/{severity}", response_model=List[Dict[str, Any]])
-def get_alerts_by_severity_route(severity: str) -> List[Dict[str, Any]]:
-    """Return alerts filtered by severity."""
-    try:
-        return alert_service.get_alerts_by_severity(severity)
-    except Exception as exc:
-        logger.exception("Failed to retrieve severity alerts")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error",
-        ) from exc
+def get_quick_links() -> List[Dict[str, Any]]:
+    """
+    Return dashboard quick links.
+    """
+    data = get_dashboard_data()
+    return data.get("quick_links", [])
 
 
-@router.get("/{alert_id}", response_model=Dict[str, Any])
-def get_alert_by_id_route(alert_id: str) -> Dict[str, Any]:
-    """Return a single alert by ID."""
-    try:
-        alert = alert_service.get_alert_by_id(alert_id)
-
-        if alert is None:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="Alert not found",
-            )
-
-        return alert
-
-    except HTTPException:
-        raise
-
-    except Exception as exc:
-        logger.exception("Failed to retrieve alert")
-        raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Internal server error",
-        ) from exc
+def get_recent_activity() -> List[Dict[str, Any]]:
+    """
+    Return recent activity.
+    """
+    data = get_dashboard_data()
+    return data.get("recent_activity", [])

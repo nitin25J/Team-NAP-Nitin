@@ -27,13 +27,18 @@ app = FastAPI(
 # ------------------------
 # CORS Configuration
 # ------------------------
+from fastapi.middleware.cors import CORSMiddleware
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],          # Change this later in production
+    allow_origins=[
+        "https://varuna-ai.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # ------------------------
 # Root Endpoint
