@@ -1,284 +1,219 @@
-# VARUNA AI
+# Varuna AI
 
-## AI Disaster Intelligence Platform
+### AI Disaster Intelligence Platform
 
-**Tagline:** Predict. Prepare. Protect.
+**Tagline:** *Predict. Prepare. Protect.*
 
 ---
 
 ## Overview
 
-Varuna AI is an AI-powered Disaster Intelligence Platform designed to transform disaster management from reactive response to proactive decision-making. The platform integrates weather forecasts, satellite imagery, GIS maps, IoT sensors, traffic networks, hospitals, and emergency resources into a unified intelligence layers.
+Varuna AI is an AI-powered Disaster Intelligence Platform designed to improve disaster preparedness and emergency response through centralized monitoring and intelligent decision support.
 
-Using Multi-Agent AI, Digital Twins, Knowledge Graphs, Computer Vision, and Predictive Analytics, Varuna AI continuously monitors disaster risks, simulates future scenarios, and generates explainable recommendations for evacuation planning, rescue deployment, resource allocation, and emergency response.
+The platform integrates weather intelligence, disaster mapping, emergency resources, hospitals, rescue operations, and analytics into a unified dashboard for government agencies and disaster management authorities.
 
-Unlike traditional disaster monitoring systems, Varuna AI provides real-time decision intelligence that helps governments, emergency agencies, and smart cities respond faster while minimizing casualties and infrastructure damage.
-
-The platform is currently being developed and prototyped as a state-level command center for Assam, India, with district-level coverage across Sivasagar, Golaghat, Jorhat, and Charaideo, and is designed to scale to a national deployment.
+The current prototype focuses on flood disaster management in Assam and is designed to scale for multiple disaster types and regions.
 
 ---
 
-# Vision
+## Live Demo
 
-To build an intelligent disaster management platform capable of predicting, simulating, and coordinating emergency response through advanced Artificial Intelligence technologies.
+**Frontend:** https://your-frontend.vercel.app
 
----
+**Backend API:** https://your-backend.onrender.com
 
-# Objectives
-
-- Predict disasters before they occur.
-- Simulate disaster scenarios using Digital Twins.
-- Optimize evacuation planning.
-- Improve emergency resource allocation.
-- Assist government agencies in making faster decisions.
-- Reduce disaster response time.
-- Minimize casualties and infrastructure damage.
-- Provide explainable AI-driven recommendations.
+**API Documentation (Swagger):** https://your-backend.onrender.com/docs
 
 ---
 
-# Problem Statement
+## Vision
 
-## Disaster management agencies often operate in isolated systems.
-
-- Weather departments monitor forecasts.
-- Hospitals monitor patient capacity.
-- Traffic departments monitor road conditions.
-- Satellite agencies monitor environmental changes.
-- Emergency teams coordinate rescue operations.
-
-These systems rarely communicate in real time, resulting in delayed decision-making and inefficient disaster response.
-
-Varuna AI bridges this gap by creating a unified AI-powered intelligence platform.
+Build an intelligent disaster management ecosystem that enables proactive decision-making using Artificial Intelligence.
 
 ---
 
-# Key Features
+## Key Features
 
-- Real-Time Weather Intelligence
-- Satellite Image Analysis
-- GIS-Based Disaster Mapping
-- Digital Twin Simulation
-- Multi-Agent AI Coordination
-- Knowledge Graph Reasoning
-- Disaster Risk Prediction
-- Emergency Resource Optimization
-- Hospital Capacity Monitoring
-- Intelligent Evacuation Planning
-- Explainable AI Recommendations
-- Interactive Disaster Dashboard
-- Drone-Fed Terrain Scanning
-- AI-Verified Citizen Incident Reporting
-- Emergency Alert Broadcasting with Live Countdown Tracking
+- Real-Time Dashboard
+- Weather Intelligence
+- Interactive Disaster Map
+- Flood Risk Prediction *(Prototype)*
+- Emergency Alerts
+- Hospital Monitoring
+- Rescue Team Management
+- Resource Management
+- Reports & Analytics
+- Responsive Dashboard UI
 
 ---
 
-# System Architecture
+## System Architecture
 
-```
-Weather APIs
+```text
+Weather Data
+Satellite Data
+GIS Data
+Hospital Data
+Rescue Data
         │
-Satellite Imagery
+        ▼
+     FastAPI Backend
         │
-River & IoT Sensors
+ ├── Dashboard
+ ├── Weather
+ ├── Alerts
+ ├── Prediction
+ ├── Hospitals
+ ├── Resources
+ ├── Rescue
+ ├── Reports
+ └── Analytics
         │
-Traffic Data
-        │
-Hospital Information
-        │
-Emergency Resources
-        │
-──────────────────────────────
-Varuna AI Intelligence Layer
-──────────────────────────────
-Data Fusion Engine
-Knowledge Graph
-Digital Twin
-Multi-Agent AI
-Prediction Engine
-Decision Engine
-──────────────────────────────
-        │
-Risk Analysis
-Evacuation Planning
-Resource Allocation
-Emergency Alerts
-Live Dashboard
+        ▼
+ JSON Data Layer
+(Current Prototype)
+
+Future:
+PostgreSQL • PostGIS • Neo4j
 ```
 
 ---
 
-# Multi-Agent AI Architecture
+## Frontend Architecture
 
-Varuna AI consists of specialized AI agents working together.
-
-| Agent || Responsibility |
-|--------||----------------|
-| Weather Agent || Predict rainfall, storms, cyclones, and heatwaves |
-| Satellite Agent || Detect floods, landslides, fires, and damaged infrastructure |
-| Traffic Agent || Monitor roads and recommend evacuation routes |
-| Hospital Agent || Track beds, ICU availability, ambulances, and medical resources |
-| Rescue Agent || Allocate rescue teams, boats, helicopters, and emergency vehicles |
-| Government Agent || Generate reports and emergency notifications |
-| Master Agent || Coordinates all AI agents and generates final recommendations |
-
----
-
-# Digital Twin
-
-Varuna AI creates a virtual representation of a city or district containing:
-
-- Roads
-- Rivers
-- Bridges
-- Hospitals
-- Shelters
-- Schools
-- Emergency Vehicles
-- Population Distribution
-- Disaster-Prone Areas
-
-The Digital Twin enables authorities to simulate disasters before they occur and evaluate different response strategies.
+```text
+Browser
+    │
+    ▼
+HTML • CSS • JavaScript
+    │
+    ▼
+Dashboard Components
+    │
+    ▼
+API Layer (config.js)
+    │
+    ▼
+FastAPI Backend
+```
 
 ---
 
-# AI Technologies
+## Backend Architecture
 
-- Large Language Models (LLMs)
-- Multi-Agent AI
-- Knowledge Graphs
-- Retrieval-Augmented Generation (RAG)
-- Computer Vision
-- Time-Series Forecasting
-- Explainable AI (XAI)
-- Digital Twins
-- Geographic Information Systems (GIS)
+```text
+FastAPI
+│
+├── API Routes
+│
+├── /dashboard
+├── /alerts
+├── /weather
+├── /prediction
+├── /hospitals
+├── /resources
+├── /rescue
+├── /reports
+├── /analytics
+├── /settings
+└── /disaster-map
+│
+▼
+Service Layer
+│
+├── dashboard_service.py
+├── alert_service.py
+├── weather_service.py
+├── prediction_service.py
+├── hospital_service.py
+├── resource_service.py
+├── rescue_service.py
+├── report_service.py
+├── analytics_service.py
+└── disaster_map_service.py
+│
+▼
+Database Loader
+│
+▼
+JSON Dataset (Current Prototype)
+```
 
 ---
 
-# Technology Stack
+## Technology Stack
 
-## Frontend
+### Frontend
 
-- **HTML5**
-- **CSS3**
-- **JavaScript (ES6)**
-- **Leaflet.js** (Interactive Maps)
-- **Chart.js** (Data Visualization)
-- **Tabler Icons** (Icon Library)
-- **Google Fonts**
-  - Inter
-  - Space Grotesk
-  - IBM Plex Mono
-- **CSS Grid & Flexbox**
-- **CSS Variables (Design Tokens)**
-- **Glassmorphism UI**
-- **Responsive Web Design**
-- **Dark/Light Theme**
+- HTML5
+- CSS3
+- JavaScript (ES6)
+- Leaflet.js
+- Chart.js
+- Responsive Design
 
-## Backend
+### Backend
 
 - FastAPI
 - Python
+- Pydantic
+- Uvicorn
 
-## Artificial Intelligence (planned — not yet integrated)
+### Current Data Layer
 
+- JSON Dataset
+
+### Planned Technologies
+
+- PostgreSQL
+- PostGIS
+- Neo4j
 - LangChain
 - OpenAI / Gemini
 - TensorFlow
 - PyTorch
 - OpenCV
-- YOLO
+- Multi-Agent AI
+- Digital Twin
 
-## Database
-
-- PostgreSQL
-- PostGIS
-- Neo4j
-
-## Maps
-
-- OpenStreetMap
-- Leaflet
+---
 
 ## Deployment
 
-- Docker
-- Vercel
-- Render
+| Component | Platform |
+|-----------|----------|
+| Frontend | Vercel |
+| Backend | Render |
 
 ---
 
-# Example Workflow
+## Repository Structure
 
-```
-Heavy Rain Forecast
-        │
-        ▼
-River Water Level Rising
-        │
-        ▼
-Satellite Detects Flood Zones
-        │
-        ▼
-Traffic Agent Finds Blocked Roads
-        │
-        ▼
-Hospital Agent Checks Capacity
-        │
-        ▼
-Master AI Simulates Disaster
-        │
-        ▼
-Generate Evacuation Plan
-        │
-        ▼
-Deploy Emergency Resources
-        │
-        ▼
-Issue Public Alerts
-```
-
----
-
-# Use Cases
-
-- Flood Prediction
-- Cyclone Response
-- Wildfire Monitoring
-- Earthquake Response
-- Landslide Detection
-- Smart City Disaster Management
-- Climate Risk Assessment
-- Government Decision Support
-
----
-
-# Future Scope
-
-- Live Satellite Data Processing
-- Autonomous Rescue Systems
-- National Digital Twin
-- Citizen Mobile Application (native app; web-based citizen reporting already prototyped)
-- Reinforcement Learning for Resource Optimization
-- Cross-State Disaster Coordination
-
----
-
-# Repository Structure
-
-```
+```text
 VarunaAI/
 │
 ├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── services/
+│   │   ├── database/
+│   │   ├── models/
+│   │   ├── schemas/
+│   │   ├── core/
+│   │   └── utils/
+│   │
+│   ├── requirements.txt
+│   ├── Dockerfile
+│   └── main.py
+│
 ├── frontend/
-├── ai-engine/
-├── digital-twin/
-├── gis/
-├── datasets/
+│   ├── css/
+│   ├── js/
+│   ├── assets/
+│   └── index.html
+│
 ├── docs/
 ├── assets/
-├── api/
 ├── README.md
 ├── LICENSE
 └── .gitignore
@@ -286,41 +221,67 @@ VarunaAI/
 
 ---
 
-# Project Status
+## Project Status
 
-This project is currently under active development. 
+### Implemented
 
-- Frontend: functional prototype dashboard (Live Map, AI Risk Prediction, Resource Management, Hospitals, Rescue Teams, Emergency Alerts, Satellite Analysis, Citizen Reports, Analytics, Settings) — currently running on mock/sample data.
-- Backend: Flask API in early integration, currently serving live weather data; endpoints for other modules (resources, alerts, reports) not yet built.
-- AI/ML models: not yet integrated — prediction confidence values shown in the UI are placeholders.
-- Database & Knowledge Graph: not yet implemented.
-- Digital Twin & Multi-Agent backend: planned, not yet built.
+- Interactive Frontend Dashboard
+- FastAPI Backend
+- REST API Architecture
+- Dashboard Module
+- Weather Module
+- Disaster Map
+- Alerts
+- Hospitals
+- Rescue Operations
+- Resources
+- Reports
+- Analytics
+- JSON-Based Data Layer
 
-Features and architecture will continue to evolve as new modules are implemented.
+### In Progress
+
+- Frontend–Backend Integration
+- Live Weather API Integration
+
+### Planned
+
+- AI Prediction Models
+- PostgreSQL Migration
+- Knowledge Graph
+- Digital Twin
+- Multi-Agent AI
+- IoT Integration
+- Citizen Mobile Application
 
 ---
 
-# Contributing
+## Future Scope
+
+- Real-Time Satellite Data
+- IoT Sensor Integration
+- Explainable AI
+- Digital Twin Simulation
+- Intelligent Resource Optimization
+- National-Scale Deployment
+
+---
+
+## Contributing
 
 Contributions are welcome.
 
 1. Fork the repository.
-2. Create a new feature branch.
+2. Create a feature branch.
 3. Commit your changes.
 4. Push your branch.
 5. Open a Pull Request.
 
 ---
 
-# License
+## License
 
-This project is licensed under the MIT License.
-
----
-
-# Acknowledgements
-
-This project draws inspiration from modern research in Artificial Intelligence, Digital Twins, Geographic Information Systems, Disaster Management, Computer Vision, and Multi-Agent Systems.
+This project is licensed under the **MIT License**.
 
 ---
 
