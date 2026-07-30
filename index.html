@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varuna AI — National Disaster Intelligence Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app" id="appShell">
+
+  <div class="topbar">
+    <button class="collapse-btn" id="collapseBtn"><i class="ti ti-layout-sidebar-left-collapse"></i></button>
+    <div class="brand"><div class="mark"><svg viewBox="0 0 34 34" width="21" height="21" fill="none"><path d="M17 3 27.5 7.2v7.6c0 7.6-4.6 11.9-10.5 15.7C11 26.7 6.5 22.4 6.5 14.8V7.2z" fill="none" stroke="#14E6D3" stroke-width="1.5"/><circle cx="17" cy="14.5" r="4.3" fill="none" stroke="#14E6D3" stroke-width="1.3"/><circle cx="17" cy="14.5" r="1.5" fill="#14E6D3"/><path d="M17 6.7v3M17 19.6v2.9M9.9 14.5h2.8M21.3 14.5h2.8" stroke="#14E6D3" stroke-width="1.1" stroke-linecap="round"/><path d="M12.6 22.8c1.4 1.5 2.8 2.4 4.4 3 1.6-.6 3-1.5 4.4-3" stroke="#8CF5EA" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg></div>Varuna AI</div>
+    <div class="searchbar"><i class="ti ti-search"></i><input placeholder="Search districts, incidents, units…"></div>
+    <div class="topbar-right">
+      <div class="live-pill"><span class="pulse-dot"></span>LIVE · ASSAM COMMAND</div>
+      <div class="theme-toggle">
+        <button class="active" data-theme="dark"><i class="ti ti-moon"></i></button>
+        <button data-theme="light"><i class="ti ti-sun"></i></button>
+      </div>
+      <button class="icon-btn"><i class="ti ti-bell"></i><span class="dot"></span></button>
+      <button class="icon-btn" id="aiAssistantBtn"><i class="ti ti-sparkles"></i></button>
+      <div class="profile">
+        <div class="avatar">NS</div>
+        <div><div class="pname">Nitin Sharma</div><div class="prole" title="Director General, National Disaster Response Force">Director General, NDRF</div></div>
+        <i class="ti ti-chevron-down" style="font-size:14px;color:var(--text-faint)"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail" id="rail">
+    <div class="rail-section-lbl">Command</div>
+    <button class="nav-item active" data-view="dashboard"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></button>
+    <button class="nav-item" data-view="map"><i class="ti ti-map-2"></i><span>Live Disaster Map</span></button>
+    <button class="nav-item" data-view="ai"><i class="ti ti-brain"></i><span>AI Risk Prediction</span></button>
+
+    <div class="rail-section-lbl">Response</div>
+    <button class="nav-item" data-view="resources"><i class="ti ti-package"></i><span>Resource Management</span></button>
+    <button class="nav-item" data-view="hospitals"><i class="ti ti-building-hospital"></i><span>Hospitals</span></button>
+    <button class="nav-item" data-view="rescue"><i class="ti ti-shield"></i><span>Rescue Teams</span></button>
+    <button class="nav-item" data-view="alerts"><i class="ti ti-bell-ringing"></i><span>Emergency Alerts</span></button>
+
+    <div class="rail-section-lbl">Intelligence</div>
+    <button class="nav-item" data-view="satellite"><i class="ti ti-satellite"></i><span>Satellite Analysis</span></button>
+    <button class="nav-item" data-view="reports"><i class="ti ti-file-text"></i><span>Citizen Reports</span></button>
+    <button class="nav-item" data-view="analytics"><i class="ti ti-chart-bar"></i><span>Analytics</span></button>
+
+    <div class="rail-section-lbl">System</div>
+    <button class="nav-item" data-view="settings"><i class="ti ti-settings"></i><span>Settings</span></button>
+  </div>
+
+  <div class="main">
+
+    <!-- ============ DASHBOARD ============ -->
+    <div class="view active" id="view-dashboard">
+      <div class="view-head">
+        <div><div class="eyebrow">Executive overview</div><h1>National situation summary</h1><p>Real-time posture across all monitored sectors · updated every 60s</p></div>
+        <button class="btn primary"><i class="ti ti-refresh"></i>Refresh</button>
+      </div>
+
+      <div class="hero">
+        <div class="card ring-card">
+          <div class="ring-wrap">
+            <svg viewBox="0 0 160 160">
+              <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#FF6A4D"/><stop offset="100%" stop-color="#F5B94D"/></linearGradient></defs>
+              <circle class="ring-track" cx="80" cy="80" r="70"/>
+              <circle class="ring-fill" id="ringFill" cx="80" cy="80" r="70"/>
+            </svg>
+            <div class="ring-center"><div class="num" id="ringNum">0</div><div class="lbl">Severity /100</div></div>
+          </div>
+          <div class="ring-foot"><div class="t" id="ringPostureText">Elevated risk posture</div><div class="s" id="ringSubText">3 active disasters · Assam sector</div></div>
+        </div>
+
+        <div class="hero-kpis">
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--alert-dim);color:var(--alert)"><i class="ti ti-alert-triangle"></i></div><span class="ki-delta up" id="kpiActiveDisastersDelta"></span></div>
+            <div class="ki-val" id="kpiActiveDisasters" data-count="0">0</div><div class="ki-lbl">Active disasters</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--warn-dim);color:var(--warn)"><i class="ti ti-users-group"></i></div><span class="ki-delta up" id="kpiPopulationDelta"></span></div>
+            <div class="ki-val" id="kpiPopulation" data-count="0">0</div><div class="ki-lbl">Population at risk</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-truck"></i></div><span class="ki-delta down" id="kpiRescueDelta"></span></div>
+            <div class="ki-val" id="kpiRescueTeams" data-count="0">0</div><div class="ki-lbl">Rescue teams deployed</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--safe-dim);color:var(--safe)"><i class="ti ti-home"></i></div><span class="ki-delta down" id="kpiSheltersDelta"></span></div>
+            <div class="ki-val" id="kpiShelters" data-count="0">0</div><div class="ki-lbl">Shelters available</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--blue-dim);color:var(--blue)"><i class="ti ti-heartbeat"></i></div><span class="ki-delta up" id="kpiHospitalDelta"></span></div>
+            <div class="ki-val" id="kpiHospitalOccupancy" data-count="0" data-suffix="%">0</div><div class="ki-lbl">Hospital occupancy</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--violet-dim);color:var(--violet)"><i class="ti ti-cloud-storm"></i></div><span class="ki-delta up" id="kpiWeatherDelta"></span></div>
+            <div class="ki-val" id="kpiWeatherAlerts" data-count="0">0</div><div class="ki-lbl">Weather alerts</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-gauge"></i></div><span class="ki-delta down" id="kpiUtilDelta"></span></div>
+            <div class="ki-val" id="kpiResourceUtil" data-count="0" data-suffix="%">0</div><div class="ki-lbl">Resource utilization</div>
+          </div>
+          <div class="card hoverable kpi">
+            <div class="ki-top"><div class="ki-icon" style="background:var(--safe-dim);color:var(--safe)"><i class="ti ti-brain"></i></div><span class="ki-delta down" id="kpiConfDelta">stable</span></div>
+            <div class="ki-val" id="kpiAiConfidence" data-count="0" data-suffix="%">0</div><div class="ki-lbl">AI model confidence</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-lbl"><div class="n"><i class="ti ti-list-check" style="font-size:13px"></i></div><div><h3>Live incident feed</h3><p>Highest-priority events across monitored districts</p></div></div>
+      <div class="card" style="padding:0">
+        <table>
+          <tr><th>Incident</th><th>District</th><th>Severity</th><th>Score</th><th>Status</th></tr>
+          <tr><td>Riverside colony flooding</td><td>Sivasagar</td><td><span class="tag critical">Critical</span></td><td class="mono">92</td><td><span class="status-dot" style="background:var(--alert)"></span>Assigning</td></tr>
+          <tr><td>Sector 12 bridge collapse</td><td>Golaghat</td><td><span class="tag critical">Critical</span></td><td class="mono">87</td><td><span class="status-dot" style="background:var(--warn)"></span>En route</td></tr>
+          <tr><td>Market road waterlogging</td><td>Charaideo</td><td><span class="tag moderate">Moderate</span></td><td class="mono">54</td><td><span class="status-dot" style="background:var(--safe)"></span>Monitoring</td></tr>
+          <tr><td>School shelter overcapacity</td><td>Jorhat</td><td><span class="tag moderate">Moderate</span></td><td class="mono">48</td><td><span class="status-dot" style="background:var(--safe)"></span>Monitoring</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ LIVE DISASTER MAP ============ -->
+    <div class="view" id="view-map">
+      <div class="view-head">
+        <div><div class="eyebrow">GIS command view</div><h1>Live disaster map</h1><p>Guwahati sector · all overlays sourced from monitored sensors and rescue telemetry</p></div>
+        <button class="btn ghost"><i class="ti ti-maximize"></i>Fullscreen</button>
+      </div>
+
+      <div class="layer-chips" style="margin-bottom:14px">
+        <div class="chip on" data-layer="flood"><span class="dotc" style="background:var(--blue)"></span>Flood zones</div>
+        <div class="chip" data-layer="wildfire"><span class="dotc" style="background:var(--alert)"></span>Wildfire spread</div>
+        <div class="chip" data-layer="cyclone"><span class="dotc" style="background:var(--violet)"></span>Cyclone path</div>
+        <div class="chip" data-layer="landslide"><span class="dotc" style="background:#B08968"></span>Landslide probability</div>
+        <div class="chip" data-layer="earthquake"><span class="dotc" style="background:var(--warn)"></span>Earthquake intensity</div>
+        <div class="chip" data-layer="traffic"><span class="dotc" style="background:#F5B94D"></span>Traffic congestion</div>
+        <div class="chip on" data-layer="hospitals"><span class="dotc" style="background:var(--safe)"></span>Hospitals</div>
+        <div class="chip on" data-layer="shelters"><span class="dotc" style="background:var(--hydro)"></span>Shelters</div>
+        <div class="chip on" data-layer="units"><span class="dotc" style="background:#5B9CFF"></span>Rescue vehicles</div>
+        <div class="chip" data-layer="drones"><span class="dotc" style="background:#9B7BFF"></span>Drones</div>
+        <div class="chip" data-layer="sensors"><span class="dotc" style="background:#3ED598"></span>IoT sensors</div>
+        <div class="chip" data-layer="radar"><span class="dotc" style="background:#8CA3AE"></span>Weather radar</div>
+      </div>
+
+      <div class="map-shell">
+        <div class="map-col">
+          <div id="liveMap"></div>
+          <div class="card">
+            <div class="section-lbl" style="margin:0 0 4px"><div class="n"><i class="ti ti-timeline" style="font-size:13px"></i></div><div><h3>Response timeline — Sivasagar flood event</h3><p>Detection through recovery, tracked automatically</p></div></div>
+            <div class="timeline">
+              <div class="tl-step done"><div class="tl-dot"></div><div class="tl-label">Detection</div><div class="tl-time">06:12</div></div>
+              <div class="tl-step done"><div class="tl-dot"></div><div class="tl-label">Prediction</div><div class="tl-time">06:24</div></div>
+              <div class="tl-step done"><div class="tl-dot"></div><div class="tl-label">Alert issued</div><div class="tl-time">06:40</div></div>
+              <div class="tl-step active"><div class="tl-dot"></div><div class="tl-label">Rescue started</div><div class="tl-time">07:05</div></div>
+              <div class="tl-step"><div class="tl-dot"></div><div class="tl-label">Resources deployed</div><div class="tl-time">—</div></div>
+              <div class="tl-step"><div class="tl-dot"></div><div class="tl-label">Recovery</div><div class="tl-time">—</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card ai-panel">
+          <div class="ai-head"><div class="ai-avatar"><i class="ti ti-sparkles"></i></div><div><div style="font-weight:600;font-size:13.5px">AI Insight Assistant</div><div style="font-size:10.5px;color:var(--text-faint)">Analyzing Sivasagar sector</div></div></div>
+          <p style="font-size:12px;color:var(--text-dim);line-height:1.6;margin:0">Water levels near riverside colony are projected to rise 0.4m over the next 6 hours based on upstream gauge trends and rainfall forecast. Evacuation of low-lying wards is recommended before 14:00.</p>
+          <div>
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-faint);margin-bottom:3px"><span>Prediction confidence</span><b class="mono" style="color:var(--text)">87%</b></div>
+            <div class="confidence-bar"><div class="confidence-fill" style="width:87%"></div></div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 2px">Recommended actions</div>
+            <div class="ai-rec"><i class="ti ti-alert-triangle"></i>Issue evacuation notice for Wards 4–7</div>
+            <div class="ai-rec"><i class="ti ti-truck-delivery"></i>Reposition 2 boats from Golaghat depot</div>
+            <div class="ai-rec"><i class="ti ti-building-hospital"></i>Pre-alert Sivasagar Civil Hospital, +15 beds</div>
+          </div>
+          <div>
+            <div style="font-size:11px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 2px">Evacuation priority</div>
+            <span class="tag critical">Ward 4-7 · Immediate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ AI RISK PREDICTION ============ -->
+    <div class="view" id="view-ai">
+      <div class="view-head">
+        <div><div class="eyebrow">Predictive intelligence</div><h1>AI risk prediction</h1><p>Model outputs across all monitored hazard types</p></div>
+      </div>
+      <div class="grid grid-3">
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-droplet"></i></div><div class="feat-title">Flood prediction</div><div class="feat-desc">Upstream gauge + rainfall fusion model</div><div class="confidence-bar"><div class="confidence-fill" style="width:91%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">91% confidence · Sivasagar sector</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon" style="background:var(--alert-dim);color:var(--alert)"><i class="ti ti-flame"></i></div><div class="feat-title">Wildfire prediction</div><div class="feat-desc">Vegetation dryness + wind vector model</div><div class="confidence-bar"><div class="confidence-fill" style="width:34%;background:linear-gradient(90deg,var(--warn),var(--alert))"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">34% confidence · low current risk</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon" style="background:var(--warn-dim);color:var(--warn)"><i class="ti ti-activity"></i></div><div class="feat-title">Earthquake risk estimation</div><div class="feat-desc">Seismic history + fault-line proximity</div><div class="confidence-bar"><div class="confidence-fill" style="width:18%;background:linear-gradient(90deg,var(--warn),var(--alert))"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">18% confidence · minimal activity</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon" style="background:var(--violet-dim);color:var(--violet)"><i class="ti ti-tornado"></i></div><div class="feat-title">Cyclone tracking</div><div class="feat-desc">Satellite trajectory + pressure modeling</div><div class="confidence-bar"><div class="confidence-fill" style="width:0%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">No active system in basin</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon" style="background:#3a2a10;color:#c98a3e"><i class="ti ti-mountain"></i></div><div class="feat-title">Landslide probability</div><div class="feat-desc">Slope saturation + terrain slope model</div><div class="confidence-bar"><div class="confidence-fill" style="width:62%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">62% confidence · hill districts</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-photo-search"></i></div><div class="feat-title">AI image damage detection</div><div class="feat-desc">Computer vision on citizen-submitted photos</div><div class="confidence-bar"><div class="confidence-fill" style="width:88%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">88% average detection accuracy</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-satellite"></i></div><div class="feat-title">Satellite analysis</div><div class="feat-desc">Multi-spectral flood-extent mapping</div><div class="confidence-bar"><div class="confidence-fill" style="width:79%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">Updated 2 hrs ago</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-message-chatbot"></i></div><div class="feat-title">AI chatbot assistant</div><div class="feat-desc">Natural-language query over live incident data</div><button class="btn ghost" style="margin-top:4px;font-size:11.5px">Open assistant</button></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-microphone"></i></div><div class="feat-title">Voice command support</div><div class="feat-desc">Hands-free dispatch for field responders</div><button class="btn ghost" style="margin-top:4px;font-size:11.5px"><i class="ti ti-microphone"></i>Try voice input</button></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-language"></i></div><div class="feat-title">Multi-language translation</div><div class="feat-desc">Assamese · Bengali · Hindi · English</div><div class="lang-pills" style="display:flex;gap:6px;margin-top:2px"><span class="tag ok">EN</span><span class="tag ok">অস</span><span class="tag ok">বাং</span><span class="tag ok">हिं</span></div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-chart-dots"></i></div><div class="feat-title">Predictive analytics</div><div class="feat-desc">Resource-demand forecasting, 72-hr horizon</div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">Next update in 38 min</div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-drone"></i></div><div class="feat-title">Drone-fed terrain scan</div><div class="feat-desc">Live aerial feed correlation with flood layer</div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">2 drones airborne, Sivasagar</div></div>
+      </div>
+    </div>
+
+    <!-- ============ RESOURCE MANAGEMENT ============ -->
+    <div class="view" id="view-resources">
+      <div class="view-head"><div><div class="eyebrow">Logistics</div><h1>Resource management</h1><p>Live availability across all depots</p></div><button class="btn primary"><i class="ti ti-plus"></i>Request resource</button></div>
+      <div class="grid grid-4" id="resourceGrid"></div>
+    </div>
+
+    <!-- ============ HOSPITALS ============ -->
+    <div class="view" id="view-hospitals">
+      <div class="view-head"><div><div class="eyebrow">Medical readiness</div><h1>Hospitals</h1><p>Bed availability and ICU load, updated every 15 min</p></div></div>
+      <div class="card" style="padding:0">
+        <table>
+          <tr><th>Hospital</th><th>District</th><th>Beds available</th><th>ICU occupancy</th><th>Status</th></tr>
+          <tbody id="hospitalsTbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ============ RESCUE TEAMS ============ -->
+    <div class="view" id="view-rescue">
+      <div class="view-head"><div><div class="eyebrow">Field units</div><h1>Rescue teams</h1><p>Deployment status of all registered response units</p></div></div>
+      <div class="grid grid-4" id="rescueGrid"></div>
+    </div>
+
+    <!-- ============ EMERGENCY ALERTS ============ -->
+    <div class="view" id="view-alerts">
+      <div class="view-head"><div><div class="eyebrow">Public safety</div><h1>Emergency alerts</h1><p>Active advisories across monitored districts</p></div><button class="btn danger"><i class="ti ti-broadcast"></i>Issue new alert</button></div>
+      <div class="grid grid-2" id="alertsGrid"></div>
+    </div>
+
+    <!-- ============ SATELLITE ANALYSIS ============ -->
+    <div class="view" id="view-satellite">
+      <div class="view-head"><div><div class="eyebrow">Remote sensing</div><h1>Satellite analysis</h1><p>Multi-spectral imagery compared against baseline terrain</p></div></div>
+      <div class="grid grid-3">
+        <div class="card hoverable">
+          <div class="report-media" style="background:linear-gradient(180deg,rgba(7,15,23,.1) 45%,rgba(7,15,23,.92) 100%),url('https://assets.science.nasa.gov/dynamicimage/assets/science/esd/eo/images/imagerecords/13000/13474/aqua_bangladesh_13jul04.jpg?w=800&amp;h=600&amp;fit=clip&amp;crop=faces%2Cfocalpoint') center/cover no-repeat;align-items:flex-end;justify-content:flex-start;padding:8px"><i class="ti ti-satellite" style="font-size:15px;background:rgba(7,15,23,.65);border-radius:7px;padding:6px"></i></div>
+          <div style="font-weight:600;font-size:13px">Sivasagar — flood extent</div>
+          <div style="font-size:11px;color:var(--text-faint);margin:4px 0 8px">Sentinel-derived, captured 4 hrs ago</div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim)"><span>Flooded area</span><b class="mono" style="color:var(--text)">38.4 km²</b></div>
+        </div>
+        <div class="card hoverable">
+          <div class="report-media" style="background:linear-gradient(180deg,rgba(7,15,23,.1) 45%,rgba(7,15,23,.92) 100%),url('https://commons.wikimedia.org/wiki/Special:FilePath/Landslide%20o%20the%20way%20from%20guwahati%20to%20shilong.jpg?width=800') center/cover no-repeat;align-items:flex-end;justify-content:flex-start;padding:8px"><i class="ti ti-mountain" style="font-size:15px;background:rgba(7,15,23,.65);border-radius:7px;padding:6px"></i></div>
+          <div style="font-weight:600;font-size:13px">Charaideo hills — slope saturation</div>
+          <div style="font-size:11px;color:var(--text-faint);margin:4px 0 8px">Radar-derived, captured 9 hrs ago</div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim)"><span>High-risk slope</span><b class="mono" style="color:var(--text)">12 sites</b></div>
+        </div>
+        <div class="card hoverable">
+          <div class="report-media" style="background:linear-gradient(180deg,rgba(7,15,23,.1) 45%,rgba(7,15,23,.92) 100%),url('https://commons.wikimedia.org/wiki/Special:FilePath/Chinawal-Vadgaon%20broken%20bridge%20on%20Suki%20river%201.jpg?width=800') center/cover no-repeat;align-items:flex-end;justify-content:flex-start;padding:8px"><i class="ti ti-photo-search" style="font-size:15px;background:rgba(7,15,23,.65);border-radius:7px;padding:6px"></i></div>
+          <div style="font-weight:600;font-size:13px">AI damage detection — Golaghat bridge</div>
+          <div style="font-size:11px;color:var(--text-faint);margin:4px 0 8px">Structural damage flagged automatically</div>
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim)"><span>Detection confidence</span><b class="mono" style="color:var(--text)">88%</b></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CITIZEN REPORTS ============ -->
+    <div class="view" id="view-reports">
+      <div class="view-head"><div><div class="eyebrow">Crowd intelligence</div><h1>Citizen reports</h1><p>Field reports submitted via the public app, AI-verified before dispatch</p></div></div>
+      <div class="grid grid-3" id="reportsGrid"></div>
+    </div>
+
+    <!-- ============ ANALYTICS ============ -->
+    <div class="view" id="view-analytics">
+      <div class="view-head"><div><div class="eyebrow">Performance</div><h1>Analytics</h1><p>Historical trends across response operations</p></div></div>
+      <div class="grid grid-2">
+        <div class="card chart-card"><h3 style="margin:0 0 10px;font-size:13.5px">Disaster frequency by month</h3><canvas id="chartFreq"></canvas></div>
+        <div class="card chart-card"><h3 style="margin:0 0 10px;font-size:13.5px">Average response time (min)</h3><canvas id="chartResponse"></canvas></div>
+        <div class="card chart-card"><h3 style="margin:0 0 10px;font-size:13.5px">Resource utilization by category</h3><canvas id="chartUtil"></canvas></div>
+        <div class="card chart-card"><h3 style="margin:0 0 10px;font-size:13.5px">AI model confidence over time</h3><canvas id="chartConf"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ============ SETTINGS ============ -->
+    <div class="view" id="view-settings">
+      <div class="view-head"><div><div class="eyebrow">Preferences</div><h1>Settings</h1><p>Account, notifications, and platform preferences</p></div></div>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3 style="margin-top:0;font-size:13.5px">Appearance</h3>
+          <label style="font-size:12px;color:var(--text-dim)">Theme</label>
+          <div style="display:flex;gap:8px;margin-top:6px"><button class="btn ghost" onclick="setTheme('dark')"><i class="ti ti-moon"></i>Dark</button><button class="btn ghost" onclick="setTheme('light')"><i class="ti ti-sun"></i>Light</button></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;font-size:13.5px">Language</h3>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px"><span class="tag ok">English</span><span class="tag ok">অসমীয়া</span><span class="tag ok">বাংলা</span><span class="tag ok">हिन्दी</span></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;font-size:13.5px">Notifications</h3>
+          <div style="font-size:12.5px;color:var(--text-dim);line-height:2">Critical alerts · always on<br>Shelter capacity warnings · on<br>Weekly analytics digest · off</div>
+        </div>
+        <div class="card">
+          <h3 style="margin-top:0;font-size:13.5px">Account</h3>
+          <div style="font-size:12.5px;color:var(--text-dim);line-height:2">Nitin Sharma — Dispatch Officer<br>Assam State Command<br>Role: Dispatcher</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="js/config.js"></script>
+<script src="js/mock-data.js"></script>
+<script src="js/theme.js"></script>
+<script src="js/toast.js"></script>
+<script src="js/counters.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/render-resources.js"></script>
+<script src="js/render-rescue.js"></script>
+<script src="js/render-alerts.js"></script>
+<script src="js/render-reports.js"></script>
+<script src="js/render-hospitals.js"></script>
+<script src="js/live-map.js"></script>
+<script src="js/analytics-charts.js"></script>
+<script>
+// Fetches everything the UI needs from the backend and renders it into the
+// existing DOM structure (no markup/layout changes — only data binding).
+// Bootstraps the app: depends on functions/vars from every js/*.js module
+// above, so it runs last, after all of them have loaded.
+async function initFromBackend(){
+  let overview = {};
+  let hospitals = [];
+  let predictions = [];
+
+  // Dashboard overview + severity ring
+  try {
+    const dashboard = await apiGet('/dashboard/');
+    overview = dashboard.overview_stats || {};
+    setKpi('kpiActiveDisasters', overview.active_alerts ?? 0);
+    setKpi('kpiPopulation', overview.total_population_affected ?? 0);
+    setKpi('kpiRescueTeams', overview.rescue_teams_deployed ?? 0);
+    setKpi('kpiShelters', overview.relief_camps_active ?? 0);
+    const riskLevel = overview.current_risk_level || 'Moderate';
+    setSeverityRing(RISK_LEVEL_SCORE[riskLevel] ?? 50);
+    const postureEl = document.getElementById('ringPostureText');
+    const subEl = document.getElementById('ringSubText');
+    if (postureEl) postureEl.textContent = `${riskLevel} risk posture`;
+    if (subEl) subEl.textContent = `${overview.active_alerts ?? 0} active disasters · ${dashboard.state || 'monitored sector'}`;
+  } catch (e) { console.error('Failed to load dashboard overview', e); }
+
+  // Hospitals — table, KPI, map layer data
+  try {
+    hospitals = await apiGet('/hospitals/');
+    renderHospitalsTable(hospitals);
+    const withBeds = hospitals.filter(h=>h.beds_total);
+    const avgOcc = withBeds.length
+      ? Math.round(withBeds.reduce((sum,h)=> sum + ((h.beds_total - h.beds_available) / h.beds_total) * 100, 0) / withBeds.length)
+      : 0;
+    setKpi('kpiHospitalOccupancy', avgOcc, '%');
+  } catch (e) { console.error('Failed to load hospitals', e); }
+
+  // Weather — heavy-rain district count feeds the "Weather alerts" KPI
+  try {
+    const heavyRain = await apiGet('/weather/heavy-rain');
+    setKpi('kpiWeatherAlerts', Array.isArray(heavyRain) ? heavyRain.length : 0);
+  } catch (e) { console.error('Failed to load weather', e); }
+
+  // AI predictions — average confidence feeds the "AI model confidence" KPI
+  try {
+    predictions = await apiGet('/prediction/all');
+    const avgConf = predictions.length
+      ? Math.round(predictions.reduce((sum,p)=> sum + (p.confidence || 0), 0) / predictions.length * 100)
+      : 0;
+    setKpi('kpiAiConfidence', avgConf, '%');
+  } catch (e) { console.error('Failed to load predictions', e); }
+
+  // Resources — shelter occupancy/capacity feeds "Resource utilization"
+  try {
+    const shelters = await apiGet('/resources/shelters');
+    const withCapacity = shelters.filter(s=>s.capacity);
+    const avgUtil = withCapacity.length
+      ? Math.round(withCapacity.reduce((sum,s)=> sum + (s.occupancy / s.capacity) * 100, 0) / withCapacity.length)
+      : 0;
+    setKpi('kpiResourceUtil', avgUtil, '%');
+  } catch (e) { console.error('Failed to load resources', e); }
+
+  animateAllKpis();
+  renderResourceGrid();
+
+  // Rescue teams
+  try {
+    RESCUE_TEAMS = await apiGet('/rescue/');
+    renderRescueGrid();
+  } catch (e) { console.error('Failed to load rescue teams', e); }
+
+  // Active alerts, enriched with AI confidence from the matching district's prediction
+  try {
+    ALERTS = await apiGet('/alerts/active');
+    ALERTS.forEach(a=>{
+      const match = predictions.find(p=> (p.district || '').toLowerCase() === (a.district || '').toLowerCase());
+      a._predictedConfidence = match ? Math.round(match.confidence * 100) : null;
+    });
+    renderAlertsGrid();
+  } catch (e) { console.error('Failed to load alerts', e); }
+
+  // Citizen reports
+  try {
+    REPORTS = await apiGet('/reports/');
+    renderReportsGrid();
+  } catch (e) { console.error('Failed to load reports', e); }
+
+  await loadMapAndHospitalLayers();
+}
+
+initFromBackend();
+</script>
+</body>
+</html>
