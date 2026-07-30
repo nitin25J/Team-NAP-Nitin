@@ -156,10 +156,21 @@ The Digital Twin enables authorities to simulate disasters before they occur and
 
 ## Frontend
 
-- React.js
-- Tailwind CSS
-- Leaflet.js
-- Chart.js
+- **HTML5**
+- **CSS3**
+- **JavaScript (ES6)**
+- **Leaflet.js** (Interactive Maps)
+- **Chart.js** (Data Visualization)
+- **Tabler Icons** (Icon Library)
+- **Google Fonts**
+  - Inter
+  - Space Grotesk
+  - IBM Plex Mono
+- **CSS Grid & Flexbox**
+- **CSS Variables (Design Tokens)**
+- **Glassmorphism UI**
+- **Responsive Web Design**
+- **Dark/Light Theme**
 
 ## Backend
 
