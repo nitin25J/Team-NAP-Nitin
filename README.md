@@ -8,7 +8,7 @@
 
 ## Overview
 
-Varuna AI is an AI-powered Disaster Intelligence Platform designed to transform disaster management from reactive response to proactive decision-making. The platform integrates weather forecasts, satellite imagery, GIS maps, IoT sensors, traffic networks, hospitals, and emergency resources into a unified intelligence layer.
+Varuna AI is an AI-powered Disaster Intelligence Platform designed to transform disaster management from reactive response to proactive decision-making. The platform integrates weather forecasts, satellite imagery, GIS maps, IoT sensors, traffic networks, hospitals, and emergency resources into a unified intelligence layers.
 
 Using Multi-Agent AI, Digital Twins, Knowledge Graphs, Computer Vision, and Predictive Analytics, Varuna AI continuously monitors disaster risks, simulates future scenarios, and generates explainable recommendations for evacuation planning, rescue deployment, resource allocation, and emergency response.
 
