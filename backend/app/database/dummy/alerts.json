@@ -1,0 +1,64 @@
+{
+  "alerts": [
+    {
+      "id": "ALT-1001",
+      "type": "Flood",
+      "severity": "High",
+      "district": "Dibrugarh",
+      "river": "Brahmaputra",
+      "message": "Brahmaputra river flowing above danger level near Dibrugarh town. Immediate evacuation advised for low-lying areas.",
+      "issued_by": "Assam State Disaster Management Authority",
+      "issued_at": "2026-07-29T06:30:00+05:30",
+      "valid_until": "2026-07-31T23:59:00+05:30",
+      "status": "Active"
+    },
+    {
+      "id": "ALT-1002",
+      "type": "Heavy Rainfall",
+      "severity": "Moderate",
+      "district": "Cachar",
+      "river": null,
+      "message": "IMD forecasts heavy to very heavy rainfall over Cachar district in next 48 hours. Waterlogging expected in Silchar town.",
+      "issued_by": "India Meteorological Department",
+      "issued_at": "2026-07-29T09:00:00+05:30",
+      "valid_until": "2026-07-31T09:00:00+05:30",
+      "status": "Active"
+    },
+    {
+      "id": "ALT-1003",
+      "type": "Flood",
+      "severity": "Severe",
+      "district": "Jorhat",
+      "river": "Brahmaputra",
+      "message": "Embankment breach reported near Majuli sector. Rescue teams deployed. Residents advised to move to nearest relief camp immediately.",
+      "issued_by": "Assam State Disaster Management Authority",
+      "issued_at": "2026-07-28T22:15:00+05:30",
+      "valid_until": "2026-08-01T22:15:00+05:30",
+      "status": "Active"
+    },
+    {
+      "id": "ALT-1004",
+      "type": "Landslide",
+      "severity": "Moderate",
+      "district": "Golaghat",
+      "river": null,
+      "message": "Risk of landslides in hilly fringe areas of Golaghat due to continuous rainfall. Avoid unnecessary travel through hill roads.",
+      "issued_by": "District Disaster Management Authority, Golaghat",
+      "issued_at": "2026-07-27T14:00:00+05:30",
+      "valid_until": "2026-07-30T14:00:00+05:30",
+      "status": "Expired"
+    },
+    {
+      "id": "ALT-1005",
+      "type": "River Water Level",
+      "severity": "Low",
+      "district": "Sivasagar",
+      "river": "Dikhow",
+      "message": "Dikhow river water level rising steadily but remains below warning mark. Continued monitoring in place.",
+      "issued_by": "Central Water Commission",
+      "issued_at": "2026-07-29T11:45:00+05:30",
+      "valid_until": "2026-08-02T11:45:00+05:30",
+      "status": "Active"
+    }
+  ]
+}

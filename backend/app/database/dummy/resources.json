@@ -1,0 +1,65 @@
+{
+  "inventory_summary": {
+    "state": "Assam",
+    "last_updated": "2026-07-29T10:00:00+05:30",
+    "total_boats": 214,
+    "total_food_packets": 152000,
+    "total_water_purification_units": 340,
+    "total_medical_kits": 4200,
+    "total_tents": 3100
+  },
+  "district_resources": [
+    {
+      "district": "Dibrugarh",
+      "boats": 42,
+      "food_packets": 28000,
+      "medical_kits": 900,
+      "tents": 620,
+      "shelters": [
+        { "name": "Chabua Higher Secondary School", "capacity": 800, "occupancy": 612 },
+        { "name": "Dibrugarh Town Hall Relief Camp", "capacity": 500, "occupancy": 340 }
+      ]
+    },
+    {
+      "district": "Jorhat",
+      "boats": 51,
+      "food_packets": 34000,
+      "medical_kits": 1100,
+      "tents": 780,
+      "shelters": [
+        { "name": "Majuli Community Centre", "capacity": 1000, "occupancy": 940 },
+        { "name": "Jorhat Engineering College Camp", "capacity": 600, "occupancy": 410 }
+      ]
+    },
+    {
+      "district": "Cachar",
+      "boats": 38,
+      "food_packets": 30500,
+      "medical_kits": 850,
+      "tents": 560,
+      "shelters": [
+        { "name": "Silchar Government Girls HS School", "capacity": 700, "occupancy": 505 }
+      ]
+    },
+    {
+      "district": "Golaghat",
+      "boats": 18,
+      "food_packets": 15200,
+      "medical_kits": 400,
+      "tents": 310,
+      "shelters": [
+        { "name": "Golaghat District Library Camp", "capacity": 300, "occupancy": 140 }
+      ]
+    },
+    {
+      "district": "Sivasagar",
+      "boats": 27,
+      "food_packets": 20300,
+      "medical_kits": 520,
+      "tents": 400,
+      "shelters": [
+        { "name": "Nazira Relief Camp Centre", "capacity": 450, "occupancy": 298 }
+      ]
+    }
+  ]
+}
