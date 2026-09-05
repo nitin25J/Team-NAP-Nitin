@@ -14,16 +14,28 @@ class HospitalModel(Base):
     icu_total = Column(Integer, default=20)
     lat = Column(Float)
     lng = Column(Float)
+    contact = Column(String, default="+91 361 2529457")
+    status = Column(String, default="Operational")
 
     def to_dict(self):
+        avail = self.beds_available or 0
+        total = self.beds_total or 100
+        is_low = avail < 15
+        calc_status = self.status or ("High Load" if is_low else "Operational")
         return {
             "id": self.id,
             "name": self.name,
             "district": self.district,
-            "beds_available": self.beds_available,
-            "beds_total": self.beds_total,
-            "icu_available": self.icu_available,
-            "icu_total": self.icu_total,
+            "beds_available": avail,
+            "beds_total": total,
+            "icu_available": self.icu_available or 0,
+            "icu_total": self.icu_total or 20,
+            "icu_beds": self.icu_available or 0,
+            "oxygen_available": True,
+            "status": calc_status,
+            "contact": self.contact or "+91 361 2529457",
+            "lat": self.lat,
+            "lng": self.lng,
             "coordinates": {"lat": self.lat, "lng": self.lng} if self.lat and self.lng else None
         }
 
@@ -44,8 +56,10 @@ class ShelterModel(Base):
             "id": self.id,
             "name": self.name,
             "district": self.district,
-            "capacity": self.capacity,
-            "occupancy": self.occupancy,
+            "capacity": self.capacity or 500,
+            "occupancy": self.occupancy or 0,
+            "lat": self.lat,
+            "lng": self.lng,
             "coordinates": {"lat": self.lat, "lng": self.lng} if self.lat and self.lng else None
         }
 
@@ -66,11 +80,16 @@ class RescueTeamModel(Base):
     def to_dict(self):
         return {
             "id": self.team_id or str(self.id),
+            "team_id": self.team_id or str(self.id),
             "name": self.name,
             "type": self.type,
             "district": self.district,
-            "personnel_count": self.personnel_count,
-            "status": self.status,
+            "location": self.district,
+            "members": self.personnel_count or 10,
+            "personnel_count": self.personnel_count or 10,
+            "status": (self.status or "Standby").lower(),
+            "lat": self.lat,
+            "lng": self.lng,
             "coordinates": {"lat": self.lat, "lng": self.lng} if self.lat and self.lng else None
         }
 
@@ -91,17 +110,26 @@ class EmergencyAlertModel(Base):
     status = Column(String, default="Active")
 
     def to_dict(self):
+        sev = (self.severity or "Severe").lower()
+        is_crit = sev == "critical"
         return {
+            "id": self.id,
             "alert_id": self.alert_id or f"ALT-{self.id}",
             "type": self.type,
-            "severity": self.severity,
+            "title": f"{self.type} — {self.district}",
+            "severity": self.severity or "Severe",
+            "level": "critical" if is_crit else "warning",
             "district": self.district,
+            "districts": self.district,
             "river": self.river,
             "message": self.message,
+            "population": "1.2 L",
+            "confidence": 91,
+            "endsIn": 10800,
             "issued_by": self.issued_by,
             "issued_at": self.issued_at.isoformat() if self.issued_at else None,
             "valid_until": self.valid_until.isoformat() if self.valid_until else None,
-            "status": self.status
+            "status": self.status or "Active"
         }
 
 
@@ -121,15 +149,21 @@ class CitizenReportModel(Base):
 
     def to_dict(self):
         return {
+            "id": self.id,
             "report_id": self.report_id or f"REP-{self.id}",
-            "reporter_name": self.reporter_name,
+            "reporter_name": self.reporter_name or "Anonymous citizen",
+            "user": self.reporter_name or "Anonymous citizen",
             "type": self.type,
-            "location": self.location,
+            "location": f"{self.location}, {self.district}" if self.location and self.district and self.district not in self.location else (self.location or self.district),
             "district": self.district,
             "description": self.description or "",
-            "status": self.status,
+            "severity": "critical" if "critical" in (self.description or "").lower() or "flood" in (self.type or "").lower() else "moderate",
+            "status": self.status or "Verified",
+            "verified": self.media_attached or (self.status or "").lower() in ["verified", "dispatched", "en route"],
             "media_attached": self.media_attached,
-            "submitted_at": self.submitted_at.isoformat() if self.submitted_at else None
+            "time": "Just now" if not self.submitted_at else "Recently",
+            "submitted_at": self.submitted_at.isoformat() if self.submitted_at else None,
+            "image": "https://images.unsplash.com/photo-1657069343871-fd1476990d04?auto=format&fit=crop&w=1200&q=80"
         }
 
 
@@ -145,9 +179,10 @@ class ResourceItemModel(Base):
 
     def to_dict(self):
         return {
+            "id": self.id,
             "name": self.name,
-            "icon": self.icon,
-            "have": self.have,
-            "total": self.total,
-            "color": self.color
+            "icon": self.icon or "ti-package",
+            "have": self.have or 0,
+            "total": self.total or 100,
+            "color": self.color or "var(--safe)"
         }

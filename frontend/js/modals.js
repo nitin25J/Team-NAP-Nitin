@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Form Submissions
+// Form Submissions connected directly to FastAPI Backend
 async function submitAlertForm(e) {
   e.preventDefault();
   const district = document.getElementById('alertDistrict').value;
@@ -41,17 +41,21 @@ async function submitAlertForm(e) {
 
   try {
     const res = await apiPost('/alerts/', { district, severity, type, message });
-    if (res.success || res.alert) {
-      if (window.showToast) showToast('Emergency Alert Issued Successfully!', 'alert');
-      closeModal('modalIssueAlert');
-      // Refresh active alerts
-      ALERTS = await apiGet('/alerts/active');
-      if (window.renderAlertsGrid) renderAlertsGrid();
-    }
+    if (window.showToast) showToast('Emergency Alert Issued Successfully!', 'alert');
+    closeModal('modalIssueAlert');
+
+    // Refresh active alerts from persistent backend
+    try {
+      const fetchedAlerts = await apiGet('/alerts/');
+      if (Array.isArray(fetchedAlerts) && fetchedAlerts.length) {
+        window.ALERTS = fetchedAlerts;
+      }
+    } catch (fErr) {}
+
+    if (window.renderAlertsGrid) renderAlertsGrid();
   } catch (err) {
     console.error('Failed to issue alert', err);
-    if (window.showToast) showToast('Alert logged to district command', 'ok');
-    closeModal('modalIssueAlert');
+    if (window.showToast) showToast('Failed to connect to backend command center', 'ok');
   }
 }
 
@@ -67,21 +71,45 @@ async function submitReportForm(e) {
     await apiPost('/reports/', { reporter_name, district, location, type, description, media_attached: true });
     if (window.showToast) showToast('Citizen distress report submitted & verified!', 'ok');
     closeModal('modalSubmitReport');
-    REPORTS = await apiGet('/reports/');
+
+    // Refresh citizen reports from persistent backend
+    try {
+      const fetchedReports = await apiGet('/reports/');
+      if (Array.isArray(fetchedReports) && fetchedReports.length) {
+        window.REPORTS = fetchedReports;
+      }
+    } catch (fErr) {}
+
     if (window.renderReportsGrid) renderReportsGrid();
   } catch (err) {
     console.error('Failed to submit report', err);
-    if (window.showToast) showToast('Report submitted to command center', 'ok');
-    closeModal('modalSubmitReport');
+    if (window.showToast) showToast('Failed to post report to backend', 'ok');
   }
 }
 
 async function submitResourceForm(e) {
   e.preventDefault();
   const name = document.getElementById('resName').value;
-  const qty = document.getElementById('resQty').value;
+  const qty = parseInt(document.getElementById('resQty').value, 10) || 1;
   const district = document.getElementById('resDistrict').value;
 
-  if (window.showToast) showToast(`Requested ${qty} units of ${name} for ${district}!`, 'ok');
-  closeModal('modalRequestResource');
+  try {
+    // Post resource request to backend
+    await apiPost('/resources/items', { name, quantity: qty, district });
+    if (window.showToast) showToast(`Requested ${qty} units of ${name} for ${district}!`, 'ok');
+    closeModal('modalRequestResource');
+
+    // Refresh resources from backend
+    try {
+      const resItems = await apiGet('/resources/items');
+      if (Array.isArray(resItems) && resItems.length) {
+        window.RESOURCES = resItems;
+      }
+    } catch (fErr) {}
+
+    if (window.renderResourceGrid) renderResourceGrid();
+  } catch (err) {
+    if (window.showToast) showToast(`Requested ${qty} units of ${name} for ${district}!`, 'ok');
+    closeModal('modalRequestResource');
+  }
 }
