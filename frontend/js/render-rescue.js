@@ -1,8 +1,11 @@
 // Renders the Rescue Teams grid from RESCUE_TEAMS (see mock-data.js)
-const rescueGrid = document.getElementById('rescueGrid');
 
-if (rescueGrid) {
-  rescueGrid.innerHTML = RESCUE_TEAMS.map(t=>{
+window.renderRescueGrid = function() {
+  const rescueGrid = document.getElementById('rescueGrid');
+  if (!rescueGrid) return;
+  const list = window.RESCUE_TEAMS || [];
+
+  rescueGrid.innerHTML = list.map(t => {
     const deployed = t.status === 'deployed';
     return `
       <div class="card hoverable res-card">
@@ -17,4 +20,9 @@ if (rescueGrid) {
         </div>
       </div>`;
   }).join('');
-}
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (window.renderRescueGrid) window.renderRescueGrid();
+});
+

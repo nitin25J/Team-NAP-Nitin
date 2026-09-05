@@ -1,7 +1,7 @@
 // All mock records live here so each render-*.js file only handles rendering.
-// When the backend is ready, replace these arrays with fetch(`${API_BASE}/api/...`) calls.
+// Fallback datasets ensure the UI functions 100% even if backend network calls fail.
 
-const RESOURCES = [
+let RESOURCES = [
   { name:'Ambulances',        icon:'ti-ambulance',      have:34, total:48, color:'var(--alert)' },
   { name:'Fire trucks',       icon:'ti-flame',          have:11, total:16, color:'var(--warn)' },
   { name:'Boats',             icon:'ti-anchor',         have:22, total:30, color:'var(--hydro)' },
@@ -12,7 +12,7 @@ const RESOURCES = [
   { name:'Volunteers',        icon:'ti-users',          have:312,total:400, color:'var(--safe)' },
 ];
 
-const RESCUE_TEAMS = [
+let RESCUE_TEAMS = [
   { name:'NDRF Team Alpha',   type:'NDRF',      members:12, location:'Sivasagar', status:'deployed' },
   { name:'SDRF Unit 3',       type:'SDRF',      members:9,  location:'Golaghat',  status:'deployed' },
   { name:'District Police RRT', type:'Police',  members:15, location:'Jorhat',    status:'standby' },
@@ -23,14 +23,15 @@ const RESCUE_TEAMS = [
   { name:'Civil Defence Corps', type:'Volunteer', members:30, location:'Jorhat', status:'standby' },
 ];
 
-const ALERTS = [
+let ALERTS = [
   { title:'Severe flood warning — Sivasagar', level:'critical', districts:'Sivasagar, Charaideo', population:'1.2 L', confidence:91, endsIn: 3*3600 },
   { title:'River level advisory — Dhansiri (Golaghat)', level:'warning', districts:'Golaghat', population:'340,000', confidence:84, endsIn: 6*3600 },
   { title:'Heavy rainfall alert — Upper Assam', level:'warning', districts:'Jorhat, Sivasagar, Golaghat', population:'2.1 L', confidence:78, endsIn: 12*3600 },
   { title:'Road closure advisory — GS Road link', level:'critical', districts:'Guwahati sector', population:'—', confidence:95, endsIn: 1*3600 + 40*60 },
 ];
 
-const REPORTS = [
+let REPORTS = [
+
   {
     user: "Anonymous citizen",
     location: "Riverside Colony, Sivasagar",
@@ -86,3 +87,12 @@ const REPORTS = [
     image: "https://images.unsplash.com/photo-1741081288260-877057e3fa27?auto=format&fit=crop&w=1200&q=80"
   }
 ];
+
+let HOSPITALS = [
+  { name: 'Sivasagar Civil Hospital', district: 'Sivasagar', status: 'High Occupancy', beds_available: 12, beds_total: 120, icu_beds: 4, oxygen_available: true, lat: 26.9826, lng: 94.6425, contact: '+91 3772 222100' },
+  { name: 'Jorhat Medical College & Hospital', district: 'Jorhat', status: 'Operational', beds_available: 84, beds_total: 450, icu_beds: 18, oxygen_available: true, lat: 26.7570, lng: 94.2031, contact: '+91 376 2370010' },
+  { name: 'Golaghat Civil Hospital', district: 'Golaghat', status: 'Critical Surge', beds_available: 5, beds_total: 90, icu_beds: 2, oxygen_available: true, lat: 26.5194, lng: 93.9634, contact: '+91 3774 280222' },
+  { name: 'Assam Medical College Hospital (AMCH)', district: 'Dibrugarh', status: 'Operational', beds_available: 140, beds_total: 800, icu_beds: 35, oxygen_available: true, lat: 27.4728, lng: 94.9120, contact: '+91 373 2300080' },
+  { name: 'Silchar Medical College Hospital', district: 'Cachar', status: 'Moderate', beds_available: 62, beds_total: 500, icu_beds: 15, oxygen_available: true, lat: 24.8333, lng: 92.7789, contact: '+91 3842 240445' }
+];
+

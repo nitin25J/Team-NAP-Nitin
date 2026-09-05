@@ -26,7 +26,7 @@
         <button data-theme="light"><i class="ti ti-sun"></i></button>
       </div>
       <button class="icon-btn"><i class="ti ti-bell"></i><span class="dot"></span></button>
-      <button class="icon-btn" id="aiAssistantBtn"><i class="ti ti-sparkles"></i></button>
+      <button class="icon-btn" id="aiAssistantBtn" title="Open AI Assistant"><i class="ti ti-sparkles"></i></button>
       <div class="profile">
         <div class="avatar">NS</div>
         <div><div class="pname">Nitin Sharma</div><div class="prole" title="Director General, National Disaster Response Force">Director General, NDRF</div></div>
@@ -75,41 +75,41 @@
             </svg>
             <div class="ring-center"><div class="num" id="ringNum">0</div><div class="lbl">Severity /100</div></div>
           </div>
-          <div class="ring-foot"><div class="t">Elevated risk posture</div><div class="s">3 active disasters · Assam sector</div></div>
+          <div class="ring-foot"><div class="t" id="ringPostureText">Elevated risk posture</div><div class="s" id="ringSubText">3 active disasters · Assam sector</div></div>
         </div>
 
         <div class="hero-kpis">
           <div class="card hoverable kpi">
-            <div class="ki-top"><div class="ki-icon" style="background:var(--alert-dim);color:var(--alert)"><i class="ti ti-alert-triangle"></i></div><span class="ki-delta up">+1</span></div>
-            <div class="ki-val" data-count="3">0</div><div class="ki-lbl">Active disasters</div>
+            <div class="ki-top"><div class="ki-icon" style="background:var(--alert-dim);color:var(--alert)"><i class="ti ti-alert-triangle"></i></div><span class="ki-delta up" id="kpiActiveDisastersDelta"></span></div>
+            <div class="ki-val" id="kpiActiveDisasters" data-count="0">0</div><div class="ki-lbl">Active disasters</div>
           </div>
           <div class="card hoverable kpi">
-            <div class="ki-top"><div class="ki-icon" style="background:var(--warn-dim);color:var(--warn)"><i class="ti ti-users-group"></i></div><span class="ki-delta up">+8%</span></div>
-            <div class="ki-val" data-count="445000">0</div><div class="ki-lbl">Population at risk</div>
+            <div class="ki-top"><div class="ki-icon" style="background:var(--warn-dim);color:var(--warn)"><i class="ti ti-users-group"></i></div><span class="ki-delta up" id="kpiPopulationDelta"></span></div>
+            <div class="ki-val" id="kpiPopulation" data-count="0">0</div><div class="ki-lbl">Population at risk</div>
           </div>
           <div class="card hoverable kpi">
-            <div class="ki-top"><div class="ki-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-truck"></i></div><span class="ki-delta down">+12</span></div>
-            <div class="ki-val" data-count="86">0</div><div class="ki-lbl">Rescue teams deployed</div>
+            <div class="ki-top"><div class="ki-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-truck"></i></div><span class="ki-delta down" id="kpiRescueDelta"></span></div>
+            <div class="ki-val" id="kpiRescueTeams" data-count="0">0</div><div class="ki-lbl">Rescue teams deployed</div>
           </div>
           <div class="card hoverable kpi">
-            <div class="ki-top"><div class="ki-icon" style="background:var(--safe-dim);color:var(--safe)"><i class="ti ti-home"></i></div><span class="ki-delta down">+5</span></div>
-            <div class="ki-val" data-count="109">0</div><div class="ki-lbl">Shelters available</div>
+            <div class="ki-top"><div class="ki-icon" style="background:var(--safe-dim);color:var(--safe)"><i class="ti ti-home"></i></div><span class="ki-delta down" id="kpiSheltersDelta"></span></div>
+            <div class="ki-val" id="kpiShelters" data-count="0">0</div><div class="ki-lbl">Shelters available</div>
           </div>
           <div class="card hoverable kpi">
-            <div class="ki-top"><div class="ki-icon" style="background:var(--blue-dim);color:var(--blue)"><i class="ti ti-heartbeat"></i></div><span class="ki-delta up">71%</span></div>
-            <div class="ki-val" data-count="71" data-suffix="%">0</div><div class="ki-lbl">Hospital occupancy</div>
+            <div class="ki-top"><div class="ki-icon" style="background:var(--blue-dim);color:var(--blue)"><i class="ti ti-heartbeat"></i></div><span class="ki-delta up" id="kpiHospitalDelta"></span></div>
+            <div class="ki-val" id="kpiHospitalOccupancy" data-count="0" data-suffix="%">0</div><div class="ki-lbl">Hospital occupancy</div>
           </div>
           <div class="card hoverable kpi">
-            <div class="ki-top"><div class="ki-icon" style="background:var(--violet-dim);color:var(--violet)"><i class="ti ti-cloud-storm"></i></div><span class="ki-delta up">4 new</span></div>
-            <div class="ki-val" data-count="12">0</div><div class="ki-lbl">Weather alerts</div>
+            <div class="ki-top"><div class="ki-icon" style="background:var(--violet-dim);color:var(--violet)"><i class="ti ti-cloud-storm"></i></div><span class="ki-delta up" id="kpiWeatherDelta"></span></div>
+            <div class="ki-val" id="kpiWeatherAlerts" data-count="0">0</div><div class="ki-lbl">Weather alerts</div>
           </div>
           <div class="card hoverable kpi">
-            <div class="ki-top"><div class="ki-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-gauge"></i></div><span class="ki-delta down">-3%</span></div>
-            <div class="ki-val" data-count="64" data-suffix="%">0</div><div class="ki-lbl">Resource utilization</div>
+            <div class="ki-top"><div class="ki-icon" style="background:var(--hydro-dim);color:var(--hydro)"><i class="ti ti-gauge"></i></div><span class="ki-delta down" id="kpiUtilDelta"></span></div>
+            <div class="ki-val" id="kpiResourceUtil" data-count="0" data-suffix="%">0</div><div class="ki-lbl">Resource utilization</div>
           </div>
           <div class="card hoverable kpi">
-            <div class="ki-top"><div class="ki-icon" style="background:var(--safe-dim);color:var(--safe)"><i class="ti ti-brain"></i></div><span class="ki-delta down">stable</span></div>
-            <div class="ki-val" data-count="92" data-suffix="%">0</div><div class="ki-lbl">AI model confidence</div>
+            <div class="ki-top"><div class="ki-icon" style="background:var(--safe-dim);color:var(--safe)"><i class="ti ti-brain"></i></div><span class="ki-delta down" id="kpiConfDelta">stable</span></div>
+            <div class="ki-val" id="kpiAiConfidence" data-count="0" data-suffix="%">0</div><div class="ki-lbl">AI model confidence</div>
           </div>
         </div>
       </div>
@@ -200,7 +200,7 @@
         <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-satellite"></i></div><div class="feat-title">Satellite analysis</div><div class="feat-desc">Multi-spectral flood-extent mapping</div><div class="confidence-bar"><div class="confidence-fill" style="width:79%"></div></div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">Updated 2 hrs ago</div></div>
         <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-message-chatbot"></i></div><div class="feat-title">AI chatbot assistant</div><div class="feat-desc">Natural-language query over live incident data</div><button class="btn ghost" style="margin-top:4px;font-size:11.5px">Open assistant</button></div>
         <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-microphone"></i></div><div class="feat-title">Voice command support</div><div class="feat-desc">Hands-free dispatch for field responders</div><button class="btn ghost" style="margin-top:4px;font-size:11.5px"><i class="ti ti-microphone"></i>Try voice input</button></div>
-        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-language"></i></div><div class="feat-title">Multi-language translation</div><div class="feat-desc">Assamese · Bengali · Hindi · English</div><div class="lang-pills" style="display:flex;gap:6px;margin-top:2px"><span class="tag ok">EN</span><span class="tag ok">অস</span><span class="tag ok">বাং</span><span class="tag ok">हिं</span></div></div>
+        <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-language"></i></div><div class="feat-title">Multi-language translation</div><div class="feat-desc">Assamese · Bengali · Hindi · English</div><div class="lang-pills" style="display:flex;gap:6px;margin-top:2px"><span class="tag ok">EN</span><span class="tag ok">অস</span><span class="tag ok">বাং</span><span class="tag ok">हिং</span></div></div>
         <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-chart-dots"></i></div><div class="feat-title">Predictive analytics</div><div class="feat-desc">Resource-demand forecasting, 72-hr horizon</div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">Next update in 38 min</div></div>
         <div class="card hoverable feat-card"><div class="feat-icon"><i class="ti ti-drone"></i></div><div class="feat-title">Drone-fed terrain scan</div><div class="feat-desc">Live aerial feed correlation with flood layer</div><div style="font-size:11px;color:var(--text-faint);margin-top:4px">2 drones airborne, Sivasagar</div></div>
       </div>
@@ -217,11 +217,8 @@
       <div class="view-head"><div><div class="eyebrow">Medical readiness</div><h1>Hospitals</h1><p>Bed availability and ICU load, updated every 15 min</p></div></div>
       <div class="card" style="padding:0">
         <table>
-          <tr><th>Hospital</th><th>District</th><th>Beds available</th><th>ICU occupancy</th><th>Ambulances</th><th>Status</th></tr>
-          <tr><td>Sivasagar Civil Hospital</td><td>Sivasagar</td><td class="mono">18 / 120</td><td><span class="mini-bar"><span class="mini-fill" style="width:88%;background:var(--alert)"></span></span>88%</td><td class="mono">4</td><td><span class="tag critical">Near capacity</span></td></tr>
-          <tr><td>Golaghat District Hospital</td><td>Golaghat</td><td class="mono">42 / 150</td><td><span class="mini-bar"><span class="mini-fill" style="width:61%;background:var(--warn)"></span></span>61%</td><td class="mono">6</td><td><span class="tag moderate">Elevated</span></td></tr>
-          <tr><td>Jorhat Medical College</td><td>Jorhat</td><td class="mono">96 / 220</td><td><span class="mini-bar"><span class="mini-fill" style="width:44%;background:var(--safe)"></span></span>44%</td><td class="mono">9</td><td><span class="tag ok">Stable</span></td></tr>
-          <tr><td>Charaideo Community Hospital</td><td>Charaideo</td><td class="mono">31 / 60</td><td><span class="mini-bar"><span class="mini-fill" style="width:52%;background:var(--warn)"></span></span>52%</td><td class="mono">3</td><td><span class="tag moderate">Elevated</span></td></tr>
+          <tr><th>Hospital</th><th>District</th><th>Beds available</th><th>ICU occupancy</th><th>Status</th></tr>
+          <tbody id="hospitalsTbody"></tbody>
         </table>
       </div>
     </div>
@@ -265,7 +262,7 @@
 
     <!-- ============ CITIZEN REPORTS ============ -->
     <div class="view" id="view-reports">
-      <div class="view-head"><div><div class="eyebrow">Crowd intelligence</div><h1>Citizen reports</h1><p>Field reports submitted via the public app, AI-verified before dispatch</p></div></div>
+      <div class="view-head"><div><div class="eyebrow">Crowd intelligence</div><h1>Citizen reports</h1><p>Field reports submitted via the public app, AI-verified before dispatch</p></div><button class="btn primary" onclick="openModal('modalSubmitReport')"><i class="ti ti-plus"></i>Submit field report</button></div>
       <div class="grid grid-3" id="reportsGrid"></div>
     </div>
 
@@ -309,18 +306,293 @@
 
 <div class="toast-wrap" id="toastWrap"></div>
 
+<!-- ============ MODALS & AI ASSISTANT DRAWER ============ -->
+
+<!-- Modal: Issue Emergency Alert -->
+<div class="modal-overlay" id="modalIssueAlert">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3><i class="ti ti-broadcast" style="color:var(--alert)"></i> Issue Emergency Alert</h3>
+      <button class="close-modal-btn" onclick="closeModal('modalIssueAlert')"><i class="ti ti-x"></i></button>
+    </div>
+    <form onsubmit="submitAlertForm(event)">
+      <div class="form-group">
+        <label>District</label>
+        <select class="form-control" id="alertDistrict">
+          <option value="Sivasagar">Sivasagar</option>
+          <option value="Jorhat">Jorhat</option>
+          <option value="Golaghat">Golaghat</option>
+          <option value="Cachar">Cachar</option>
+          <option value="Charaideo">Charaideo</option>
+          <option value="Kamrup Metropolitan">Kamrup Metropolitan</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Severity Level</label>
+        <select class="form-control" id="alertSeverity">
+          <option value="Critical">Critical</option>
+          <option value="Severe">Severe</option>
+          <option value="Moderate">Moderate</option>
+          <option value="Low">Low</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Advisory Type</label>
+        <input class="form-control" id="alertType" value="Flash Flood & River Breach Warning" required>
+      </div>
+      <div class="form-group">
+        <label>Broadcast Message</label>
+        <textarea class="form-control" id="alertMessage" required>River water level rising past danger mark. Immediate evacuation of low-lying wards instructed.</textarea>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+        <button type="button" class="btn ghost" onclick="closeModal('modalIssueAlert')">Cancel</button>
+        <button type="submit" class="btn danger"><i class="ti ti-broadcast"></i> Broadcast Alert Now</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Submit Citizen Report -->
+<div class="modal-overlay" id="modalSubmitReport">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3><i class="ti ti-report" style="color:var(--hydro)"></i> Submit Citizen Field Report</h3>
+      <button class="close-modal-btn" onclick="closeModal('modalSubmitReport')"><i class="ti ti-x"></i></button>
+    </div>
+    <form onsubmit="submitReportForm(event)">
+      <div class="form-group">
+        <label>Reporter Name</label>
+        <input class="form-control" id="reportName" value="Nitin Sharma" required>
+      </div>
+      <div class="form-group">
+        <label>District</label>
+        <select class="form-control" id="reportDistrict">
+          <option value="Sivasagar">Sivasagar</option>
+          <option value="Jorhat">Jorhat</option>
+          <option value="Golaghat">Golaghat</option>
+          <option value="Cachar">Cachar</option>
+          <option value="Charaideo">Charaideo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Location / Ward</label>
+        <input class="form-control" id="reportLocation" placeholder="e.g. Ward 4, Riverside Road" required>
+      </div>
+      <div class="form-group">
+        <label>Distress Type</label>
+        <select class="form-control" id="reportType">
+          <option value="Flooding">Flooding</option>
+          <option value="Trapped People">Trapped People</option>
+          <option value="Bridge Damage">Bridge Damage</option>
+          <option value="Road Blocked">Road Blocked</option>
+          <option value="Shelter Full">Shelter Overcapacity</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Description & Situation Details</label>
+        <textarea class="form-control" id="reportDesc" placeholder="Describe the water depth, stranded people, or damage..." required></textarea>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+        <button type="button" class="btn ghost" onclick="closeModal('modalSubmitReport')">Cancel</button>
+        <button type="submit" class="btn primary"><i class="ti ti-send"></i> Submit Distress Report</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Request Resource -->
+<div class="modal-overlay" id="modalRequestResource">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3><i class="ti ti-package" style="color:var(--safe)"></i> Request Emergency Resource</h3>
+      <button class="close-modal-btn" onclick="closeModal('modalRequestResource')"><i class="ti ti-x"></i></button>
+    </div>
+    <form onsubmit="submitResourceForm(event)">
+      <div class="form-group">
+        <label>Resource Item</label>
+        <select class="form-control" id="resName">
+          <option value="Boats">Rescue Motorboats</option>
+          <option value="Medical kits">Medical Kits</option>
+          <option value="Food supplies">Food Rations</option>
+          <option value="Water supplies">Water Purification Supplies</option>
+          <option value="Ambulances">Ambulances</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Quantity Required</label>
+        <input type="number" class="form-control" id="resQty" value="10" min="1" required>
+      </div>
+      <div class="form-group">
+        <label>Target District / Depot</label>
+        <select class="form-control" id="resDistrict">
+          <option value="Sivasagar">Sivasagar Sector</option>
+          <option value="Jorhat">Jorhat Base</option>
+          <option value="Golaghat">Golaghat Command</option>
+          <option value="Cachar">Silchar Depot</option>
+        </select>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+        <button type="button" class="btn ghost" onclick="closeModal('modalRequestResource')">Cancel</button>
+        <button type="submit" class="btn primary"><i class="ti ti-check"></i> Dispatch Request</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- AI Assistant Slide-over Drawer -->
+<div class="drawer-backdrop" id="aiDrawerBackdrop"></div>
+<div class="drawer-panel" id="aiDrawerPanel">
+  <div class="drawer-header">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="ai-avatar"><i class="ti ti-sparkles"></i></div>
+      <div>
+        <div style="font-weight:600;font-size:14px">Varuna AI Assistant</div>
+        <div style="font-size:11px;color:var(--text-faint)">Live Hydro-Met Neural Engine</div>
+      </div>
+    </div>
+    <button class="close-modal-btn" id="closeAiDrawerBtn"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="drawer-body" id="chatMsgContainer">
+    <div class="chat-msg bot">
+      <div class="ru-avatar" style="background:var(--violet-dim);color:var(--violet)"><i class="ti ti-brain"></i></div>
+      <div class="chat-bubble">
+        Hello DG Nitin Sharma! I am your AI Disaster Response Assistant. Ask me anything regarding current flood risks, river water gauge levels, hospital bed status, or rescue unit dispatches.
+      </div>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <input class="form-control" id="chatInput" placeholder="Ask Varuna AI (e.g., Sivasagar risk status)..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+    <button class="btn primary" onclick="sendChatMessage()"><i class="ti ti-send"></i></button>
+  </div>
+</div>
 
 <script src="js/config.js"></script>
 <script src="js/mock-data.js"></script>
 <script src="js/theme.js"></script>
-<script src="js/nav.js"></script>
-<script src="js/counters.js"></script>
 <script src="js/toast.js"></script>
+<script src="js/counters.js"></script>
+<script src="js/nav.js"></script>
 <script src="js/render-resources.js"></script>
 <script src="js/render-rescue.js"></script>
 <script src="js/render-alerts.js"></script>
 <script src="js/render-reports.js"></script>
+<script src="js/render-hospitals.js"></script>
 <script src="js/live-map.js"></script>
 <script src="js/analytics-charts.js"></script>
+<script src="js/modals.js"></script>
+<script src="js/chatbot-ui.js"></script>
+<script src="js/interactions.js"></script>
+<script>
+async function initFromBackend(){
+  let overview = {};
+  let predictions = [];
+
+  // Initial renders with fallback mock datasets
+  if (window.renderResourceGrid) renderResourceGrid();
+  if (window.renderRescueGrid) renderRescueGrid();
+  if (window.renderAlertsGrid) renderAlertsGrid();
+  if (window.renderReportsGrid) renderReportsGrid();
+  if (window.renderHospitalsTable) renderHospitalsTable(window.HOSPITALS);
+
+  // Dashboard overview + severity ring
+  try {
+    const dashboard = await apiGet('/dashboard/');
+    overview = dashboard.overview_stats || {};
+    setKpi('kpiActiveDisasters', overview.active_alerts ?? 4);
+    setKpi('kpiPopulation', overview.total_population_affected ?? 670000);
+    setKpi('kpiRescueTeams', overview.rescue_teams_deployed ?? 18);
+    setKpi('kpiShelters', overview.relief_camps_active ?? 42);
+    const riskLevel = overview.current_risk_level || 'Moderate';
+    setSeverityRing(RISK_LEVEL_SCORE[riskLevel] ?? 50);
+    const postureEl = document.getElementById('ringPostureText');
+    const subEl = document.getElementById('ringSubText');
+    if (postureEl) postureEl.textContent = `${riskLevel} risk posture`;
+    if (subEl) subEl.textContent = `${overview.active_alerts ?? 4} active disasters · ${dashboard.state || 'Assam Sector'}`;
+  } catch (e) { console.warn('Using default dashboard stats:', e.message); }
+
+  // Hospitals
+  try {
+    const fetchedHospitals = await apiGet('/hospitals/');
+    if (Array.isArray(fetchedHospitals) && fetchedHospitals.length) {
+      window.HOSPITALS = fetchedHospitals;
+    }
+    if (window.renderHospitalsTable) renderHospitalsTable(window.HOSPITALS);
+    const withBeds = window.HOSPITALS.filter(h => h.beds_total);
+    const avgOcc = withBeds.length
+      ? Math.round(withBeds.reduce((sum, h) => sum + ((h.beds_total - h.beds_available) / h.beds_total) * 100, 0) / withBeds.length)
+      : 74;
+    setKpi('kpiHospitalOccupancy', avgOcc, '%');
+  } catch (e) { console.warn('Using default hospital stats:', e.message); }
+
+  // Weather
+  try {
+    const heavyRain = await apiGet('/weather/heavy-rain');
+    setKpi('kpiWeatherAlerts', Array.isArray(heavyRain) ? heavyRain.length : 3);
+  } catch (e) { setKpi('kpiWeatherAlerts', 3); }
+
+  // AI predictions
+  try {
+    predictions = await apiGet('/prediction/all');
+    const avgConf = predictions.length
+      ? Math.round(predictions.reduce((sum, p) => sum + (p.confidence || 0), 0) / predictions.length * 100)
+      : 89;
+    setKpi('kpiAiConfidence', avgConf, '%');
+  } catch (e) { setKpi('kpiAiConfidence', 89, '%'); }
+
+  // Resources
+  try {
+    const shelters = await apiGet('/resources/shelters');
+    const withCapacity = shelters.filter(s => s.capacity);
+    const avgUtil = withCapacity.length
+      ? Math.round(withCapacity.reduce((sum, s) => sum + (s.occupancy / s.capacity) * 100, 0) / withCapacity.length)
+      : 82;
+    setKpi('kpiResourceUtil', avgUtil, '%');
+
+    try {
+      const resItems = await apiGet('/resources/items');
+      if (Array.isArray(resItems) && resItems.length) window.RESOURCES = resItems;
+    } catch (err) {}
+  } catch (e) { setKpi('kpiResourceUtil', 82, '%'); }
+
+  // Rescue teams
+  try {
+    const teams = await apiGet('/rescue/');
+    if (Array.isArray(teams) && teams.length) window.RESCUE_TEAMS = teams;
+  } catch (e) {}
+
+  // Active alerts
+  try {
+    const fetchedAlerts = await apiGet('/alerts/active');
+    if (Array.isArray(fetchedAlerts) && fetchedAlerts.length) {
+      window.ALERTS = fetchedAlerts;
+      window.ALERTS.forEach(a => {
+        const match = predictions.find(p => (p.district || '').toLowerCase() === (a.district || '').toLowerCase());
+        a._predictedConfidence = match ? Math.round(match.confidence * 100) : null;
+      });
+    }
+  } catch (e) {}
+
+  // Citizen reports
+  try {
+    const fetchedReports = await apiGet('/reports/');
+    if (Array.isArray(fetchedReports) && fetchedReports.length) window.REPORTS = fetchedReports;
+  } catch (e) {}
+
+  // Re-render grids with final data
+  if (window.renderResourceGrid) renderResourceGrid();
+  if (window.renderRescueGrid) renderRescueGrid();
+  if (window.renderAlertsGrid) renderAlertsGrid();
+  if (window.renderReportsGrid) renderReportsGrid();
+  if (window.animateAllKpis) animateAllKpis();
+
+  if (typeof loadMapAndHospitalLayers === 'function') {
+    try { await loadMapAndHospitalLayers(); } catch (mErr) { console.warn('Map layer error:', mErr); }
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initFromBackend();
+});
+</script>
 </body>
 </html>
