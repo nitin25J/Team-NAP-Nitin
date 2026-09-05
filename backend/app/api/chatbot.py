@@ -3,7 +3,7 @@
 import logging
 from typing import Any, Dict, List
 
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, Body, HTTPException, Query, status
 
 from app.services import chatbot_service
 
@@ -117,3 +117,19 @@ def get_conversation_log_route() -> List[Dict[str, Any]]:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error",
         ) from exc
+
+
+@router.post("/query", response_model=Dict[str, Any])
+def query_chatbot_route(
+    payload: Dict[str, Any] = Body(...),
+) -> Dict[str, Any]:
+    """Process natural language chatbot query."""
+    try:
+        user_message = payload.get("message") or payload.get("query") or ""
+        return chatbot_service.query_chatbot(user_message)
+    except Exception as exc:
+        logger.exception("Failed to query chatbot")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error",
+        ) from exc

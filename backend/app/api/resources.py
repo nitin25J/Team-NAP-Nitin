@@ -54,6 +54,20 @@ def get_inventory_summary_route() -> Dict[str, Any]:
         ) from exc
 
 
+@router.get("/items", response_model=List[Dict[str, Any]])
+def get_inventory_items_route() -> List[Dict[str, Any]]:
+    """Return live equipment/supply inventory list."""
+    try:
+        return resource_service.get_inventory_items()
+
+    except Exception as exc:
+        logger.exception("Failed to retrieve inventory items")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error",
+        ) from exc
+
+
 @router.get("/districts", response_model=List[Dict[str, Any]])
 def get_district_resources_route() -> List[Dict[str, Any]]:
     """Return resource allocation for all districts."""

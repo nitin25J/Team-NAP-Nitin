@@ -3,13 +3,14 @@
 import logging
 from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, HTTPException, Query, status
+from fastapi import APIRouter, Body, HTTPException, Query, status
 
 from app.services import alert_service
 
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/alerts", tags=["Alerts"])
+
 
 
 @router.get("/", response_model=List[Dict[str, Any]])
@@ -56,3 +57,23 @@ def get_alert(alert_id: str) -> Dict[str, Any]:
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
         ) from exc
+
+
+@router.post("/", response_model=Dict[str, Any])
+def create_alert_route(
+    alert_payload: Dict[str, Any] = Body(...),
+) -> Dict[str, Any]:
+    """Issue a new emergency alert."""
+    try:
+        new_alert = alert_service.create_alert(alert_payload)
+        return {
+            "success": True,
+            "message": "Emergency alert issued successfully",
+            "alert": new_alert
+        }
+    except Exception as exc:
+        logger.exception("Failed to issue alert")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal Server Error",
+        ) from exc
