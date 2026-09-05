@@ -1,64 +1,7 @@
-{
-  "alerts": [
-    {
-      "id": "ALT-1001",
-      "type": "Flood",
-      "severity": "High",
-      "district": "Dibrugarh",
-      "river": "Brahmaputra",
-      "message": "Brahmaputra river flowing above danger level near Dibrugarh town. Immediate evacuation advised for low-lying areas.",
-      "issued_by": "Assam State Disaster Management Authority",
-      "issued_at": "2026-07-29T06:30:00+05:30",
-      "valid_until": "2026-07-31T23:59:00+05:30",
-      "status": "Active"
-    },
-    {
-      "id": "ALT-1002",
-      "type": "Heavy Rainfall",
-      "severity": "Moderate",
-      "district": "Cachar",
-      "river": null,
-      "message": "IMD forecasts heavy to very heavy rainfall over Cachar district in next 48 hours. Waterlogging expected in Silchar town.",
-      "issued_by": "India Meteorological Department",
-      "issued_at": "2026-07-29T09:00:00+05:30",
-      "valid_until": "2026-07-31T09:00:00+05:30",
-      "status": "Active"
-    },
-    {
-      "id": "ALT-1003",
-      "type": "Flood",
-      "severity": "Severe",
-      "district": "Jorhat",
-      "river": "Brahmaputra",
-      "message": "Embankment breach reported near Majuli sector. Rescue teams deployed. Residents advised to move to nearest relief camp immediately.",
-      "issued_by": "Assam State Disaster Management Authority",
-      "issued_at": "2026-07-28T22:15:00+05:30",
-      "valid_until": "2026-08-01T22:15:00+05:30",
-      "status": "Active"
-    },
-    {
-      "id": "ALT-1004",
-      "type": "Landslide",
-      "severity": "Moderate",
-      "district": "Golaghat",
-      "river": null,
-      "message": "Risk of landslides in hilly fringe areas of Golaghat due to continuous rainfall. Avoid unnecessary travel through hill roads.",
-      "issued_by": "District Disaster Management Authority, Golaghat",
-      "issued_at": "2026-07-27T14:00:00+05:30",
-      "valid_until": "2026-07-30T14:00:00+05:30",
-      "status": "Expired"
-    },
-    {
-      "id": "ALT-1005",
-      "type": "River Water Level",
-      "severity": "Low",
-      "district": "Sivasagar",
-      "river": "Dikhow",
-      "message": "Dikhow river water level rising steadily but remains below warning mark. Continued monitoring in place.",
-      "issued_by": "Central Water Commission",
-      "issued_at": "2026-07-29T11:45:00+05:30",
-      "valid_until": "2026-08-02T11:45:00+05:30",
-      "status": "Active"
-    }
-  ]
-}
+[
+  { "id": 1, "alert_id": "ALT-101", "type": "Flash Flood & River Breach Warning", "title": "Flash Flood & River Breach Warning — Sivasagar", "severity": "critical", "level": "critical", "district": "Sivasagar", "districts": "Sivasagar, Charaideo", "river": "Brahmaputra & Dikhow", "message": "Dikhow river rising past danger level by +1.8m. Wards 4-7 instructed to evacuate immediately to Govt HS School shelter.", "population": "1.2 L", "confidence": 91, "endsIn": 10800, "status": "Active" },
+  { "id": 2, "alert_id": "ALT-102", "type": "Heavy Rainfall & Landslide Watch", "title": "Heavy Rainfall & Landslide Watch — Charaideo", "severity": "severe", "level": "warning", "district": "Charaideo", "districts": "Charaideo, Sivasagar", "river": "Disang", "message": "Continuous heavy precipitation expected (140mm/24hr). High vulnerability of hill slopes to saturation and landslides.", "population": "2.1 L", "confidence": 88, "endsIn": 21600, "status": "Active" },
+  { "id": 3, "alert_id": "ALT-103", "type": "Embankment Erosion Advisory", "title": "Embankment Erosion Advisory — Dhansiri (Golaghat)", "severity": "critical", "level": "critical", "district": "Golaghat", "districts": "Golaghat", "river": "Dhansiri", "message": "Dhansiri embankment structural weakening near Numaligarh. NDRF and SDRF teams deployed for emergency reinforcement.", "population": "340,000", "confidence": 94, "endsIn": 14400, "status": "Active" },
+  { "id": 4, "alert_id": "ALT-104", "type": "Urban Waterlogging Advisory", "title": "Urban Waterlogging Advisory — GS Road Link", "severity": "moderate", "level": "warning", "district": "Kamrup Metropolitan", "districts": "Kamrup Metropolitan", "river": "Bharalu", "message": "Severe waterlogging across GS Road arterial link. Citizens advised to avoid underpasses and riverfront zones.", "population": "1.5 L", "confidence": 85, "endsIn": 9000, "status": "Active" },
+  { "id": 5, "alert_id": "ALT-105", "type": "Subansiri Surge Watch", "title": "Subansiri Surge & Inundation Watch — Lakhimpur", "severity": "severe", "level": "critical", "district": "Lakhimpur", "districts": "Lakhimpur, Dhemaji", "river": "Subansiri", "message": "Subansiri river level overflowing low embankments. 14 villages in Bihpuria sector alerted for high water levels.", "population": "1.8 L", "confidence": 92, "endsIn": 28800, "status": "Active" }
+]

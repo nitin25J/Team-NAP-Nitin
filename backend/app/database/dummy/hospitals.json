@@ -1,76 +1,12 @@
-{
-  "hospitals": [
-    {
-      "id": "HOSP-001",
-      "name": "Gauhati Medical College and Hospital",
-      "district": "Guwahati",
-      "address": "Bhangagarh, Guwahati, Assam",
-      "type": "Government",
-      "beds_total": 1200,
-      "beds_available": 214,
-      "emergency_contact": "0361-2529457",
-      "flood_response_ready": true,
-      "coordinates": { "lat": 26.1584, "lng": 91.7458 }
-    },
-    {
-      "id": "HOSP-002",
-      "name": "Assam Medical College and Hospital",
-      "district": "Dibrugarh",
-      "address": "Barbari, Dibrugarh, Assam",
-      "type": "Government",
-      "beds_total": 950,
-      "beds_available": 87,
-      "emergency_contact": "0373-2300106",
-      "flood_response_ready": true,
-      "coordinates": { "lat": 27.4728, "lng": 94.9120 }
-    },
-    {
-      "id": "HOSP-003",
-      "name": "Jorhat Medical College and Hospital",
-      "district": "Jorhat",
-      "address": "Barbheta, Jorhat, Assam",
-      "type": "Government",
-      "beds_total": 750,
-      "beds_available": 42,
-      "emergency_contact": "0376-2340900",
-      "flood_response_ready": true,
-      "coordinates": { "lat": 26.7509, "lng": 94.2037 }
-    },
-    {
-      "id": "HOSP-004",
-      "name": "Silchar Medical College and Hospital",
-      "district": "Cachar",
-      "address": "Ghungoor Road, Silchar, Assam",
-      "type": "Government",
-      "beds_total": 900,
-      "beds_available": 63,
-      "emergency_contact": "03842-260204",
-      "flood_response_ready": true,
-      "coordinates": { "lat": 24.8333, "lng": 92.7789 }
-    },
-    {
-      "id": "HOSP-005",
-      "name": "Golaghat Civil Hospital",
-      "district": "Golaghat",
-      "address": "Golaghat Town, Assam",
-      "type": "Government",
-      "beds_total": 300,
-      "beds_available": 55,
-      "emergency_contact": "03774-280234",
-      "flood_response_ready": false,
-      "coordinates": { "lat": 26.5100, "lng": 93.9600 }
-    },
-    {
-      "id": "HOSP-006",
-      "name": "Sivasagar District Civil Hospital",
-      "district": "Sivasagar",
-      "address": "S.T. Road, Sivasagar, Assam",
-      "type": "Government",
-      "beds_total": 350,
-      "beds_available": 71,
-      "emergency_contact": "03772-222222",
-      "flood_response_ready": true,
-      "coordinates": { "lat": 26.9850, "lng": 94.6389 }
-    }
-  ]
-}
+[
+  { "id": 1, "name": "Guwahati Medical College & Hospital", "district": "Kamrup Metropolitan", "beds_available": 45, "beds_total": 350, "icu_beds": 8, "icu_available": 8, "icu_total": 45, "oxygen_available": true, "status": "Operational", "lat": 26.1558, "lng": 91.7686, "contact": "+91 361 2529457" },
+  { "id": 2, "name": "Sivasagar Civil Hospital", "district": "Sivasagar", "beds_available": 12, "beds_total": 120, "icu_beds": 2, "icu_available": 2, "icu_total": 15, "oxygen_available": true, "status": "High Load", "lat": 26.9826, "lng": 94.6425, "contact": "+91 3772 222100" },
+  { "id": 3, "name": "Jorhat Medical College & Hospital", "district": "Jorhat", "beds_available": 84, "beds_total": 450, "icu_beds": 18, "icu_available": 18, "icu_total": 30, "oxygen_available": true, "status": "Operational", "lat": 26.7570, "lng": 94.2031, "contact": "+91 376 2370010" },
+  { "id": 4, "name": "Golaghat Civil Hospital", "district": "Golaghat", "beds_available": 5, "beds_total": 90, "icu_beds": 2, "icu_available": 2, "icu_total": 10, "oxygen_available": true, "status": "Critical Surge", "lat": 26.5194, "lng": 93.9634, "contact": "+91 3774 280222" },
+  { "id": 5, "name": "Assam Medical College Hospital (AMCH)", "district": "Dibrugarh", "beds_available": 140, "beds_total": 800, "icu_beds": 35, "icu_available": 35, "icu_total": 60, "oxygen_available": true, "status": "Operational", "lat": 27.4728, "lng": 94.9120, "contact": "+91 373 2300080" },
+  { "id": 6, "name": "Silchar Medical College Hospital", "district": "Cachar", "beds_available": 62, "beds_total": 500, "icu_beds": 15, "icu_available": 15, "icu_total": 35, "oxygen_available": true, "status": "Moderate", "lat": 24.8333, "lng": 92.7789, "contact": "+91 3842 240445" },
+  { "id": 7, "name": "Sonari Civil Hospital", "district": "Charaideo", "beds_available": 15, "beds_total": 80, "icu_beds": 2, "icu_available": 2, "icu_total": 8, "oxygen_available": true, "status": "High Load", "lat": 26.9000, "lng": 94.8800, "contact": "+91 3772 256211" },
+  { "id": 8, "name": "Lakhimpur Medical College & Hospital", "district": "Lakhimpur", "beds_available": 38, "beds_total": 200, "icu_beds": 6, "icu_available": 6, "icu_total": 18, "oxygen_available": true, "status": "Operational", "lat": 27.2340, "lng": 94.1030, "contact": "+91 3752 222300" },
+  { "id": 9, "name": "Dhemaji District Civil Hospital", "district": "Dhemaji", "beds_available": 9, "beds_total": 75, "icu_beds": 1, "icu_available": 1, "icu_total": 6, "oxygen_available": true, "status": "Critical Surge", "lat": 27.4800, "lng": 94.5800, "contact": "+91 3753 224100" },
+  { "id": 10, "name": "Nagaon BP Civil Hospital", "district": "Nagaon", "beds_available": 42, "beds_total": 220, "icu_beds": 7, "icu_available": 7, "icu_total": 20, "oxygen_available": true, "status": "Operational", "lat": 26.3450, "lng": 92.6830, "contact": "+91 3672 233200" }
+]

@@ -1,65 +1,19 @@
 {
-  "inventory_summary": {
-    "state": "Assam",
-    "last_updated": "2026-07-29T10:00:00+05:30",
-    "total_boats": 214,
-    "total_food_packets": 152000,
-    "total_water_purification_units": 340,
-    "total_medical_kits": 4200,
-    "total_tents": 3100
-  },
-  "district_resources": [
-    {
-      "district": "Dibrugarh",
-      "boats": 42,
-      "food_packets": 28000,
-      "medical_kits": 900,
-      "tents": 620,
-      "shelters": [
-        { "name": "Chabua Higher Secondary School", "capacity": 800, "occupancy": 612 },
-        { "name": "Dibrugarh Town Hall Relief Camp", "capacity": 500, "occupancy": 340 }
-      ]
-    },
-    {
-      "district": "Jorhat",
-      "boats": 51,
-      "food_packets": 34000,
-      "medical_kits": 1100,
-      "tents": 780,
-      "shelters": [
-        { "name": "Majuli Community Centre", "capacity": 1000, "occupancy": 940 },
-        { "name": "Jorhat Engineering College Camp", "capacity": 600, "occupancy": 410 }
-      ]
-    },
-    {
-      "district": "Cachar",
-      "boats": 38,
-      "food_packets": 30500,
-      "medical_kits": 850,
-      "tents": 560,
-      "shelters": [
-        { "name": "Silchar Government Girls HS School", "capacity": 700, "occupancy": 505 }
-      ]
-    },
-    {
-      "district": "Golaghat",
-      "boats": 18,
-      "food_packets": 15200,
-      "medical_kits": 400,
-      "tents": 310,
-      "shelters": [
-        { "name": "Golaghat District Library Camp", "capacity": 300, "occupancy": 140 }
-      ]
-    },
-    {
-      "district": "Sivasagar",
-      "boats": 27,
-      "food_packets": 20300,
-      "medical_kits": 520,
-      "tents": 400,
-      "shelters": [
-        { "name": "Nazira Relief Camp Centre", "capacity": 450, "occupancy": 298 }
-      ]
-    }
+  "inventory": [
+    { "name": "Ambulances", "icon": "ti-ambulance", "have": 34, "total": 48, "color": "var(--alert)" },
+    { "name": "Fire trucks", "icon": "ti-flame", "have": 11, "total": 16, "color": "var(--warn)" },
+    { "name": "Boats", "icon": "ti-anchor", "have": 22, "total": 30, "color": "var(--hydro)" },
+    { "name": "Rescue helicopters", "icon": "ti-helicopter", "have": 4, "total": 6, "color": "var(--violet)" },
+    { "name": "Medical kits", "icon": "ti-first-aid-kit", "have": 860, "total": 1200, "color": "var(--safe)" },
+    { "name": "Food supplies", "icon": "ti-bread", "have": 640, "total": 1000, "color": "var(--warn)" },
+    { "name": "Water supplies", "icon": "ti-droplet", "have": 410, "total": 900, "color": "var(--blue)" },
+    { "name": "Volunteers", "icon": "ti-users", "have": 312, "total": 400, "color": "var(--safe)" }
+  ],
+  "shelters": [
+    { "name": "Govt Higher Secondary School Shelter", "district": "Sivasagar", "capacity": 450, "occupancy": 320, "lat": 26.9850, "lng": 94.6390 },
+    { "name": "Jorhat Indoor Stadium Relief Camp", "district": "Jorhat", "capacity": 600, "occupancy": 380, "lat": 26.7520, "lng": 94.2050 },
+    { "name": "Golaghat Town Hall Shelter", "district": "Golaghat", "capacity": 350, "occupancy": 290, "lat": 26.5180, "lng": 93.9690 },
+    { "name": "Silchar District Relief Shelter", "district": "Cachar", "capacity": 800, "occupancy": 650, "lat": 24.8350, "lng": 92.7700 },
+    { "name": "Guwahati Sector 3 Relief Center", "district": "Kamrup Metropolitan", "capacity": 500, "occupancy": 210, "lat": 26.1480, "lng": 91.7400 }
   ]
 }
