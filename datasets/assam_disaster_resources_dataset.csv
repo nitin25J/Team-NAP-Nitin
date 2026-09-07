@@ -1,0 +1,9 @@
+id,name,icon,have,total,color
+1,Ambulances,ti-ambulance,34,48,var(--alert)
+2,Fire trucks,ti-flame,11,16,var(--warn)
+3,Boats,ti-anchor,22,30,var(--hydro)
+4,Rescue helicopters,ti-helicopter,4,6,var(--violet)
+5,Medical kits,ti-first-aid-kit,860,1200,var(--safe)
+6,Food supplies,ti-bread,640,1000,var(--warn)
+7,Water supplies,ti-droplet,410,900,var(--blue)
+8,Volunteers,ti-users,312,400,var(--safe)

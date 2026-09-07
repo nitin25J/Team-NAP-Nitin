@@ -1,0 +1,10 @@
+[
+  { "id": 1, "name": "Ambulances", "icon": "ti-ambulance", "have": 34, "total": 48, "color": "var(--alert)" },
+  { "id": 2, "name": "Fire trucks", "icon": "ti-flame", "have": 11, "total": 16, "color": "var(--warn)" },
+  { "id": 3, "name": "Boats", "icon": "ti-anchor", "have": 22, "total": 30, "color": "var(--hydro)" },
+  { "id": 4, "name": "Rescue helicopters", "icon": "ti-helicopter", "have": 4, "total": 6, "color": "var(--violet)" },
+  { "id": 5, "name": "Medical kits", "icon": "ti-first-aid-kit", "have": 860, "total": 1200, "color": "var(--safe)" },
+  { "id": 6, "name": "Food supplies", "icon": "ti-bread", "have": 640, "total": 1000, "color": "var(--warn)" },
+  { "id": 7, "name": "Water supplies", "icon": "ti-droplet", "have": 410, "total": 900, "color": "var(--blue)" },
+  { "id": 8, "name": "Volunteers", "icon": "ti-users", "have": 312, "total": 400, "color": "var(--safe)" }
+]

@@ -1,0 +1,7 @@
+id,report_id,reporter_name,type,location,district,description,status,media_attached
+1,REP-901,Bhaben Kalita,Flooding,Riverside colony Ward 4,Sivasagar,"Flood water entered houses up to waist height. 15 families stranded on rooftops requiring boat rescue.",Verified & Dispatched,true
+2,REP-902,Priyanka Gogoi,Bridge Damage,Sector 12 approach bridge,Golaghat,Approach embankment eroded by fast current. Light vehicles stranded on both sides.,En Route,true
+3,REP-903,Anil Saikia,Road Blocked,Market road junction,Charaideo,Fallen trees and water accumulation blocking emergency vehicles.,Reviewing,false
+4,REP-904,Mukesh Sharma,Submerged Shelter,Relief Camp Entrance,Jorhat,Water accumulation near camp generator house. Requesting additional water pump units.,Monitoring,true
+5,REP-905,Rituraj Baruah,Overflowing Riverbank,Brahmaputra Bank,Dibrugarh,Water level breaching retaining wall near ward 2.,Verified,true
+6,REP-906,Kavita Das,Stranded Residents,Bihpuria Sector,Lakhimpur,8 senior citizens stranded in low-lying area requiring boat evac.,Rescue Ongoing,true

@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "report_id": "REP-901",
+    "reporter_name": "Bhaben Kalita",
+    "type": "Flooding",
+    "location": "Riverside colony, Ward 4",
+    "district": "Sivasagar",
+    "description": "Flood water entered houses up to waist height. 15 families stranded on rooftops requiring boat rescue.",
+    "status": "Verified & Dispatched",
+    "media_attached": true
+  },
+  {
+    "id": 2,
+    "report_id": "REP-902",
+    "reporter_name": "Priyanka Gogoi",
+    "type": "Bridge Damage",
+    "location": "Sector 12 approach bridge",
+    "district": "Golaghat",
+    "description": "Approach embankment eroded by fast current. Light vehicles stranded on both sides.",
+    "status": "En Route",
+    "media_attached": true
+  },
+  {
+    "id": 3,
+    "report_id": "REP-903",
+    "reporter_name": "Anil Saikia",
+    "type": "Road Blocked",
+    "location": "Market road junction",
+    "district": "Charaideo",
+    "description": "Fallen trees and water accumulation blocking emergency vehicles.",
+    "status": "Reviewing",
+    "media_attached": false
+  },
+  {
+    "id": 4,
+    "report_id": "REP-904",
+    "reporter_name": "Mukesh Sharma",
+    "type": "Submerged Shelter",
+    "location": "Relief Camp Entrance",
+    "district": "Jorhat",
+    "description": "Water accumulation near camp generator house. Requesting additional water pump units.",
+    "status": "Monitoring",
+    "media_attached": true
+  },
+  {
+    "id": 5,
+    "report_id": "REP-905",
+    "reporter_name": "Rituraj Baruah",
+    "type": "Overflowing Riverbank",
+    "location": "Brahmaputra Bank",
+    "district": "Dibrugarh",
+    "description": "Water level breaching retaining wall near ward 2.",
+    "status": "Verified",
+    "media_attached": true
+  },
+  {
+    "id": 6,
+    "report_id": "REP-906",
+    "reporter_name": "Kavita Das",
+    "type": "Stranded Residents",
+    "location": "Bihpuria Sector",
+    "district": "Lakhimpur",
+    "description": "8 senior citizens stranded in low-lying area requiring boat evac.",
+    "status": "Rescue Ongoing",
+    "media_attached": true
+  }
+]
