@@ -1,0 +1,9 @@
+id,river,station,district,current_level_m,danger_level_m,trend,status
+1,"Brahmaputra","Neamati Ghat","Jorhat",86.8,85.54,"Rising","Above Danger Mark"
+2,"Dikhow","Sivasagar Town","Sivasagar",11.8,10.0,"Rising","Above Danger Mark"
+3,"Disang","Nanglamora","Charaideo",94.2,92.5,"Rising","Above Danger Mark"
+4,"Dhansiri","Numaligarh Base","Golaghat",78.4,77.4,"Steady","Above Danger Mark"
+5,"Subansiri","Badatighat","Lakhimpur",83.2,82.5,"Rising","Above Danger Mark"
+6,"Barak","Annapurna Ghat","Cachar",22.2,19.83,"Falling","Above Danger Mark"
+7,"Bharalu","Guwahati Sector 4","Kamrup Metropolitan",48.6,49.0,"Steady","Near Danger Mark"
+8,"Brahmaputra","Dibrugarh Waterfront","Dibrugarh",105.8,105.7,"Rising","Above Danger Mark"

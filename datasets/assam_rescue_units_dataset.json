@@ -1,0 +1,10 @@
+[
+  { "id": 1, "team_id": "NDRF-ALPHA", "name": "NDRF Team Alpha", "type": "NDRF Battalion 12", "district": "Sivasagar", "personnel_count": 45, "status": "Deployed", "lat": 26.9830, "lng": 94.6400 },
+  { "id": 2, "team_id": "SDRF-BRAVO", "name": "SDRF Unit Bravo", "type": "SDRF State Force", "district": "Golaghat", "personnel_count": 30, "status": "Deployed", "lat": 26.5170, "lng": 93.9680 },
+  { "id": 3, "team_id": "ARMY-CHARLIE", "name": "Indian Army Column 4", "type": "Military Relief", "district": "Cachar", "personnel_count": 60, "status": "Deployed", "lat": 24.8340, "lng": 92.7680 },
+  { "id": 4, "team_id": "BOAT-UNIT-01", "name": "Sivasagar Motorboat Fleet", "type": "Inflatable Boat Unit", "district": "Sivasagar", "personnel_count": 16, "status": "Deployed", "lat": 26.9810, "lng": 94.6450 },
+  { "id": 5, "team_id": "QRT-DELTA", "name": "Guwahati Quick Response", "type": "Medical Evac QRT", "district": "Kamrup Metropolitan", "personnel_count": 20, "status": "Standby", "lat": 26.1450, "lng": 91.7370 },
+  { "id": 6, "team_id": "NDRF-ECHO", "name": "NDRF Team Echo", "type": "NDRF Deep Water", "district": "Dibrugarh", "personnel_count": 35, "status": "Deployed", "lat": 27.4740, "lng": 94.9110 },
+  { "id": 7, "team_id": "FIRE-02", "name": "Jorhat Fire & Rescue Unit", "type": "Fire & Emergency Svc", "district": "Jorhat", "personnel_count": 18, "status": "Standby", "lat": 26.7530, "lng": 94.2040 },
+  { "id": 8, "team_id": "HELO-AIR-1", "name": "IAF Chopper Rescue Sqn 3", "type": "Air Evacuation Squadron", "district": "Lakhimpur", "personnel_count": 12, "status": "Deployed", "lat": 27.2380, "lng": 94.1080 }
+]

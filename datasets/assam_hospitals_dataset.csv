@@ -1,0 +1,11 @@
+id,name,district,beds_available,beds_total,icu_available,icu_total,oxygen_available,status,lat,lng,contact
+1,"Guwahati Medical College & Hospital","Kamrup Metropolitan",45,350,8,45,true,"Operational",26.1558,91.7686,"+91 361 2529457"
+2,"Sivasagar Civil Hospital","Sivasagar",12,120,2,15,true,"High Load",26.9826,94.6425,"+91 3772 222100"
+3,"Jorhat Medical College & Hospital","Jorhat",84,450,18,30,true,"Operational",26.7570,94.2031,"+91 376 2370010"
+4,"Golaghat Civil Hospital","Golaghat",5,90,2,10,true,"Critical Surge",26.5194,93.9634,"+91 3774 280222"
+5,"Assam Medical College Hospital (AMCH)","Dibrugarh",140,800,35,60,true,"Operational",27.4728,94.9120,"+91 373 2300080"
+6,"Silchar Medical College Hospital","Cachar",62,500,15,35,true,"Moderate",24.8333,92.7789,"+91 3842 240445"
+7,"Sonari Civil Hospital","Charaideo",15,80,2,8,true,"High Load",26.9000,94.8800,"+91 3772 256211"
+8,"Lakhimpur Medical College & Hospital","Lakhimpur",38,200,6,18,true,"Operational",27.2340,94.1030,"+91 3752 222300"
+9,"Dhemaji District Civil Hospital","Dhemaji",9,75,1,6,true,"Critical Surge",27.4800,94.5800,"+91 3753 224100"
+10,"Nagaon BP Civil Hospital","Nagaon",42,220,7,20,true,"Operational",26.3450,92.6830,"+91 3672 233200"

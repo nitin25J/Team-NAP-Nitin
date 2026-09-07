@@ -1,0 +1,6 @@
+id,alert_id,type,severity,district,river,message,issued_by,status
+1,"ALT-101","Flash Flood & River Breach Warning","Critical","Sivasagar","Brahmaputra & Dikhow","Dikhow river rising past danger level by +1.8m. Wards 4-7 instructed to evacuate immediately to Govt HS School shelter.","Assam State Disaster Management Authority","Active"
+2,"ALT-102","Heavy Rainfall & Landslide Watch","Severe","Charaideo","Disang","Continuous heavy precipitation expected (140mm/24hr). High vulnerability of hill slopes to saturation and landslides.","India Meteorological Department (IMD)","Active"
+3,"ALT-103","Embankment Erosion Advisory","Critical","Golaghat","Dhansiri","Dhansiri embankment structural weakening near Numaligarh. NDRF and SDRF teams deployed for emergency reinforcement.","Central Water Commission (CWC)","Active"
+4,"ALT-104","Urban Waterlogging Advisory","Moderate","Kamrup Metropolitan","Bharalu","Severe waterlogging across GS Road arterial link. Citizens advised to avoid underpasses and riverfront zones.","Guwahati Municipal Corporation","Active"
+5,"ALT-105","Subansiri Surge & Inundation Watch","Severe","Lakhimpur","Subansiri","Subansiri river level overflowing low embankments. 14 villages in Bihpuria sector alerted for high water levels.","District Disaster Management Authority","Active"

@@ -1,0 +1,9 @@
+id,team_id,name,type,district,personnel_count,status,lat,lng
+1,"NDRF-ALPHA","NDRF Team Alpha","NDRF Battalion 12","Sivasagar",45,"Deployed",26.9830,94.6400
+2,"SDRF-BRAVO","SDRF Unit Bravo","SDRF State Force","Golaghat",30,"Deployed",26.5170,93.9680
+3,"ARMY-CHARLIE","Indian Army Column 4","Military Relief","Cachar",60,"Deployed",24.8340,92.7680
+4,"BOAT-UNIT-01","Sivasagar Motorboat Fleet","Inflatable Boat Unit","Sivasagar",16,"Deployed",26.9810,94.6450
+5,"QRT-DELTA","Guwahati Quick Response","Medical Evac QRT","Kamrup Metropolitan",20,"Standby",26.1450,91.7370
+6,"NDRF-ECHO","NDRF Team Echo","NDRF Deep Water","Dibrugarh",35,"Deployed",27.4740,94.9110
+7,"FIRE-02","Jorhat Fire & Rescue Unit","Fire & Emergency Svc","Jorhat",18,"Standby",26.7530,94.2040
+8,"HELO-AIR-1","IAF Chopper Rescue Sqn 3","Air Evacuation Squadron","Lakhimpur",12,"Deployed",27.2380,94.1080

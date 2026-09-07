@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "alert_id": "ALT-101",
+    "type": "Flash Flood & River Breach Warning",
+    "severity": "Critical",
+    "district": "Sivasagar",
+    "river": "Brahmaputra & Dikhow",
+    "message": "Dikhow river rising past danger level by +1.8m. Wards 4-7 instructed to evacuate immediately to Govt HS School shelter.",
+    "issued_by": "Assam State Disaster Management Authority",
+    "status": "Active"
+  },
+  {
+    "id": 2,
+    "alert_id": "ALT-102",
+    "type": "Heavy Rainfall & Landslide Watch",
+    "severity": "Severe",
+    "district": "Charaideo",
+    "river": "Disang",
+    "message": "Continuous heavy precipitation expected (140mm/24hr). High vulnerability of hill slopes to saturation and landslides.",
+    "issued_by": "India Meteorological Department (IMD)",
+    "status": "Active"
+  },
+  {
+    "id": 3,
+    "alert_id": "ALT-103",
+    "type": "Embankment Erosion Advisory",
+    "severity": "Critical",
+    "district": "Golaghat",
+    "river": "Dhansiri",
+    "message": "Dhansiri embankment structural weakening near Numaligarh. NDRF and SDRF teams deployed for emergency reinforcement.",
+    "issued_by": "Central Water Commission (CWC)",
+    "status": "Active"
+  },
+  {
+    "id": 4,
+    "alert_id": "ALT-104",
+    "type": "Urban Waterlogging Advisory",
+    "severity": "Moderate",
+    "district": "Kamrup Metropolitan",
+    "river": "Bharalu",
+    "message": "Severe waterlogging across GS Road arterial link. Citizens advised to avoid underpasses and riverfront zones.",
+    "issued_by": "Guwahati Municipal Corporation",
+    "status": "Active"
+  },
+  {
+    "id": 5,
+    "alert_id": "ALT-105",
+    "type": "Subansiri Surge & Inundation Watch",
+    "severity": "Severe",
+    "district": "Lakhimpur",
+    "river": "Subansiri",
+    "message": "Subansiri river level overflowing low embankments. 14 villages in Bihpuria sector alerted for high water levels.",
+    "issued_by": "District Disaster Management Authority",
+    "status": "Active"
+  }
+]

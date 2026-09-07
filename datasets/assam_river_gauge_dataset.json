@@ -1,0 +1,10 @@
+[
+  { "id": 1, "river": "Brahmaputra", "station": "Neamati Ghat", "district": "Jorhat", "current_level_m": 86.8, "danger_level_m": 85.54, "trend": "Rising", "status": "Above Danger Mark" },
+  { "id": 2, "river": "Dikhow", "station": "Sivasagar Town", "district": "Sivasagar", "current_level_m": 11.8, "danger_level_m": 10.0, "trend": "Rising", "status": "Above Danger Mark" },
+  { "id": 3, "river": "Disang", "station": "Nanglamora", "district": "Charaideo", "current_level_m": 94.2, "danger_level_m": 92.5, "trend": "Rising", "status": "Above Danger Mark" },
+  { "id": 4, "river": "Dhansiri", "station": "Numaligarh Base", "district": "Golaghat", "current_level_m": 78.4, "danger_level_m": 77.4, "trend": "Steady", "status": "Above Danger Mark" },
+  { "id": 5, "river": "Subansiri", "station": "Badatighat", "district": "Lakhimpur", "current_level_m": 83.2, "danger_level_m": 82.5, "trend": "Rising", "status": "Above Danger Mark" },
+  { "id": 6, "river": "Barak", "station": "Annapurna Ghat", "district": "Cachar", "current_level_m": 22.2, "danger_level_m": 19.83, "trend": "Falling", "status": "Above Danger Mark" },
+  { "id": 7, "river": "Bharalu", "station": "Guwahati Sector 4", "district": "Kamrup Metropolitan", "current_level_m": 48.6, "danger_level_m": 49.0, "trend": "Steady", "status": "Near Danger Mark" },
+  { "id": 8, "river": "Brahmaputra", "station": "Dibrugarh Waterfront", "district": "Dibrugarh", "current_level_m": 105.8, "danger_level_m": 105.7, "trend": "Rising", "status": "Above Danger Mark" }
+]
