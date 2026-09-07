@@ -12,7 +12,6 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/alerts", tags=["Alerts"])
 
 
-
 @router.get("/", response_model=List[Dict[str, Any]])
 def get_alerts(
     district: Optional[str] = Query(None),
@@ -69,11 +68,11 @@ def create_alert_route(
         return {
             "success": True,
             "message": "Emergency alert issued successfully",
-            "alert": new_alert
+            "alert": new_alert,
         }
     except Exception as exc:
         logger.exception("Failed to issue alert")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal Server Error",
-        ) from exc
+        ) from exc

@@ -45,13 +45,13 @@ def get_reports_by_district_route(
         ) from exc
 
 
-@router.get("/status/{status}", response_model=List[Dict[str, Any]])
+@router.get("/status/{report_status}", response_model=List[Dict[str, Any]])
 def get_reports_by_status_route(
-    status: str,
+    report_status: str,
 ) -> List[Dict[str, Any]]:
     """Return reports filtered by status."""
     try:
-        return report_service.get_reports_by_status(status)
+        return report_service.get_reports_by_status(report_status)
 
     except Exception as exc:
         logger.exception("Failed to retrieve reports by status")

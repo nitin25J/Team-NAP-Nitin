@@ -42,7 +42,10 @@ def calculate_severity_score(
     Returns:
         float: Bounded severity score between 0.0 and 100.0.
     """
-    if any(param < 0 for param in (rainfall_mm, river_level_m, wind_speed_kmh, reports_count)):
+    if any(
+        param < 0
+        for param in (rainfall_mm, river_level_m, wind_speed_kmh, reports_count)
+    ):
         logger.error("Negative values detected in severity input parameters.")
         raise ValueError("Metrics inputs must be non-negative.")
 

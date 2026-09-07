@@ -10,7 +10,7 @@ from app.ai.recommendation_engine import generate_recommendations
 logger = logging.getLogger(__name__)
 
 # Danger Mark Thresholds for major rivers per district (in meters)
-DISTRICT_RIVER_DANGER_MARKS: Dict[str, Dict[str, float]] = {
+DISTRICT_RIVER_DANGER_MARKS: Dict[str, Any] = {
     "Sivasagar": {"river": "Dikhow & Brahmaputra", "current_m": 11.8, "danger_m": 10.0},
     "Cachar": {"river": "Barak", "current_m": 22.2, "danger_m": 19.8},
     "Jorhat": {"river": "Brahmaputra", "current_m": 86.8, "danger_m": 85.5},
@@ -40,28 +40,32 @@ def _compute_live_predictions() -> List[Dict[str, Any]]:
 
         # Run AI Risk Engine & Severity Calculator
         risk_tier = calculate_flood_risk(rainfall, river_level, danger_level)
-        severity_score = calculate_severity_score(rainfall, river_level, danger_level, wind_speed, reports_count=35)
+        severity_score = calculate_severity_score(
+            rainfall, river_level, danger_level, wind_speed, reports_count=35
+        )
         recommendations = generate_recommendations(severity_score)
 
         # Normalize score to 0.0 - 1.0 range for API contract
         risk_score_decimal = round(severity_score / 100.0, 2)
         confidence = round(min(0.82 + (rainfall / 300.0) * 0.15, 0.96), 2)
 
-        predictions.append({
-            "district": district,
-            "hazard_type": "Flood & Inundation",
-            "risk_level": risk_tier,
-            "risk_score": risk_score_decimal,
-            "severity_score": severity_score,
-            "confidence": confidence,
-            "river_name": river_info["river"],
-            "water_level_m": river_level,
-            "danger_mark_m": danger_level,
-            "rainfall_mm_24h": rainfall,
-            "wind_speed_kmh": wind_speed,
-            "recommendations": recommendations,
-            "last_updated": datetime.utcnow().isoformat()
-        })
+        predictions.append(
+            {
+                "district": district,
+                "hazard_type": "Flood & Inundation",
+                "risk_level": risk_tier,
+                "risk_score": risk_score_decimal,
+                "severity_score": severity_score,
+                "confidence": confidence,
+                "river_name": river_info["river"],
+                "water_level_m": river_level,
+                "danger_mark_m": danger_level,
+                "rainfall_mm_24h": rainfall,
+                "wind_speed_kmh": wind_speed,
+                "recommendations": recommendations,
+                "last_updated": datetime.utcnow().isoformat(),
+            }
+        )
 
     return predictions
 
@@ -73,7 +77,7 @@ def get_prediction_data() -> Dict[str, Any]:
         "model_name": "Varuna Hydro-Met Neural Risk Fusion v2.4",
         "model_version": "2.4.0-Live",
         "last_run": datetime.utcnow().isoformat(),
-        "predictions": preds
+        "predictions": preds,
     }
 
 

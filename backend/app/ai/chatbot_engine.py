@@ -51,17 +51,23 @@ def _match_intent(question: str) -> str:
 
     if any(k in q_lower for k in ["rescue", "trapped", "help", "save", "sos", "stuck"]):
         return "rescue"
-    elif any(k in q_lower for k in ["hospital", "medical", "doctor", "clinic", "health"]):
+    elif any(
+        k in q_lower for k in ["hospital", "medical", "doctor", "clinic", "health"]
+    ):
         return "hospital"
     elif any(k in q_lower for k in ["river", "water", "level", "gauge", "flood level"]):
         return "river_level"
-    elif any(k in q_lower for k in ["risk", "status", "severity", "danger", "condition"]):
+    elif any(
+        k in q_lower for k in ["risk", "status", "severity", "danger", "condition"]
+    ):
         return "risk"
     else:
         return "general"
 
 
-def process_user_query(question: str, custom_district_data: Optional[Dict[str, Any]] = None) -> str:
+def process_user_query(
+    question: str, custom_district_data: Optional[Dict[str, Any]] = None
+) -> str:
     """
     Processes a user question using deterministic rule matching and returns a structured JSON response string.
 
@@ -74,12 +80,18 @@ def process_user_query(question: str, custom_district_data: Optional[Dict[str, A
     """
     if not question or not question.strip():
         logger.warning("Received empty or whitespace user query.")
-        return json.dumps({
-            "error": "Empty question provided.",
-            "recommendation": "Please provide a valid query regarding disaster status or assistance.",
-        })
+        return json.dumps(
+            {
+                "error": "Empty question provided.",
+                "recommendation": "Please provide a valid query regarding disaster status or assistance.",
+            }
+        )
 
-    data_store = custom_district_data if custom_district_data is not None else DEFAULT_DISTRICT_DATA
+    data_store = (
+        custom_district_data
+        if custom_district_data is not None
+        else DEFAULT_DISTRICT_DATA
+    )
 
     district = _extract_district(question)
     intent = _match_intent(question)
@@ -98,7 +110,9 @@ def process_user_query(question: str, custom_district_data: Optional[Dict[str, A
     if intent == "rescue":
         response_payload["action"] = "RESCUE_DISPATCHED"
         response_payload["details"] = district_info["rescue_team"]
-        response_payload["recommendation"] = "Move to higher ground immediately. NDRF/SDRF informed."
+        response_payload["recommendation"] = (
+            "Move to higher ground immediately. NDRF/SDRF informed."
+        )
     elif intent == "hospital":
         response_payload["action"] = "MEDICAL_INFO"
         response_payload["nearest_facility"] = district_info["nearest_hospital"]

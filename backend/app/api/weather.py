@@ -47,7 +47,9 @@ def get_highest_rainfall_district_route() -> Dict[str, Any]:
     try:
         result = weather_service.get_highest_rainfall_district()
         if result is None:
-            raise HTTPException(status_code=404, detail="Highest rainfall district not found")
+            raise HTTPException(
+                status_code=404, detail="Highest rainfall district not found"
+            )
         return result
     except HTTPException:
         raise
@@ -61,7 +63,9 @@ def get_forecast_by_district_route(district: str) -> Dict[str, Any]:
     try:
         result = weather_service.get_forecast_by_district(district)
         if result is None:
-            raise HTTPException(status_code=404, detail="Forecast not found for district")
+            raise HTTPException(
+                status_code=404, detail="Forecast not found for district"
+            )
         return result
     except HTTPException:
         raise

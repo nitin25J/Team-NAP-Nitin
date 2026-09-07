@@ -22,6 +22,7 @@ _weather_cache: Dict[str, Any] = {}
 _cache_timestamp: float = 0
 CACHE_TTL_SECONDS: int = 600
 
+
 def _get_wmo_code_description(code: int) -> str:
     """Map WMO Weather interpretation codes to readable conditions."""
     if code in [0, 1]:
@@ -39,6 +40,7 @@ def _get_wmo_code_description(code: int) -> str:
     elif code in [95, 96, 99]:
         return "Severe Thunderstorm"
     return "Overcast / Rain"
+
 
 def _fetch_open_meteo_weather_sync() -> List[Dict[str, Any]]:
     """Fetch live real weather data from Open-Meteo REST API for all districts."""
@@ -69,36 +71,61 @@ def _fetch_open_meteo_weather_sync() -> List[Dict[str, Any]]:
 
                     temp_c = current.get("temperature_2m", 28.0)
                     humidity = current.get("relative_humidity_2m", 82)
-                    current_rain = current.get("rain", 0.0) or current.get("precipitation", 0.0)
+                    current_rain = current.get("rain", 0.0) or current.get(
+                        "precipitation", 0.0
+                    )
                     wind_kmh = current.get("wind_speed_10m", 12.0)
                     wmo_code = current.get("weather_code", 3)
                     pressure_hpa = current.get("surface_pressure", 1008.0)
 
-                    daily_rain = daily.get("precipitation_sum", [45.0])[0] if daily.get("precipitation_sum") else 45.0
+                    daily_rain = (
+                        daily.get("precipitation_sum", [45.0])[0]
+                        if daily.get("precipitation_sum")
+                        else 45.0
+                    )
                     condition = _get_wmo_code_description(wmo_code)
                     if daily_rain > 50.0 or current_rain > 10.0:
                         condition = "Heavy Rain Warning"
 
-                    results.append({
-                        "district": district,
-                        "temperature_c": temp_c,
-                        "humidity_pct": humidity,
-                        "rainfall_mm_24h": round(daily_rain, 1),
-                        "current_rain_mm_h": round(current_rain, 1),
-                        "wind_speed_kmh": round(wind_kmh, 1),
-                        "pressure_hpa": round(pressure_hpa, 1),
-                        "condition": condition,
-                        "coordinates": coords,
-                        "data_source": "Open-Meteo Live API"
-                    })
+                    results.append(
+                        {
+                            "district": district,
+                            "temperature_c": temp_c,
+                            "humidity_pct": humidity,
+                            "rainfall_mm_24h": round(daily_rain, 1),
+                            "current_rain_mm_h": round(current_rain, 1),
+                            "wind_speed_kmh": round(wind_kmh, 1),
+                            "pressure_hpa": round(pressure_hpa, 1),
+                            "condition": condition,
+                            "coordinates": coords,
+                            "data_source": "Open-Meteo Live API",
+                        }
+                    )
                 else:
-                    logger.warning("Open-Meteo returned status %d for %s", resp.status_code, district)
+                    logger.warning(
+                        "Open-Meteo returned status %d for %s",
+                        resp.status_code,
+                        district,
+                    )
             except Exception as exc:
-                logger.error("Failed fetching live weather for district %s: %s", district, exc)
+                logger.error(
+                    "Failed fetching live weather for district %s: %s", district, exc
+                )
 
     if not results:
         results = [
-            {"district": name, "temperature_c": 28.5, "humidity_pct": 85, "rainfall_mm_24h": 65.0, "current_rain_mm_h": 12.0, "wind_speed_kmh": 22.0, "pressure_hpa": 1005.0, "condition": "Heavy Rain Warning", "coordinates": coords, "data_source": "Fallback Environmental Sensors"}
+            {
+                "district": name,
+                "temperature_c": 28.5,
+                "humidity_pct": 85,
+                "rainfall_mm_24h": 65.0,
+                "current_rain_mm_h": 12.0,
+                "wind_speed_kmh": 22.0,
+                "pressure_hpa": 1005.0,
+                "condition": "Heavy Rain Warning",
+                "coordinates": coords,
+                "data_source": "Fallback Environmental Sensors",
+            }
             for name, coords in DISTRICT_COORDINATES.items()
         ]
 
@@ -112,7 +139,7 @@ def get_weather_data() -> Dict[str, Any]:
     return {
         "source": "Open-Meteo Real-time Meteorological API",
         "last_updated": time.strftime("%Y-%m-%d %H:%M:%S IST"),
-        "district_forecast": forecasts
+        "district_forecast": forecasts,
     }
 
 
@@ -131,8 +158,10 @@ def get_forecast_by_district(district: str) -> Optional[Dict[str, Any]]:
 def get_districts_with_heavy_rain() -> List[Dict[str, Any]]:
     forecasts = get_district_forecasts()
     return [
-        f for f in forecasts
-        if "heavy rain" in f.get("condition", "").lower() or f.get("rainfall_mm_24h", 0) >= 40.0
+        f
+        for f in forecasts
+        if "heavy rain" in f.get("condition", "").lower()
+        or f.get("rainfall_mm_24h", 0) >= 40.0
     ]
 
 

@@ -53,9 +53,7 @@ def get_significant_flood_changes_route(
 ) -> List[Dict[str, Any]]:
     """Return districts with significant flood changes."""
     try:
-        return satellite_service.get_significant_flood_changes(
-            threshold_percent
-        )
+        return satellite_service.get_significant_flood_changes(threshold_percent)
 
     except Exception as exc:
         logger.exception("Failed to retrieve significant flood changes")
@@ -71,9 +69,7 @@ def get_satellite_analysis_by_district_route(
 ) -> Dict[str, Any]:
     """Return satellite analysis for a district."""
     try:
-        analysis = satellite_service.get_satellite_analysis_by_district(
-            district
-        )
+        analysis = satellite_service.get_satellite_analysis_by_district(district)
 
         if analysis is None:
             raise HTTPException(

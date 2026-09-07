@@ -30,8 +30,7 @@ def get_teams_by_district(district: str) -> List[Dict[str, Any]]:
     """Return rescue teams filtered by district."""
     teams = get_all_rescue_teams()
     return [
-        team for team in teams
-        if team.get("district", "").lower() == district.lower()
+        team for team in teams if team.get("district", "").lower() == district.lower()
     ]
 
 
@@ -51,6 +50,5 @@ def get_teams_by_type(team_type: str) -> List[Dict[str, Any]]:
     """Return rescue teams filtered by organization type."""
     teams = get_all_rescue_teams()
     return [
-        team for team in teams
-        if team_type.lower() in (team.get("type") or "").lower()
+        team for team in teams if team_type.lower() in (team.get("type") or "").lower()
     ]

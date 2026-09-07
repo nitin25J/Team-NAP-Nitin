@@ -2,7 +2,7 @@
 // Auto-detects custom VITE_API_URL, local dev (http://127.0.0.1:8000/api), or relative path (/api).
 const API_BASE = (function() {
   if (window.VITE_API_URL) return window.VITE_API_URL;
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
     return 'http://127.0.0.1:8000/api';
   }
   return '/api';

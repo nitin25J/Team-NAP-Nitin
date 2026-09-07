@@ -127,6 +127,8 @@ def reset_settings() -> Dict[str, Any]:
     try:
         save_json(SETTINGS_FILE, DEFAULT_SETTINGS)
     except Exception as exc:
-        logger.exception("Failed to persist default settings to '%s': %s", SETTINGS_FILE, exc)
+        logger.exception(
+            "Failed to persist default settings to '%s': %s", SETTINGS_FILE, exc
+        )
 
     return DEFAULT_SETTINGS.copy()

@@ -46,15 +46,23 @@ def load_json(filename: str) -> Union[List[Any], dict]:
             shelters = db.query(ShelterModel).all()
             return {
                 "inventory": [r.to_dict() for r in resources],
-                "shelters": [s.to_dict() for s in shelters]
+                "shelters": [s.to_dict() for s in shelters],
             }
 
         elif filename == "settings.json":
             return {
                 "theme": "dark",
                 "language": "English",
-                "notifications": {"critical_alerts": True, "shelter_warnings": True, "weekly_digest": False},
-                "user": {"name": "Nitin Sharma", "role": "Director General, NDRF", "state": "Assam"}
+                "notifications": {
+                    "critical_alerts": True,
+                    "shelter_warnings": True,
+                    "weekly_digest": False,
+                },
+                "user": {
+                    "name": "Nitin Sharma",
+                    "role": "Director General, NDRF",
+                    "state": "Assam",
+                },
             }
 
         # Fallback to local JSON file if exists

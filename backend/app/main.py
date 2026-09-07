@@ -40,7 +40,11 @@ app = FastAPI(
 # CORS Configuration
 # ------------------------
 cors_origins_env = os.getenv("CORS_ORIGINS", "*")
-origins = [o.strip() for o in cors_origins_env.split(",")] if cors_origins_env != "*" else ["*"]
+origins = (
+    [o.strip() for o in cors_origins_env.split(",")]
+    if cors_origins_env != "*"
+    else ["*"]
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -49,6 +53,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # ------------------------
 # Root & Health Check
@@ -61,12 +66,14 @@ def root():
         "status": "running",
     }
 
+
 @app.get("/health", tags=["Health"])
 def health_check():
     return {
         "status": "healthy",
         "service": "Varuna AI Backend",
     }
+
 
 # ------------------------
 # Register Routers (Both /api prefix and root for full compatibility)

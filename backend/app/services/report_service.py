@@ -24,7 +24,9 @@ def get_report_by_id(report_id: str) -> Optional[Dict[str, Any]]:
     """Return report matching ID."""
     reports = get_all_reports()
     for report in reports:
-        if report.get("report_id") == report_id or str(report.get("id")) == str(report_id):
+        if report.get("report_id") == report_id or str(report.get("id")) == str(
+            report_id
+        ):
             return report
     return None
 
@@ -33,7 +35,8 @@ def get_reports_by_district(district: str) -> List[Dict[str, Any]]:
     """Return reports filtered by district."""
     reports = get_all_reports()
     return [
-        report for report in reports
+        report
+        for report in reports
         if (report.get("district") or "").lower() == district.lower()
     ]
 
@@ -42,7 +45,8 @@ def get_reports_by_status(status: str) -> List[Dict[str, Any]]:
     """Return reports filtered by review status."""
     reports = get_all_reports()
     return [
-        report for report in reports
+        report
+        for report in reports
         if (report.get("status") or "").lower() == status.lower()
     ]
 
@@ -61,7 +65,7 @@ def add_report(new_report: Dict[str, Any]) -> bool:
             description=new_report.get("description", ""),
             status="Pending Review",
             media_attached=bool(new_report.get("media_attached", False)),
-            submitted_at=now
+            submitted_at=now,
         )
         db.add(report_obj)
         db.commit()

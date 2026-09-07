@@ -1,6 +1,5 @@
 import logging
 from typing import Any, Dict, List
-from app.database.loader import load_json
 from app.database.database import SessionLocal
 from app.database.db_models import ResourceItemModel, ShelterModel
 
@@ -15,14 +14,16 @@ def get_resource_data() -> Dict[str, Any]:
     try:
         resources = db.query(ResourceItemModel).all()
         shelters = db.query(ShelterModel).all()
-        
+
         items_list = [r.to_dict() for r in resources]
         shelters_list = [s.to_dict() for s in shelters]
 
         return {
             "inventory": items_list,
-            "inventory_summary": {r["name"].lower().replace(" ", "_"): r["have"] for r in items_list},
-            "shelters": shelters_list
+            "inventory_summary": {
+                r["name"].lower().replace(" ", "_"): r["have"] for r in items_list
+            },
+            "shelters": shelters_list,
         }
     finally:
         db.close()
@@ -68,11 +69,10 @@ def get_resources_by_district(district: str) -> Dict[str, Any]:
     """Return resource allocation for a specific district."""
     db = SessionLocal()
     try:
-        shelters = db.query(ShelterModel).filter(ShelterModel.district.ilike(district)).all()
-        return {
-            "district": district,
-            "shelters": [s.to_dict() for s in shelters]
-        }
+        shelters = (
+            db.query(ShelterModel).filter(ShelterModel.district.ilike(district)).all()
+        )
+        return {"district": district, "shelters": [s.to_dict() for s in shelters]}
     finally:
         db.close()
 
@@ -81,7 +81,9 @@ def get_shelters_by_district(district: str) -> List[Dict[str, Any]]:
     """Return shelters for a district."""
     db = SessionLocal()
     try:
-        shelters = db.query(ShelterModel).filter(ShelterModel.district.ilike(district)).all()
+        shelters = (
+            db.query(ShelterModel).filter(ShelterModel.district.ilike(district)).all()
+        )
         return [s.to_dict() for s in shelters]
     finally:
         db.close()

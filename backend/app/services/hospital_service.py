@@ -30,7 +30,8 @@ def get_hospitals_by_district(district: str) -> List[Dict[str, Any]]:
     """Return hospitals filtered by district."""
     hospitals = get_all_hospitals()
     return [
-        hospital for hospital in hospitals
+        hospital
+        for hospital in hospitals
         if hospital.get("district", "").lower() == district.lower()
     ]
 
@@ -45,6 +46,7 @@ def get_hospitals_with_available_beds(min_beds: int = 1) -> List[Dict[str, Any]]
     """Return hospitals with available beds."""
     hospitals = get_all_hospitals()
     return [
-        h for h in hospitals
+        h
+        for h in hospitals
         if isinstance(h.get("beds_available"), int) and h["beds_available"] >= min_beds
     ]

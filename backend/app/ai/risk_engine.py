@@ -34,7 +34,9 @@ def calculate_flood_risk(
             river_level_m,
             threshold_river_m,
         )
-        raise ValueError("Environmental metric inputs must be non-negative, and threshold must be positive.")
+        raise ValueError(
+            "Environmental metric inputs must be non-negative, and threshold must be positive."
+        )
 
     river_ratio = river_level_m / threshold_river_m
     effective_rainfall = rainfall_mm / max(drainage_efficiency, 0.1)
@@ -82,7 +84,9 @@ def calculate_cyclone_risk(
             pressure_mb,
             storm_surge_m,
         )
-        raise ValueError("Atmospheric metric inputs must be non-negative and positive for pressure.")
+        raise ValueError(
+            "Atmospheric metric inputs must be non-negative and positive for pressure."
+        )
 
     logger.debug(
         "Calculating cyclone risk - Wind: %.2f km/h, Pressure: %.2f mb, Surge: %.2f m",

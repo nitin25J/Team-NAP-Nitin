@@ -23,40 +23,54 @@ def generate_recommendations(severity_score: float) -> List[str]:
     recommendations: List[str] = []
 
     if severity_score >= 85.0:
-        recommendations.extend([
-            "Issue Emergency Alert",
-            "Evacuate Area",
-            "Deploy NDRF",
-            "Deploy Rescue Boats",
-            "Open Relief Camps",
-            "Increase Medical Support",
-        ])
+        recommendations.extend(
+            [
+                "Issue Emergency Alert",
+                "Evacuate Area",
+                "Deploy NDRF",
+                "Deploy Rescue Boats",
+                "Open Relief Camps",
+                "Increase Medical Support",
+            ]
+        )
     elif severity_score >= 65.0:
-        recommendations.extend([
-            "Issue Emergency Alert",
-            "Evacuate Area",
-            "Deploy Rescue Boats",
-            "Open Relief Camps",
-            "Increase Medical Support",
-        ])
+        recommendations.extend(
+            [
+                "Issue Emergency Alert",
+                "Evacuate Area",
+                "Deploy Rescue Boats",
+                "Open Relief Camps",
+                "Increase Medical Support",
+            ]
+        )
     elif severity_score >= 45.0:
-        recommendations.extend([
-            "Issue Emergency Alert",
-            "Open Relief Camps",
-            "Increase Medical Support",
-            "Deploy SDRF Local Teams",
-        ])
+        recommendations.extend(
+            [
+                "Issue Emergency Alert",
+                "Open Relief Camps",
+                "Increase Medical Support",
+                "Deploy SDRF Local Teams",
+            ]
+        )
     elif severity_score >= 25.0:
-        recommendations.extend([
-            "Issue Public Safety Advisory",
-            "Monitor River Levels and Weather Updates",
-            "Keep Emergency Services on Standby",
-        ])
+        recommendations.extend(
+            [
+                "Issue Public Safety Advisory",
+                "Monitor River Levels and Weather Updates",
+                "Keep Emergency Services on Standby",
+            ]
+        )
     else:
-        recommendations.extend([
-            "Continue Normal Monitoring",
-            "Maintain Standard Emergency Preparedness",
-        ])
+        recommendations.extend(
+            [
+                "Continue Normal Monitoring",
+                "Maintain Standard Emergency Preparedness",
+            ]
+        )
 
-    logger.info("Generated %d recommendations for severity score: %.2f", len(recommendations), severity_score)
+    logger.info(
+        "Generated %d recommendations for severity score: %.2f",
+        len(recommendations),
+        severity_score,
+    )
     return recommendations

@@ -25,11 +25,14 @@ def get_satellite_analysis_by_district(district: str) -> Optional[Dict[str, Any]
     return None
 
 
-def get_significant_flood_changes(threshold_percent: float = 10.0) -> List[Dict[str, Any]]:
+def get_significant_flood_changes(
+    threshold_percent: float = 10.0,
+) -> List[Dict[str, Any]]:
     """Return districts where flood extent change exceeds the given threshold."""
     records = get_all_satellite_analysis()
     return [
-        r for r in records
+        r
+        for r in records
         if isinstance(r.get("change_from_previous_capture_percent"), (int, float))
         and r["change_from_previous_capture_percent"] >= threshold_percent
     ]

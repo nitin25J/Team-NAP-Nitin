@@ -19,17 +19,31 @@ def get_chatbot_config() -> Dict[str, Any]:
         "bot_name": "Varuna Assistant",
         "language_support": ["English", "Assamese", "Bengali", "Hindi"],
         "intents": [
-            {"intent": "rescue", "sample_queries": ["rescue trapped people", "help I am stuck in flood"]},
-            {"intent": "hospital", "sample_queries": ["nearest hospital beds", "medical support"]},
-            {"intent": "river_level", "sample_queries": ["river water gauge level", "danger mark"]},
-            {"intent": "risk", "sample_queries": ["district risk status", "flood severity"]}
+            {
+                "intent": "rescue",
+                "sample_queries": ["rescue trapped people", "help I am stuck in flood"],
+            },
+            {
+                "intent": "hospital",
+                "sample_queries": ["nearest hospital beds", "medical support"],
+            },
+            {
+                "intent": "river_level",
+                "sample_queries": ["river water gauge level", "danger mark"],
+            },
+            {
+                "intent": "risk",
+                "sample_queries": ["district risk status", "flood severity"],
+            },
         ],
-        "conversation_log_sample": []
+        "conversation_log_sample": [],
     }
 
 
 def get_supported_languages() -> List[str]:
-    return get_chatbot_config().get("language_support", ["English", "Assamese", "Bengali", "Hindi"])
+    return get_chatbot_config().get(
+        "language_support", ["English", "Assamese", "Bengali", "Hindi"]
+    )
 
 
 def get_intents() -> List[Dict[str, Any]]:
@@ -70,19 +84,29 @@ def query_chatbot(user_message: str) -> Dict[str, Any]:
             hospitals = hospital_service.get_hospitals_by_district(d)
             rescue_teams = rescue_service.get_teams_by_district(d)
 
-            nearest_h = hospitals[0]["name"] if hospitals else "Regional Command Hospital"
-            r_team = rescue_teams[0]["name"] if rescue_teams else "NDRF Quick Response Unit"
+            nearest_h = (
+                hospitals[0]["name"] if hospitals else "Regional Command Hospital"
+            )
+            r_team = (
+                rescue_teams[0]["name"] if rescue_teams else "NDRF Quick Response Unit"
+            )
 
             custom_data[d] = {
                 "risk": p["risk_level"],
                 "river_level": f"{p['water_level_m']}m (Danger: {p['danger_mark_m']}m)",
                 "nearest_hospital": nearest_h,
                 "rescue_team": r_team,
-                "recommendations": p["recommendations"][0] if p["recommendations"] else "Evacuate low areas.",
-                "confidence": f"{int(p['confidence']*100)}%"
+                "recommendations": (
+                    p["recommendations"][0]
+                    if p["recommendations"]
+                    else "Evacuate low areas."
+                ),
+                "confidence": f"{int(p['confidence']*100)}%",
             }
 
-        response_json_str = process_user_query(user_message, custom_district_data=custom_data)
+        response_json_str = process_user_query(
+            user_message, custom_district_data=custom_data
+        )
         parsed = json.loads(response_json_str)
         return parsed
     except Exception as e:
@@ -91,5 +115,5 @@ def query_chatbot(user_message: str) -> Dict[str, Any]:
             "risk": "High",
             "district": "Sivasagar",
             "confidence": "91%",
-            "recommendation": "Move to higher ground immediately. Field teams notified."
+            "recommendation": "Move to higher ground immediately. Field teams notified.",
         }

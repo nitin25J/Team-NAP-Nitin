@@ -23,7 +23,9 @@ def get_all_alerts() -> List[Dict[str, Any]]:
 def get_active_alerts() -> List[Dict[str, Any]]:
     """Return active alerts."""
     alerts = get_all_alerts()
-    return [alert for alert in alerts if (alert.get("status") or "").lower() == "active"]
+    return [
+        alert for alert in alerts if (alert.get("status") or "").lower() == "active"
+    ]
 
 
 def get_alert_by_id(alert_id: str) -> Optional[Dict[str, Any]]:
@@ -39,7 +41,8 @@ def get_alerts_by_district(district: str) -> List[Dict[str, Any]]:
     """Return alerts filtered by district."""
     alerts = get_all_alerts()
     return [
-        alert for alert in alerts
+        alert
+        for alert in alerts
         if (alert.get("district") or "").lower() == district.lower()
     ]
 
@@ -48,7 +51,8 @@ def get_alerts_by_severity(severity: str) -> List[Dict[str, Any]]:
     """Return alerts filtered by severity."""
     alerts = get_all_alerts()
     return [
-        alert for alert in alerts
+        alert
+        for alert in alerts
         if (alert.get("severity") or "").lower() == severity.lower()
     ]
 
@@ -69,7 +73,7 @@ def create_alert(new_alert: Dict[str, Any]) -> Dict[str, Any]:
             issued_by=new_alert.get("issued_by", "Assam State Disaster Control Room"),
             issued_at=now,
             valid_until=now + timedelta(hours=valid_hours),
-            status="Active"
+            status="Active",
         )
         db.add(alert_obj)
         db.commit()
