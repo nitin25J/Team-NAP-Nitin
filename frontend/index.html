@@ -14,6 +14,20 @@
 </head>
 <body>
 <div class="app" id="appShell">
+<div id="google_translate_element" style="display:none;"></div>
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'en,as,bn,hi', autoDisplay: false}, 'google_translate_element');
+}
+function changeLanguage(langCode) {
+  document.cookie = `googtrans=/en/${langCode}; path=/;`;
+  if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+    document.cookie = `googtrans=/en/${langCode}; domain=.${location.hostname}; path=/;`;
+  }
+  location.reload();
+}
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
   <div class="topbar">
     <button class="collapse-btn" id="collapseBtn"><i class="ti ti-layout-sidebar-left-collapse"></i></button>

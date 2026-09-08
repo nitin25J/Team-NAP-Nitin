@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    },
-    {
       "src": "frontend/**",
       "use": "@vercel/static"
     }
@@ -13,7 +9,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/api/index.py"
+      "destination": "https://varuna-ai.onrender.com/api/$1"
     },
     {
       "source": "/(.*)",
