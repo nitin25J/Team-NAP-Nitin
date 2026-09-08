@@ -5,7 +5,7 @@ const API_BASE = (function() {
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
     return 'http://127.0.0.1:8000/api';
   }
-  return '/api';
+  return 'https://varuna-ai.onrender.com/api';
 })();
 
 function showBackendErrorBanner(msg) {
