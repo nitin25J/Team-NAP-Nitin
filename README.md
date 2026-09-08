@@ -44,6 +44,8 @@ Build an intelligent disaster management ecosystem that enables proactive decisi
 - Resource Management
 - Reports & Analytics
 - Responsive Dashboard UI
+- **Comprehensive Datasets**: Built-in JSON/CSV datasets for 10 Assam flood-prone districts.
+- **Automated Database Seeder**: Seamlessly migrates structured datasets directly into PostgreSQL.
 
 ---
 
@@ -228,9 +230,10 @@ VarunaAI/
 - Interactive Frontend Dashboard
 - FastAPI Backend
 - REST API Architecture
-- Dashboard Module
-- Weather Module
-- Disaster Map
+- Responsive Dashboard UI
+- Fast API Backend Services
+- Automated Database Seeder & Loader Fallbacks
+- Integrated Structured JSON/CSV Datasets (10 Assam Districts)
 - Alerts
 - Hospitals
 - Rescue Operations
