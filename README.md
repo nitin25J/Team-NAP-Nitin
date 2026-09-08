@@ -70,11 +70,11 @@ Rescue Data
  └── Analytics
         │
         ▼
- JSON Data Layer
-(Current Prototype)
+ PostgreSQL Database
+ (Assam Datasets Migrated)
 
 Future:
-PostgreSQL • PostGIS • Neo4j
+PostGIS • Neo4j
 ```
 
 ---
@@ -136,7 +136,7 @@ Service Layer
 Database Loader
 │
 ▼
-JSON Dataset (Current Prototype)
+PostgreSQL Database
 ```
 
 ---
@@ -161,11 +161,11 @@ JSON Dataset (Current Prototype)
 
 ### Current Data Layer
 
-- JSON Dataset
+- PostgreSQL (Migrated from SQLite/JSON)
+- SQLAlchemy ORM
 
 ### Planned Technologies
 
-- PostgreSQL
 - PostGIS
 - Neo4j
 - LangChain
@@ -237,9 +237,8 @@ VarunaAI/
 - Resources
 - Reports
 - Analytics
-- JSON-Based Data Layer
-
-### In Progress
+- PostgreSQL Database Migration
+- Resolved KPI rendering crash bug in Frontend
 
 - Frontend–Backend Integration
 - Live Weather API Integration
@@ -247,7 +246,6 @@ VarunaAI/
 ### Planned
 
 - AI Prediction Models
-- PostgreSQL Migration
 - Knowledge Graph
 - Digital Twin
 - Multi-Agent AI
