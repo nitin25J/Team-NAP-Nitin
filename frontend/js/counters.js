@@ -18,6 +18,26 @@ document.querySelectorAll('.ki-val[data-count]').forEach(el=>{
   animateCount(el, target, suffix);
 });
 
+window.setKpi = function(id, val, suffix) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.dataset.count = val;
+  el.dataset.suffix = suffix || '';
+  animateCount(el, Number(val), suffix);
+};
+
+// Also define setSeverityRing which is called in index.html
+window.setSeverityRing = function(score) {
+  const ringFill = document.getElementById('ringFill');
+  const ringNum = document.getElementById('ringNum');
+  const CIRCUMFERENCE = 440; // 2 * PI * r(70)
+  if (ringFill) {
+    const offset = CIRCUMFERENCE - (score / 100) * CIRCUMFERENCE;
+    requestAnimationFrame(()=>{ ringFill.style.strokeDashoffset = offset; });
+    if (ringNum) animateCount(ringNum, score, '');
+  }
+};
+
 // Command ring — animates the severity arc to its value
 const SEVERITY_SCORE = 74; // 0-100, drives both the ring and its number
 const ringFill = document.getElementById('ringFill');

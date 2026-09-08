@@ -97,3 +97,16 @@ def get_all_shelters() -> List[Dict[str, Any]]:
         return [s.to_dict() for s in shelters]
     finally:
         db.close()
+
+
+def request_resource(name: str, quantity: int, district: str) -> Dict[str, Any]:
+    """Request a resource allocation."""
+    db = SessionLocal()
+    try:
+        resource = db.query(ResourceItemModel).filter(ResourceItemModel.name.ilike(name)).first()
+        if resource:
+            resource.have = max(0, resource.have - quantity)
+            db.commit()
+        return {"status": "success", "message": f"Requested {quantity} units of {name} for {district}!"}
+    finally:
+        db.close()

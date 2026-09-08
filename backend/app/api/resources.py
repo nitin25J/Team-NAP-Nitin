@@ -4,6 +4,7 @@ import logging
 from typing import Any, Dict, List
 
 from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel
 
 from app.services import resource_service
 
@@ -133,6 +134,24 @@ def get_shelters_by_district_route(
 
     except Exception as exc:
         logger.exception("Failed to retrieve district shelters")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Internal server error",
+        ) from exc
+
+
+class ResourceRequest(BaseModel):
+    name: str
+    quantity: int
+    district: str
+
+@router.post("/items", response_model=Dict[str, Any])
+def request_resource_route(request: ResourceRequest) -> Dict[str, Any]:
+    """Request a resource allocation."""
+    try:
+        return resource_service.request_resource(request.name, request.quantity, request.district)
+    except Exception as exc:
+        logger.exception("Failed to request resource")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Internal server error",
