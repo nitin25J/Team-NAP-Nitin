@@ -1,0 +1,201 @@
+/**
+ * VARUNA AI 2.0 - Layout Styles (Fixed Structure)
+ */
+
+/* App Shell (Column layout to stack Topbar on top of Body) */
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+/* Topbar */
+.topbar {
+  height: 64px;
+  min-height: 64px;
+  background-color: var(--topbar-bg);
+  border-bottom: 1px solid var(--topbar-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  z-index: 40;
+  box-shadow: var(--shadow-sm);
+}
+
+.topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.topbar__brand i {
+  color: var(--accent-primary);
+  font-size: 1.5rem;
+}
+
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Global Search Input in Topbar */
+.topbar__search {
+  position: relative;
+  width: 300px;
+}
+
+.topbar__search input {
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 2.5rem;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  transition: all var(--transition-fast);
+}
+
+.topbar__search input:focus {
+  outline: none;
+  background-color: var(--bg-secondary);
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-alpha);
+}
+
+.topbar__search i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* Connection Status */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.status-indicator--online .status-dot {
+  background-color: var(--status-success);
+  box-shadow: 0 0 8px var(--status-success);
+}
+
+.status-indicator--offline .status-dot {
+  background-color: var(--status-danger);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* App Shell Body (Row layout to place Sidebar and Main side-by-side) */
+.app-shell__body {
+  display: flex;
+  flex: 1;
+  min-height: 0; /* Ensures inner scrolling works */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background-color: var(--sidebar-bg);
+  border-right: 1px solid var(--sidebar-border);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+  transition: width var(--transition-normal), min-width var(--transition-normal);
+  overflow-y: auto;
+  z-index: 50;
+}
+
+.app-shell--collapsed .sidebar {
+  width: 80px;
+  min-width: 80px;
+}
+
+.sidebar__section-label {
+  padding: 1.5rem 1.5rem 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1.5rem;
+  background: transparent;
+  border: none;
+  color: var(--sidebar-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: all var(--transition-fast);
+  margin: 0.125rem 0.75rem;
+  border-radius: var(--radius-md);
+}
+
+.sidebar__item i {
+  font-size: 1.25rem;
+  margin-right: 1rem;
+  color: var(--text-muted);
+  transition: color var(--transition-fast);
+}
+
+.sidebar__item:hover {
+  background-color: var(--sidebar-hover);
+  color: var(--sidebar-text-active);
+}
+
+.sidebar__item:hover i {
+  color: var(--sidebar-text-active);
+}
+
+.sidebar__item--active {
+  background-color: var(--accent-primary);
+  color: var(--text-inverse);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.sidebar__item--active i {
+  color: var(--text-inverse);
+}
+
+/* Main Content */
+.app-shell__main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+  background-color: var(--bg-primary);
+}
