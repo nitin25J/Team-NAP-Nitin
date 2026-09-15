@@ -34,6 +34,18 @@ def get_alerts(
         ) from exc
 
 
+@router.get("/active", response_model=List[Dict[str, Any]])
+def get_active_alerts_route() -> List[Dict[str, Any]]:
+    try:
+        return alert_service.get_active_alerts()
+    except Exception as exc:
+        logger.exception("Failed to retrieve active alerts")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Error retrieving active alerts.",
+        ) from exc
+
+
 @router.get("/{alert_id}", response_model=Dict[str, Any])
 def get_alert(alert_id: str) -> Dict[str, Any]:
     try:
