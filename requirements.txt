@@ -4,3 +4,4 @@ pydantic
 python-multipart
 sqlalchemy
 httpx
+python-dotenv

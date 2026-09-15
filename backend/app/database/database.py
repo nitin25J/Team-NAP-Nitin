@@ -19,7 +19,7 @@ if (
 else:
     DB_PATH = BASE_DIR / "varuna.db"
 
-SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DB_PATH}")
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{DB_PATH.as_posix()}")
 
 # SQLite connection args
 connect_args = (
