@@ -1,4 +1,4 @@
-# Varuna AI
+# Varuna AI.
 
 ### AI Disaster Intelligence Platform
 
